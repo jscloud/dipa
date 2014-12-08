@@ -1,0 +1,10 @@
+{
+  "name": "dipa-emitter",
+  "version": "1.0.0",
+  "description": "SocketIO Emitter for Dipa project",
+  "dependencies": {
+    "express": "~4.7.2",
+    "socket.io": "~1.2.0",
+    "body-parser": "~1.8.2"
+  }
+}
