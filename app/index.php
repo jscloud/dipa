@@ -1,5 +1,5 @@
 <?php
 
-echo "PHP OK";
+echo "PHP OK PASTING";
 
 
