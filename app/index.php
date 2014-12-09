@@ -1,5 +1,5 @@
 <?php
 
-echo "PHP PRODUCTION OK";
+echo "PHP APP OK";
 
 
