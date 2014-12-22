@@ -46,11 +46,18 @@ app.route('/send/:username')
   })
 
 io.on('connection', function (socket) {
+
   console.log('New connection');
+
   socket.on('send_data', function (data) {
 	console.log(data);
 	io.emit(data.username, data.text);
   });
+
+  socket.on('client_connection', function (username) {
+        io.emit('new_client', username);
+  });
+
 });
 
 http.listen(port, function()
