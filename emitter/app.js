@@ -9,7 +9,7 @@ var jsonParser = bodyParser.json();
 
 app.get('/', function(req, res)
 {
-  res.send('Emitter OK');
+  res.send('Emitter OK !');
 });
 
 
