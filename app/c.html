@@ -59,6 +59,7 @@
 
 			var socket = io.connect('http://104.236.60.178:8080');
 			socket.on(userName, function(text) {
+				text = text.replace(/\n/g, "<br />");
 				$textArea.html(text);
 			});
 			
