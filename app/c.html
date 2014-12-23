@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>PASTING.IO</title>
+
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="tbd" />
+		<meta name="keywords" content="tbd" />
+
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/paste.js"></script>
+		<script src="js/sweet-alert.min.js"></script>
+
+		<script src="http://104.236.60.178:8080/socket.io/socket.io.js"></script>
+
+		<script text="text/javascript">
+
+		var connected = false;
+
+		$(document).ready(function() 
+		{
+			$strInput = $('#pastingStr');
+			$email    = $('#email');
+			$textArea = $('#textArea');
+			$realTimeBtn = $('#realTimeBtn');
+
+			var url = location.href;
+			var urlData = url.split('?');
+			var userName = urlData[1];
+			$userSpan = $('#userSpan');
+			$userSpan.html(userName);
+
+			$strInput.on('keyup', function () {
+				if (connected) {
+					console.log('Emitted');
+					socket.emit('send_data', {username: $email.val(), text: $strInput.val()});
+				}
+			});
+
+			$realTimeBtn.on('click', function () {
+				if (!connected) {
+					if ($email.val() != '') {
+						connected = true;
+						$(this).css('background', "#67A749");
+						swal("Use the follow Url to share your text in real time!", "http://jscloud.github.io/dipa/c.html?" + $email.val(), "success");
+					} else {
+						swal("Error!", "Please, fill the email field to share your text", "error");
+					}
+				} else {
+					connected = false;
+					$(this).css('background', "#E04646");
+				}
+				return false;
+			});
+
+			var socket = io.connect('http://104.236.60.178:8080');
+			socket.on(userName, function(text) {
+				$textArea.html(text);
+			});
+			
+			socket.emit('client_connection', userName);
+		});
+		</script>
+
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+
+		<link rel="stylesheet" href="css/sweet-alert.css" />
+		
+		<style>
+			.pasteBox {
+				border-style: dotted;
+				/* border-color: #fff; */
+				border-width: 0px;
+				height: 40px;
+				/* width: 746px; */
+				background: rgba(255,255,255,0.15);
+				/* box-shadow: inset 0 0 0 1px #fff; */
+				color: #fff;
+			}
+
+			.center {
+				text-align: center;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.olights {
+				color: #ffa61a;
+			}
+
+			.button.realTime {
+				background-color: #E04646;
+			}
+		</style>
+	</head>
+
+	<body>
+			<section class="main">
+
+				<header>
+					<div class="container">
+						<h2>PASTING.IO</h2>
+						<p>Paste and share your text. Fast, free and real time support</p>
+						<p id="textArea"></p>
+					</div>
+				</header>
+
+
+				<div class="content style1 dark">
+					<div class="container">
+
+				<!-- pastingCloudBoard -->
+						<section>
+							<header>
+								<h3>Pasting Cloud history: <span id="userSpan"></span></h3>
+							</header>
+							<div class="table-wrapper">
+								<table class="default">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>00001</td>
+											<td>Lorem ipsum dolor</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00002</td>
+											<td>Sit amet nullam</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00003</td>
+											<td>Feugiat felis viverra</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00004</td>
+											<td>Sagittis enim felis</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00005</td>
+											<td>Nullam sed vestibulum</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+									</tbody>
+
+									<!--
+									<tfoot>
+										<tr>
+											<td colspan="3"></td>
+											<td>100.00</td>
+										</tr>
+									</tfoot>
+									-->
+								</table>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+
+			
+		<!-- mainFeatures -->
+			<section id="mainFeatures" class="main">
+				<header>
+					<div class="container">
+						<h2>PASTING MAIN FEATURES</h2>
+						<p>Comparte texto entre diferentes dispositivos y colegas de manera sensilla. <br />
+						Ya no más auto-emails. Tu clipboard al mundo en un solo click</p>
+					</div>
+				</header>
+				<div class="content dark style1 featured">
+					<div class="container">
+						<div class="row">
+							<div class="4u">
+								<section>
+									<span class="feature-icon"><span class="icon fa-clock-o"></span></span>
+									<header>
+										<h3>Fast & Free</h3>
+									</header>
+									<p>Texto descri</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section>
+									<span class="feature-icon"><span class="icon fa-cloud"></span></span>
+									<header>
+										<h3>Cloud & Real Time</h3>
+									</header>
+									<p>Texto descri</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section>
+									<span class="feature-icon"><span class="icon fa-slideshare"></span></span>
+									<header>
+										<h3>By Nerds, for Nerds </h3>
+									</header>
+									<p>Texto descri</p>
+								</section>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<footer>
+									<a href="#pasteText" class="button scrolly">Pasting Now !</a>
+								</footer>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		
+		<!-- pasteText -->
+			<section id="pasteText" class="main">
+				<header>
+					<div class="container">
+						<h2>SHARE YOUR TEXT </h2>
+						<h2>or EMIT IN REAL TIME </h2>
+					</div>
+				</header>
+				<div class="content style4 featured">
+					<div class="container 75%">
+						<form method="post" action="#" name="pastingForm">
+							<div class="row 50%">
+								<div class="6u"><input type="text" name="email" placeholder="Enter your Email *" id="email" required /></div>
+								<div class="6u"><input type="text" placeholder="Set password (Optional)" /></div>
+							</div>
+							<div class="row 50%">
+								<div class="12u"><textarea placeholder="Paste or type your text!" id="pastingStr" required></textarea></div>
+							</div>
+							<div class="row">
+								<div class="12u">
+									<ul class="actions">
+										<li><input type="submit" class="button" value="Share Now!" /></li>
+										<li><input type="submit" class="button realTime" value="Real Time!" id="realTimeBtn" /></li>
+										<li><input type="reset" class="button alt" value="Clear Text " /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+
+		<!-- ourTeam -->
+			<section id="ourTeam" class="main">
+				<div class="content dark style3">
+					<div class="container">
+						<h2>OUR TEAM</h2>
+						<p>Breve descripción de la filosfia/historia del equipo y circulos centrados con las imagenes de c/u<br /></p>
+					</div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<section id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+				<div class="copyright">
+					<ul class="menu">
+						<li>&copy; JSCLOUD. All rights reserved.</li><li><a href="http://pasting.io">PASTING.IO</a></li>
+					</ul>
+				</div>
+			</section>
+	</body>
+</html>
