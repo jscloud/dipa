@@ -1,3 +1,3 @@
 <?php
 
-echo "API OK"";
+echo "API";
