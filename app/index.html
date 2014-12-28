@@ -8,11 +8,13 @@
 		<meta name="description" content="tbd" />
 		<meta name="keywords" content="tbd" />
 
-		<script src="js/jquery.min.js"></script>
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+
+		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.scrolly.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
+
 		<script src="js/paste.js"></script>
 		<script src="js/sweet-alert.min.js"></script>
 
@@ -23,8 +25,6 @@
 
 		$(document).ready(function() 
 		{
-			var socket = io.connect('http://104.236.60.178:8080');
-
 			$header = $('#header');
 			$strInput = $('#pastingStr');
 			$email    = $('#email');
@@ -32,6 +32,8 @@
 			$cmdSpan = $('#cmd');
 			$pasteBox = $('#pasteBox');
 			$realTimeBtn = $('#realTimeBtn');
+
+			var socket = io.connect('http://104.236.60.178:8080');
 
 			if (navigator.appVersion.indexOf("Mac") != -1) {
 				$cmdSpan.html('⌘CMD');
@@ -93,7 +95,8 @@
 		<script src="http://underscorejs.org/underscore-min.js"></script>
 		<script src="http://backbonejs.org/backbone-min.js"></script>
 
-		<!-- Header -->
+		<script id="homeTemplate" type="text/template">
+			<!-- Default Header -->
 			<section id="header" class="dark">
 				<header>
 					<h1>PASTING.IO</h1>
@@ -108,8 +111,69 @@
 					<a href="#pasteText" class="button scrolly" id="pastingButton">or Type and share !</a>
 				</footer>
 			</section>
-			
-		<!-- mainFeatures -->
+		</script>
+
+		<script id="userTemplate" type="text/template">
+			<section class="main">
+				<header>
+					<div class="container">
+						<h2>PASTING.IO</h2>
+						<p>Paste and share your text. Fast, free and real time support</p>
+						<p id="textArea"></p>
+					</div>
+				</header>
+				<div class="content style1 dark">
+					<div class="container">
+						<section>
+							<header>
+								<h3>Pasting Cloud history: <span id="userSpan"> <%= user %> </span></h3>
+							</header>
+							<div class="table-wrapper">
+								<table class="default">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>00001</td>
+											<td>Lorem ipsum dolor</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00002</td>
+											<td>Sit amet nullam</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00003</td>
+											<td>Feugiat felis viverra</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+										<tr>
+											<td>00004</td>
+											<td>Sagittis enim felis</td>
+											<td>Ut porttitor sagittis lorem quis nisi ornare.</td>
+											<td>Delete</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</script>
+
+		<script id="sharedTemplate" type="text/template">
+			<!-- mainFeatures -->
 			<section id="mainFeatures" class="main">
 				<header>
 					<div class="container">
@@ -160,7 +224,7 @@
 				</div>
 			</section>
 		
-		<!-- pasteText -->
+			<!-- pastingSection (pasteText) -->
 			<section id="pasteText" class="main">
 				<header>
 					<div class="container">
@@ -192,7 +256,7 @@
 				</div>
 			</section>
 
-		<!-- ourTeam -->
+			<!-- ourTeam -->
 			<section id="ourTeam" class="main">
 				<div class="content dark style3">
 					<div class="container">
@@ -202,7 +266,7 @@
 				</div>
 			</section>
 
-		<!-- Footer -->
+			<!-- Footer -->
 			<section id="footer">
 				<ul class="icons">
 					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
@@ -216,16 +280,36 @@
 					</ul>
 				</div>
 			</section>
+		</script>
 
 		<script text="text/javascript">
-			var AppView = Backbone.View.extend(
+
+			var sharedTemplate = _.template( $("#sharedTemplate").html());
+
+			var HomeView = Backbone.View.extend(
 			{
-				el: '#pastingButton',
+				el: 'body',
 				initialize: function(){
 					this.render();
 				},
 				render: function(){
-					this.$el.html("Hello World");
+					var template = _.template( $("#homeTemplate").html());
+					this.$el.html(template);
+					this.$el.append(sharedTemplate);
+				}
+			});
+
+			var UserView = Backbone.View.extend(
+			{
+				el: 'body',
+				initialize: function(userStr){
+					this.render(userStr);
+				},
+				render: function(userStr){
+					var data = {'user' : userStr};
+					var template = _.template( $("#userTemplate").html());
+					this.$el.html(template(data));
+					this.$el.append(sharedTemplate);
 				}
 			});
 
@@ -233,8 +317,14 @@
 				{ 
 					routes: 
 					{ 
-						'' 				: function () { alert('home view'); }, 
-						'(:username)'	: function (username) { alert('user view: ' + username); } 
+						'' 				: function () 
+						{
+							var home_view = new HomeView();
+						}, 
+						'(:username)'	: function (username) 
+						{ 
+							var user_view = new UserView(username);
+						} 
 					} 
 				}
 			);
