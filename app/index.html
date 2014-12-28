@@ -8,8 +8,8 @@
 		<meta name="description" content="tbd" />
 		<meta name="keywords" content="tbd" />
 
-		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/jquery.min.js"></script>
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/jquery.scrolly.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/init.js"></script>
@@ -19,7 +19,6 @@
 		<script src="http://104.236.60.178:8080/socket.io/socket.io.js"></script>
 
 		<script text="text/javascript">
-
 		var connected = false;
 
 		$(document).ready(function() 
@@ -56,9 +55,9 @@
 					if ($email.val() != '') {
 						connected = true;
 						$(this).css('background', "#67A749");
-						swal("Use the follow Url to share your text in real time!", "http://jscloud.github.io/dipa/c.html?" + $email.val(), "success");
+						swal("Use the follow Url to share your text in real time!", "http://pasting.io/" + $email.val(), "success");
 					} else {
-						swal("Error!", "Please, fill the email field to share your text", "error");
+						swal("Error!", "Please, fill the username field to share your text", "error");
 					}
 				} else {
 					connected = false;
@@ -86,37 +85,13 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 
 		<link rel="stylesheet" href="css/sweet-alert.css" />
-		
-		<style>
-			.pasteBox {
-				border-style: dotted;
-				/* border-color: #fff; */
-				border-width: 0px;
-				height: 40px;
-				/* width: 746px; */
-				background: rgba(255,255,255,0.15);
-				/* box-shadow: inset 0 0 0 1px #fff; */
-				color: #fff;
-			}
-
-			.center {
-				text-align: center;
-				display: block;
-				margin-left: auto;
-				margin-right: auto;
-			}
-
-			.olights {
-				color: #ffa61a;
-			}
-
-			.button.realTime {
-				background-color: #E04646;
-			}
-		</style>
+		<link rel="stylesheet" href="css/app.css" />
 	</head>
 
 	<body>
+
+		<script src="http://underscorejs.org/underscore-min.js"></script>
+		<script src="http://backbonejs.org/backbone-min.js"></script>
 
 		<!-- Header -->
 			<section id="header" class="dark">
@@ -197,7 +172,7 @@
 					<div class="container 75%">
 						<form method="post" action="#" name="pastingForm">
 							<div class="row 50%">
-								<div class="6u"><input type="text" name="email" placeholder="Enter your Email *" id="email" required /></div>
+								<div class="6u"><input type="text" name="email" placeholder="Enter an username, email or secret phrase" id="email" required /></div>
 								<div class="6u"><input type="text" placeholder="Set password (Optional)" /></div>
 							</div>
 							<div class="row 50%">
@@ -241,5 +216,31 @@
 					</ul>
 				</div>
 			</section>
+
+		<script text="text/javascript">
+			var AppView = Backbone.View.extend(
+			{
+				el: '#pastingButton',
+				initialize: function(){
+					this.render();
+				},
+				render: function(){
+					this.$el.html("Hello World");
+				}
+			});
+
+			var Router = Backbone.Router.extend (
+				{ 
+					routes: 
+					{ 
+						'' 				: function () { alert('home view'); }, 
+						'(:username)'	: function (username) { alert('user view: ' + username); } 
+					} 
+				}
+			);
+
+			var routing = new Router();
+			Backbone.history.start();
+		</script>
 	</body>
 </html>
