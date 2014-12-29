@@ -18,7 +18,7 @@
 		<script src="js/paste.js"></script>
 		<script src="js/sweet-alert.min.js"></script>
 
-		<script src="http://104.236.60.178:8080/socket.io/socket.io.js"></script>
+		<script src="http://emitter.pasting.io/socket.io/socket.io.js"></script>
 
 		<script text="text/javascript">
 		var connected = false;
@@ -33,7 +33,7 @@
 			$pasteBox = $('#pasteBox');
 			$realTimeBtn = $('#realTimeBtn');
 
-			var socket = io.connect('http://104.236.60.178:8080');
+			var socket = io.connect('http://emitter.pasting.io:8080');
 
 			if (navigator.appVersion.indexOf("Mac") != -1) {
 				$cmdSpan.html('⌘CMD');
@@ -68,10 +68,9 @@
 				return false;
 			});
 			
-			// If new client connected
 			socket.on('new_client', function(username) {
 				if (connected) {
-					console.log('Emitted');
+					console.log('Emitted new client connected');
 					socket.emit('send_data', {username: $email.val(), text: $strInput.val()});
 				}
 			});
@@ -114,6 +113,7 @@
 		</script>
 
 		<script id="userTemplate" type="text/template">
+
 			<section class="main">
 				<header>
 					<div class="container">
@@ -323,7 +323,14 @@
 						}, 
 						'(:username)'	: function (username) 
 						{ 
+							var socket = io.connect('http://emitter.pasting.io:8080');
 							var user_view = new UserView(username);
+
+							socket.on(username, function(text) {
+								text = text.replace(/\n/g, "<br />");
+								$('#textArea').html(text);
+							});
+							socket.emit('client_connection', username);
 						} 
 					} 
 				}
