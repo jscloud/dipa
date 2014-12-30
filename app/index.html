@@ -69,7 +69,7 @@
 				$strInput.on('keyup', function () {
 					if (connected) {
 						console.log('Emitted');
-						socket.emit('send_data', {username: $email.val(), text: $strInput.val()});
+						socket.emit('send_data', {username: $email.val().toLowerCase(), text: $strInput.val()});
 					}
 				});
 
@@ -92,7 +92,7 @@
 				socket.on('new_client', function(username) {
 					if (connected) {
 						console.log('Emitted new client connected');
-						socket.emit('send_data', {username: $email.val(), text: $strInput.val()});
+						socket.emit('send_data', {username: $email.val().toLowerCase(), text: $strInput.val()});
 					}
 				});
 			});
@@ -116,7 +116,7 @@
 					this.render(userStr);
 				},
 				render: function(userStr){
-					var data = {"user":userStr};
+					var data = {"user" : userStr.toLowerCase()};
 					this.$el.html(getTemplate('templates/user.html', data));
 					this.$el.append(getTemplate('templates/shared.html'));
 				}
@@ -133,7 +133,7 @@
 						'(:username)'	: function (username) 
 						{ 
 							var socket = io.connect('http://emitter.pasting.io');
-							var user_view = new UserView(username);
+							var user_view = new UserView(username.toLowerCase());
 
 							socket.on(username, function(text) {
 								text = text.replace(/\n/g, "<br />");
