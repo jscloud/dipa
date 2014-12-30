@@ -10,6 +10,7 @@
 
 		<!--[if lte IE 8]><script src="assets/css/ie/html5shiv.js"></script><![endif]-->
 
+		<script src="assets/js/templates.js"></script>
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/jquery.scrolly.min.js"></script>
 		<script src="assets/js/skel.min.js"></script>
@@ -35,9 +36,6 @@
 
 		<script src="http://underscorejs.org/underscore-min.js"></script>
 		<script src="http://backbonejs.org/backbone-min.js"></script>
-
-		<script src="assets/js/templates.js"></script>
-
 
 		<script text="text/javascript">
 			var connected = false;
@@ -118,7 +116,7 @@
 					this.render(userStr);
 				},
 				render: function(userStr){
-					var data = {'user' : userStr};
+					var data = {"user":userStr};
 					this.$el.html(getTemplate('templates/user.html', data));
 					this.$el.append(getTemplate('templates/shared.html'));
 				}
