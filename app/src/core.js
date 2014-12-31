@@ -91,9 +91,9 @@ $(document).ready(function()
 			if ($email.val() != '') {
 				connected = true;
 				$(this).css('background', "#67A749");
-				swal("Use the follow Url to share your text in real time!", "http://pasting.io/" + $email.val(), "success");
+				swal("Use the follow Url to emit in real time!", "http://pasting.io/" + $email.val().toLowerCase(), "success");
 			} else {
-				swal("Error!", "Please, fill the username field to share your text", "error");
+				swal("Error!", "Please, fill the username field to emit in real time", "error");
 			}
 		} else {
 			connected = false;
