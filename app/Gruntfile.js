@@ -11,16 +11,28 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "assets/js/templates.js": ["templates/**/*.html"]
+          "src/templates.js": ["templates/**/*.html"]
         }
       },
     },
+
+   concat: {
+    base: {
+      src: ['src/base/*.js'],
+      dest: 'assets/compiled/base.js',
+    },
+    app: {
+      src: ['src/templates.js', 'src/core.js'],
+      dest: 'assets/compiled/app.js',
+    },
+  },
 
   });
 
   // grunt.loadTasks('tasks');
 
   grunt.loadNpmTasks('grunt-contrib-jst');
-
-  grunt.registerTask('default', ['jst']);
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  
+grunt.registerTask('default', ['jst', 'concat']);
 };

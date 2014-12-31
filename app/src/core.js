@@ -9,8 +9,10 @@ var HomeView = Backbone.View.extend(
 		this.render();
 	},
 	render: function(){
+		NProgress.start();
 		this.$el.html(getTemplate('templates/home.html'));
 		this.$el.append(getTemplate('templates/shared.html'));
+		NProgress.done();
 	}
 });
 
@@ -21,9 +23,11 @@ var UserView = Backbone.View.extend(
 		this.render(userStr);
 	},
 	render: function(userStr){
+		NProgress.start();
 		var data = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/user.html', data));
 		this.$el.append(getTemplate('templates/shared.html'));
+		NProgress.done();
 	}
 });
 
