@@ -18,14 +18,10 @@ module.exports = function(grunt) {
 
 /*
    concat: {
-    base: {
-      src: ['src/base/*.js'],
-      dest: 'assets/compiled/base.js',
-    },
-    app: {
-      src: ['src/templates.js', 'src/core.js'],
-      dest: 'assets/compiled/app.js',
-    },
+    cssMin: {
+      src: ['assets/css/skel.css', 'assets/css/style.css', 'assets/css/style-wide.css', 'assets/css/sweet-alert.css', 'assets/css/progress.css', 'assets/css/custom.css'],
+      dest: 'assets/compiled/app.min.css',
+    }
   },
 */
 
@@ -35,14 +31,14 @@ module.exports = function(grunt) {
         'assets/compiled/base.min.js': ['src/base/jquery.min.js', 'src/base/jquery.scrolly.min.js', 'src/base/paste.js', 'src/base/progress.min.js', 'src/base/skel.min.js', 'src/base/sweet-alert.min.js', 'src/base/responsive_init.js'],
         'assets/compiled/app.min.js': ['src/templates.js', 'src/core.js'],
       }
-    }
+    },
   },
 
 });
 
   // grunt.loadTasks('tasks');
-  // grunt.loadNpmTasks('grunt-contrib-concat');
 
+  // grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   
