@@ -7,7 +7,7 @@ require 'Slim/Slim.php';
 \Slim\Extensions\Config::init(
     array(
         'BASE_PATH'   => '',
-        'CONFIGS_DIR' => 'Configs/'
+        'CONFIGS_DIR' => '../config/'
     )
 );
 
