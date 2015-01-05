@@ -13,6 +13,8 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
+// $app->add(new \Slim\Middleware\ContentTypes());
+
 $app->container->singleton('pdo', function () {
     return new \PDO(
         "mysql:host=" . \Slim\Extensions\Config::get('db.default.host') .

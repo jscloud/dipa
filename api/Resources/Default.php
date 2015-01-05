@@ -1,48 +1,90 @@
 <?php
 
 $app->get(
-    '/',
-    function () use ($app) {
-        $testMapper = new \Models\Test\TestMapper($app->pdo);
-        $results = $testMapper->findByName('juan');
-        echo count($results);
+    '/get/publics/:username',
+    function ($username) use ($app) 
+    {    
+        $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+        $documents      = $documentMapper->getForUser($username);
+
+        $response = array('publics' => array(), 'st' => 'ok');
+        if ($documents) {
+            $response['publics'] = $documents->getPublics();
+            // $response['privates']   = $documents->getPrivates();
+        }
+
+        var_dump($response);
+    }
+);
+
+$app->get(
+    '/get/public/:documentId',
+    function ($documentId) use ($app) 
+    {
+        $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+        $document = $documentMapper->getPublic($documentId);
+
+        $response = array('st' => 'ok');
+        if ($document) 
+        {
+            $response['public']  = $document->getPublics();
+        } else {
+            $response['st'] = 'error';
+            $response['msg'] = 'Invalid document';
+        }
+
+        var_dump($response);
+    }
+);
+
+$app->get(
+    '/get/protected/:documentId',
+    function ($documentId) use ($app) 
+    {
+        $response = array('st' => 'ok');
+
+        if ($app->request->params('pwd')) {
+            $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+            $document = $documentMapper->getProtected($documentId, $app->request->params('pwd'));
+            if ($document) 
+            {
+                $response['protected']  = $document->getData();
+            } else {
+                $response['st'] = 'error';
+                $response['msg'] = 'Invalid access';
+            }
+        } else {
+            $response['st'] = 'error';
+            $response['msg'] = 'Missing pwd parameter';
+        }
+
+        var_dump($response);
     }
 );
 
 $app->post(
-    '/create/:usr',
-    function ($usr) use ($app) {
+    '/get/privates/:username',
+    function ($username) use ($app) 
+    {    
+        $bodyData = json_decode($app->request->getBody(), true);
 
-        $userMapper = new \Models\User\UserMapper($app->pdo);
+        $response = array('st' => 'ok');
 
-        $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
-
-
-/*
-        $result = $userMapper->findByUsername($usr);
-
-        if ($result) {
-            echo "la id es: " . $result->id;
+        if (array_key_exists('pwd', $bodyData)) {
+            $userMapper = new \Models\User\UserMapper($app->pdo);
+            if ($userMapper->validate($username, $bodyData['pwd'])) {
+                $documentMapper         = new \Models\Document\DocumentMapper($app->pdo);
+                $documents              = $documentMapper->getForUser($username);
+                $response['privates']   = $documents->getPrivates(false);
+            } else {
+                $response['st'] = 'error';
+                $response['msg'] = 'User or password is invalid';
+            }
         } else {
-            echo "user not found";
-        }
-        
-
-        if ($userMapper->validate($usr, '')) {
-            echo "valide";
-        } else {
-            echo "no valide";
+            $response['st'] = 'error';
+            $response['msg'] = 'Missing pwd parameter';
         }
 
-*/
-
-        $documents = $documentMapper->getForUser($usr);
-
-        foreach ($documents as $document) {
-            echo $document->text;
-        }
-
-        // var_dump($app->request->getBody());
-        // echo $app->request->post('var1');
+        var_dump($response);
     }
 );

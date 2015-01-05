@@ -198,4 +198,13 @@ class BaseDomainModel
     {
         unset($this->data[$fieldName]);
     }
+
+    public function getData($fieldName=false) 
+    {
+        $data = $this->data;
+        if ($fieldName) {
+            $data = $data[$fieldName];
+        } 
+        return $data;
+    }
 }
