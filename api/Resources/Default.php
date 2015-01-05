@@ -10,10 +10,9 @@ $app->get(
         $response = array('publics' => array(), 'st' => 'ok');
         if ($documents) {
             $response['publics'] = $documents->getPublics();
-            // $response['privates']   = $documents->getPrivates();
         }
 
-        var_dump($response);
+        echo json_encode($response);
     }
 );
 
@@ -33,7 +32,7 @@ $app->get(
             $response['msg'] = 'Invalid document';
         }
 
-        var_dump($response);
+        echo json_encode($response);
     }
 );
 
@@ -58,7 +57,7 @@ $app->get(
             $response['msg'] = 'Missing pwd parameter';
         }
 
-        var_dump($response);
+        echo json_encode($response);
     }
 );
 
@@ -85,6 +84,6 @@ $app->post(
             $response['msg'] = 'Missing pwd parameter';
         }
 
-        var_dump($response);
+        echo json_encode($response);
     }
 );
