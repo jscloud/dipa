@@ -1,6 +1,0 @@
-default:
-    host: 'localhost'
-    dbname: 'dbname'
-    user: 'user'
-    password: 'pwd'
-    driver: 'pdo_mysql'
