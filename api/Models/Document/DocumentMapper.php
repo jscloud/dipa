@@ -26,7 +26,7 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
                 ORDER BY date DESC";
                 
         $bindings = array(
-            'username' => $username
+            'username' => strtolower($username)
         );
 
         $documents = $this->fetchCollection($sql, $bindings);

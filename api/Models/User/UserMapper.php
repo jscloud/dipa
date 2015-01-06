@@ -23,7 +23,7 @@ class UserMapper extends \Slim\Extensions\Dmm\Mapper
             WHERE username = :username limit 1";
 
         $bindings = array(
-            'username' => $username
+            'username' => strtolower($username)
         );
 
         $results = $this->fetchCollection($sql, $bindings);
@@ -46,7 +46,7 @@ class UserMapper extends \Slim\Extensions\Dmm\Mapper
             AND password = :password limit 1";
 
         $bindings = array(
-            'username' => $username,
+            'username' => strtolower($username),
             'password' => $password
         );
         
