@@ -85,4 +85,28 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
         return $documents;
     }
 
+    public function isOwner($userId, $documentId) 
+    {
+        $sql = "SELECT *
+                FROM {$this->tableName}
+                WHERE {$this->tablePrimaryKey} = :documentId
+                AND {$this->tableRelationKey} = :userId
+                LIMIT 1";
+                
+        $bindings = array(
+            'documentId' => $documentId,
+            'userId'     => $userId
+        );
+
+        $documents = $this->fetchCollection($sql, $bindings);
+        
+        if ($documents->getCount() > 0) {
+            $result = true;
+        } else {
+            $result = false;
+        }
+
+        return $result;
+    }
+
 }

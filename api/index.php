@@ -22,6 +22,7 @@ $app->container->singleton('pdo', function () {
     );
 });
 
-require 'Resources/Default.php';
+require 'Resources/Get.php';
+require 'Resources/Post.php';
 
 $app->run();
