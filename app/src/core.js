@@ -2,6 +2,21 @@ function getTemplate(templatePath, data) {
 	return window['JST'][templatePath](data);
 }
 
+var PasteModel = Backbone.Model.extend({
+	urlRoot: 'http://api.pasting-dev.io/create',
+	defaults: {
+	    code: 0
+	}
+});
+
+var PublicPasteModel = Backbone.Model.extend({
+    urlRoot: 'http://api.pasting-dev.io/get/publics',
+    defaults: {
+    	username: 'pepe'
+    }
+});
+
+
 var HomeView = Backbone.View.extend(
 {
 	el: 'body',
@@ -23,13 +38,12 @@ var UserView = Backbone.View.extend(
 		this.render(userStr);
 	},
 	render: function(userStr){
-		NProgress.start();
 		var data = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/user.html', data));
 		this.$el.append(getTemplate('templates/shared.html'));
-		NProgress.done();
 	}
 });
+
 
 var Router = Backbone.Router.extend (
 	{ 
@@ -40,9 +54,27 @@ var Router = Backbone.Router.extend (
 				var home_view = new HomeView();
 			}, 
 			'(:username)'	: function (username) 
-			{ 
+			{
+				NProgress.start();
+
 				var socket = io.connect('http://emitter.pasting.io');
+
 				var user_view = new UserView(username.toLowerCase());
+
+				var publicPastes = new PublicPasteModel();
+				var fetchFilters = {username: username.toLowerCase()};
+
+				publicPastes.fetch({ data: $.param(fetchFilters) }, 
+				{
+			    	success: function (response) {}
+    			}).always(
+    				function(response) { 
+    					console.log(response);
+    					var data = {"pastes" : response.publics};
+    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', data));
+    					NProgress.done();
+    				}
+    			);
 
 				socket.on(username, function(text) {
 					text = text.replace(/\n/g, "<br />");
@@ -53,19 +85,22 @@ var Router = Backbone.Router.extend (
 		} 
 	}
 );
+
 var routing = new Router();
 Backbone.history.start();
 
 var connected = false;
 $(document).ready(function() 
 {
-	$header = $('#header');
-	$strInput = $('#pastingStr');
-	$email    = $('#email');
-	$pastingButon = $('#pastingButton');
-	$cmdSpan = $('#cmd');
-	$pasteBox = $('#pasteBox');
-	$realTimeBtn = $('#realTimeBtn');
+	$header 		= $('#header');
+	$strInput 		= $('#pastingStr');
+	$email    		= $('#email');
+	$pastingButon 	= $('#pastingButton');
+	$cmdSpan 		= $('#cmd');
+	$pasteBox 		= $('#pasteBox');
+	$realTimeBtn 	= $('#realTimeBtn');
+	$shareBtn		= $('#shareBtn');
+	$pwd			= $('#pwd');
 
 	var socket = io.connect('http://emitter.pasting.io');
 
@@ -99,6 +134,37 @@ $(document).ready(function()
 			connected = false;
 			$(this).css('background', "#E04646");
 		}
+		return false;
+	});
+
+	$shareBtn.on('click', function() {
+
+		if ($email.val() != '' && $pwd.val() != '' && $strInput.val() != '') 
+		{
+			var Paste = new PasteModel();
+			var pasteData = {
+			    username: $email.val().toLowerCase(),
+			    pwd: $pwd.val(),
+			    text: $strInput.val()
+			};
+
+			NProgress.start();
+			Paste.save(pasteData, {
+				success: function (response) {
+					NProgress.done();
+					console.log(response);
+					if (response.attributes.st == 'ok') {
+						swal("Your pasting has been created", "http://pasting.io/" + $email.val().toLowerCase(), "success");
+						//window.location.hash = $email.val().toLowerCase();
+					} else {
+						swal("Error", response.attributes.msg, "error");
+					}
+				}
+	    	});
+	    } else {
+	    	swal("Error!", "Please, complete all fields", "error");
+	    }
+
 		return false;
 	});
 	

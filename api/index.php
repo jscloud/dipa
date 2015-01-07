@@ -1,5 +1,9 @@
 <?php
 
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With, Authorization, Content-Type');
+
 require 'Slim/Slim.php';
 
 \Slim\Slim::registerAutoloader();

@@ -1,0 +1,22 @@
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Date</th>
+		<th>Text</th>
+		<th>Action</th>
+	</tr>
+</thead>
+<tbody>
+	<%
+    var length = obj.pastes.length;
+    for (var index = 0; index < length; index++) {
+    	var paste = obj.pastes[index];
+	%>
+		<tr>
+			<td><%= index %></td>
+			<td><%= paste.date %></td>
+			<td><%= paste.text %></td>
+			<td>Actions</td>
+		</tr>
+	<% } %>
+</tbody>

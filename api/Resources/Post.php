@@ -1,6 +1,6 @@
 <?php
 
-$app->post(
+$app->map(
     '/create',
     function () use ($app) 
     {    
@@ -66,7 +66,7 @@ $app->post(
 	                    $response['documentId'] = $document->id;
 	                } else {
 	                    $response['st'] = 'error';
-	                    $response['msg'] = 'Invalid password for this user';
+	                    $response['msg'] = 'Invalid password';
 	                }
 
 	            } else {
@@ -84,12 +84,13 @@ $app->post(
 	        $response['msg'] = 'Unexpected error';
 	    }
 
+		$app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-);
+)->via('OPTIONS', 'POST');
 
 
-$app->post(
+$app->map(
     '/update',
     function () use ($app) 
     {    
@@ -113,8 +114,8 @@ $app->post(
 		                
 		                if ($userValidateMapper->validate($bodyData['username'], $bodyData['pwd'])) {
 
-		                	$document       = new \Models\Document\Document;
-		                    $documentOwnMapper = new \Models\Document\DocumentMapper($app->pdo);
+		                	$document       	= new \Models\Document\Document;
+		                    $documentOwnMapper 	= new \Models\Document\DocumentMapper($app->pdo);
 
 		                    if ($documentOwnMapper->isOwner($userId, $bodyData['documentid'])) {
 
@@ -179,6 +180,7 @@ $app->post(
 	        $response['msg'] = 'Unexpected error';
 	    }
 
+		$app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-);
+)->via('OPTIONS', 'POST');;
