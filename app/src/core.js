@@ -3,14 +3,14 @@ function getTemplate(templatePath, data) {
 }
 
 var PasteModel = Backbone.Model.extend({
-	urlRoot: 'http://api.pasting-dev.io/create',
+	urlRoot: 'http://api.pasting.io/create',
 	defaults: {
 	    code: 0
 	}
 });
 
 var PublicPasteModel = Backbone.Model.extend({
-    urlRoot: 'http://api.pasting-dev.io/get/publics',
+    urlRoot: 'http://api.pasting.io/get/publics',
     defaults: {
     	username: 'pepe'
     }
