@@ -1,20 +1,19 @@
 <section class="main">
 	<header>
 		<div class="container">
-			<h2>PASTING.IO</h2>
-			<p>Paste and share your text. Fast, free and real time support</p>
-			<p id="textArea"></p>
+			<h2>pasting.io/<%= obj.user %></h2>
+			<!-- <p>Paste and share your text. Fast, free and real time support</p> -->
+			<pre id="textArea"></pre>
 		</div>
 	</header>
 	<div class="content style1 dark">
 		<div class="container">
 			<section>
 				<header>
-					<h3>Pasting Cloud history: <span id="userSpan"> <%= obj.user %> </span></h3>
+					<h3>Public pastes: <span id="userSpan"> <%= obj.user %> </span></h3>
 				</header>
 				<div class="table-wrapper">
 					<table class="default" id="pastesTable">
-						
 					</table>
 				</div>
 			</section>

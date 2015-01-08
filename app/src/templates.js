@@ -1,27 +1,32 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["templates/defaultPaste.html"] = function(obj) {
+var __t, __p = '', __e = _.escape;
+__p +=
+((__t = ( obj.defaultPaste.text )) == null ? '' : __t);
+return __p
+};
+
 this["JST"]["templates/home.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<!-- Default Header -->\n<section id="header" class="dark">\n\t<header>\n\t\t<h1>PASTING.IO </h1>\n\t\t<p>Paste and share text or code. Fast, free and the real time support</p>\n\t\t<p></p>\n\t\t<div class="center pasteBox" title="Press CONTROL+V on your keyboard to paste a text from your clipboard\'" id="pasteBox">\n\t\t \t<p>PRESS <span class="olights" id="cmd">CONTROL</span> + <span class="olights">V</span></span> </p>\n\t\t</div>\n\t</header>\n\t<footer>\n\t\t<a href="#mainFeatures" class="button scrolly">Pasting Features ?</a>\n\t\t<a href="#pasteText" class="button scrolly" id="pastingButton">or Type and share !</a>\n\t</footer>\n</section>';
+__p += '<!-- Default Header -->\n<section id="header" class="dark">\n\t<header>\n\t\t<h1>PASTING.IO </h1>\n\t\t<p>Paste and share text or code. Fast, free and real time support</p>\n\t\t<p></p>\n\t\t<div class="center pasteBox" title="Press CONTROL+V on your keyboard to paste a text from your clipboard\'" id="pasteBox">\n\t\t \t<p>PRESS <span class="olights" id="cmd">CONTROL</span> + <span class="olights">V</span></span> </p>\n\t\t</div>\n\t</header>\n\t<footer>\n\t\t<a href="#mainFeatures" class="button scrolly">Pasting Features ?</a>\n\t\t<a href="#pasteText" class="button scrolly" id="pastingButton">or Type and share !</a>\n\t</footer>\n</section>';
 return __p
 };
 
 this["JST"]["templates/pastesTable.html"] = function(obj) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
-__p += '<thead>\n\t<tr>\n\t\t<th>#</th>\n\t\t<th>Date</th>\n\t\t<th>Text</th>\n\t\t<th>Action</th>\n\t</tr>\n</thead>\n<tbody>\n\t';
+__p += '<thead>\n\t<tr>\n\t\t<th>#</th>\n\t\t<th>Text</th>\n\t\t<th>Action</th>\n\t</tr>\n</thead>\n<tbody>\n\t';
 
-    var length = obj.pastes.length;
-    for (var index = 0; index < length; index++) {
+    var length = obj.pastes.length - 1;
+    for (var index = 1; index < length; index++) {
     	var paste = obj.pastes[index];
 	;
 __p += '\n\t\t<tr>\n\t\t\t<td>' +
-((__t = ( index )) == null ? '' : __t) +
-'</td>\n\t\t\t<td>' +
-((__t = ( paste.date )) == null ? '' : __t) +
-'</td>\n\t\t\t<td>' +
+((__t = ( index+1 )) == null ? '' : __t) +
+'</td>\n\t\t\t<td><pre>' +
 ((__t = ( paste.text )) == null ? '' : __t) +
-'</td>\n\t\t\t<td>Actions</td>\n\t\t</tr>\n\t';
+'</pre></td>\n\t\t\t<td>Actions</td>\n\t\t</tr>\n\t';
  } ;
 __p += '\n</tbody>';
 return __p
@@ -58,8 +63,10 @@ return __p
 
 this["JST"]["templates/user.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>PASTING.IO</h2>\n\t\t\t<p>Paste and share your text. Fast, free and real time support</p>\n\t\t\t<p id="textArea"></p>\n\t\t</div>\n\t</header>\n\t<div class="content style1 dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Pasting Cloud history: <span id="userSpan"> ' +
+__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-' </span></h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t\t\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
+'</h2>\n\t\t\t<!-- <p>Paste and share your text. Fast, free and real time support</p> -->\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content style1 dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Public pastes: <span id="userSpan"> ' +
+((__t = ( obj.user )) == null ? '' : __t) +
+' </span></h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
 return __p
 };

@@ -70,7 +70,9 @@ var Router = Backbone.Router.extend (
     			}).always(
     				function(response) { 
     					console.log(response);
+    					var defaultData = {"defaultPaste": response.publics[0]}
     					var data = {"pastes" : response.publics};
+    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
     					$('#pastesTable').html(getTemplate('templates/pastesTable.html', data));
     					NProgress.done();
     				}
@@ -102,6 +104,25 @@ $(document).ready(function()
 	$shareBtn		= $('#shareBtn');
 	$pwd			= $('#pwd');
 
+	var codeEditor = CodeMirror.fromTextArea(document.getElementById("pastingStr"), {
+        lineNumbers: true,
+        viewportMargin: Infinity,
+        mode: "javascript",
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        showTrailingSpace: true,
+        theme: "monokai",
+      	extraKeys: {
+	        "F11": function(cm) {
+	          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+	        },
+	        "Esc": function(cm) {
+	          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+	        }
+      	}
+    });
+    codeEditor.setValue("Paste or type your text here!");
+
 	var socket = io.connect('http://emitter.pasting.io');
 
 	if (navigator.appVersion.indexOf("Mac") != -1) {
@@ -110,14 +131,14 @@ $(document).ready(function()
 	}
 
 	$header.pastableNonInputable().on('pasteText', function(ev, data) {
-		$strInput.val(data.text);
+		codeEditor.setValue(data.text);
 		$pastingButon.click();
 	});
 
 	$strInput.on('keyup', function () {
 		if (connected) {
 			console.log('Emitted');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: $strInput.val()});
+			socket.emit('send_data', {username: $email.val().toLowerCase(), text: codeEditor.getValue()});
 		}
 	});
 
@@ -139,13 +160,13 @@ $(document).ready(function()
 
 	$shareBtn.on('click', function() {
 
-		if ($email.val() != '' && $pwd.val() != '' && $strInput.val() != '') 
+		if ($email.val() != '' && $pwd.val() != '' && codeEditor.getValue() != '') 
 		{
 			var Paste = new PasteModel();
 			var pasteData = {
 			    username: $email.val().toLowerCase(),
 			    pwd: $pwd.val(),
-			    text: $strInput.val()
+			    text: codeEditor.getValue()
 			};
 
 			NProgress.start();
@@ -154,8 +175,9 @@ $(document).ready(function()
 					NProgress.done();
 					console.log(response);
 					if (response.attributes.st == 'ok') {
-						swal("Your pasting has been created", "http://pasting.io/" + $email.val().toLowerCase(), "success");
+						//swal("Your pasting has been created", "http://pasting.io/" + $email.val().toLowerCase(), "success");
 						//window.location.hash = $email.val().toLowerCase();
+						location.href = "http://pasting.io/" + $email.val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");
 					}
@@ -171,7 +193,7 @@ $(document).ready(function()
 	socket.on('new_client', function(username) {
 		if (connected) {
 			console.log('Emitted new client connected');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: $strInput.val()});
+			socket.emit('send_data', {username: $email.val().toLowerCase(), text: codeEditor.getValue()});
 		}
 	});
 });
