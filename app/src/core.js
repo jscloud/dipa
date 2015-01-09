@@ -3,19 +3,18 @@ function getTemplate(templatePath, data) {
 }
 
 var PasteModel = Backbone.Model.extend({
-	urlRoot: 'http://api.pasting.io/create',
+	urlRoot: apiUrl + '/create',
 	defaults: {
 	    code: 0
 	}
 });
 
 var PublicPasteModel = Backbone.Model.extend({
-    urlRoot: 'http://api.pasting.io/get/publics',
+    urlRoot: apiUrl + '/get/publics',
     defaults: {
     	username: ''
     }
 });
-
 
 var HomeView = Backbone.View.extend(
 {
@@ -44,7 +43,6 @@ var UserView = Backbone.View.extend(
 	}
 });
 
-
 var Router = Backbone.Router.extend (
 	{ 
 		routes: 
@@ -57,7 +55,7 @@ var Router = Backbone.Router.extend (
 			{
 				NProgress.start();
 
-				var socket = io.connect('http://emitter.pasting.io');
+				var socket = io.connect(emitterUrl);
 
 				var user_view = new UserView(username.toLowerCase());
 
@@ -69,7 +67,7 @@ var Router = Backbone.Router.extend (
 			    	success: function (response) {}
     			}).always(
     				function(response) { 
-    					console.log(response);
+    					// console.log(response); // modelresponse
     					var defaultData = {"defaultPaste": response.publics[0]}
     					var data = {"pastes" : response.publics};
     					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
@@ -92,50 +90,27 @@ var Router = Backbone.Router.extend (
 var routing = new Router();
 Backbone.history.start();
 
+var ddd;
+
 function bindPastes() 
 {
 	$('.codePaste').each(function() {
-
-	    var $this = $(this),
-	        $code = $this.html();
-
-	    $this.empty();
-
-	    CodeMirror(this, {
-	        value: $code,
+	    CodeMirror.fromTextArea(this, {
 	        mode: 'javascript',
 	        theme: "monokai",
 	        height: "300px",
-	        lineNumbers: !$this.is('.inline'),
+	        lineNumbers: true,
 	        readOnly: true
 	    });
-
 	});
 
-	CodeMirror(document.getElementById("defaultPaste"), {
+	CodeMirror.fromTextArea(document.getElementById("defaultPaste"), {
 	    mode: 'javascript',
 	    theme: "monokai",
-	    height: "300px",
+	    viewportMargin: Infinity,
 	    lineNumbers: true,
 	    readOnly: true
 	});
-
-/*
-	var count = document.getElementsByTagName("textarea").length - 1;
-	var $pastes = document.getElementsByTagName("textarea");
-
-	for (var i = 1; i <= count; i++) 
-	{
-		CodeMirror.fromTextArea($pastes[i], {
-	        lineNumbers: true,
-	        height: "300px",
-	        mode: "javascript",
-	        autoCloseBrackets: true,
-	        matchBrackets: true,
-	        theme: "monokai"
-    	});
-	};
-	*/
 }
 
 var connected = false;
@@ -170,7 +145,7 @@ $(document).ready(function()
     });
     codeEditor.setValue("Paste or type your text here!");
 
-	var socket = io.connect('http://emitter.pasting.io');
+	var socket = io.connect(emitterUrl);
 
 	if (navigator.appVersion.indexOf("Mac") != -1) {
 		$cmdSpan.html('⌘CMD');
@@ -194,7 +169,7 @@ $(document).ready(function()
 			if ($email.val() != '') {
 				connected = true;
 				$(this).css('background', "#67A749");
-				swal("Use the follow Url to emit in real time!", "http://pasting.io/" + $email.val().toLowerCase(), "success");
+				swal("Use the follow Url to emit in real time!", baseUrl + '/' + $email.val().toLowerCase(), "success");
 			} else {
 				swal("Error!", "Please, fill the username field to emit in real time", "error");
 			}
@@ -220,11 +195,11 @@ $(document).ready(function()
 			Paste.save(pasteData, {
 				success: function (response) {
 					NProgress.done();
-					console.log(response);
+					// console.log(response);
 					if (response.attributes.st == 'ok') {
-						//swal("Your pasting has been created", "http://pasting.io/" + $email.val().toLowerCase(), "success");
-						//window.location.hash = $email.val().toLowerCase();
-						location.href = "http://pasting.io/" + $email.val().toLowerCase();
+						// swal("Your pasting has been created", baseUrl + $email.val().toLowerCase(), "success");
+						// window.location.hash = $email.val().toLowerCase();
+						location.href = baseUrl + '/' + $email.val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");
 					}

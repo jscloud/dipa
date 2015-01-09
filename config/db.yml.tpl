@@ -1,6 +1,6 @@
 default:
     host: 'localhost'
     dbname: ''
-    user: 'root'
+    user: ''
     password: ''
     driver: 'pdo_mysql'
