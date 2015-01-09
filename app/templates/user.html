@@ -1,8 +1,18 @@
 <section class="main">
 	<header>
 		<div class="container">
+		
 			<h2>pasting.io/<%= obj.user %></h2>
-			<!-- <p>Paste and share your text. Fast, free and real time support</p> -->
+
+			<p></p>
+
+			<ul class="menu">
+				<li><a>COPY TEXT</a></li>
+				<li><a>COPY LINK</a></li>
+				<li><a>RAW</a></li>
+				<li><a>DELETE</a></li>
+			</ul>
+
 			<pre id="textArea"></pre>
 		</div>
 	</header>
@@ -10,7 +20,7 @@
 		<div class="container">
 			<section>
 				<header>
-					<h3>Public pastes: <span id="userSpan"> <%= obj.user %> </span></h3>
+					<h3>Public pastes:</h3>
 				</header>
 				<div class="table-wrapper">
 					<table class="default" id="pastesTable">

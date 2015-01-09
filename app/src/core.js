@@ -12,7 +12,7 @@ var PasteModel = Backbone.Model.extend({
 var PublicPasteModel = Backbone.Model.extend({
     urlRoot: 'http://api.pasting.io/get/publics',
     defaults: {
-    	username: 'pepe'
+    	username: ''
     }
 });
 
@@ -75,6 +75,7 @@ var Router = Backbone.Router.extend (
     					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
     					$('#pastesTable').html(getTemplate('templates/pastesTable.html', data));
     					NProgress.done();
+    					bindPastes();
     				}
     			);
 
@@ -90,6 +91,52 @@ var Router = Backbone.Router.extend (
 
 var routing = new Router();
 Backbone.history.start();
+
+function bindPastes() 
+{
+	$('.codePaste').each(function() {
+
+	    var $this = $(this),
+	        $code = $this.html();
+
+	    $this.empty();
+
+	    CodeMirror(this, {
+	        value: $code,
+	        mode: 'javascript',
+	        theme: "monokai",
+	        height: "300px",
+	        lineNumbers: !$this.is('.inline'),
+	        readOnly: true
+	    });
+
+	});
+
+	CodeMirror(document.getElementById("defaultPaste"), {
+	    mode: 'javascript',
+	    theme: "monokai",
+	    height: "300px",
+	    lineNumbers: true,
+	    readOnly: true
+	});
+
+/*
+	var count = document.getElementsByTagName("textarea").length - 1;
+	var $pastes = document.getElementsByTagName("textarea");
+
+	for (var i = 1; i <= count; i++) 
+	{
+		CodeMirror.fromTextArea($pastes[i], {
+	        lineNumbers: true,
+	        height: "300px",
+	        mode: "javascript",
+	        autoCloseBrackets: true,
+	        matchBrackets: true,
+	        theme: "monokai"
+    	});
+	};
+	*/
+}
 
 var connected = false;
 $(document).ready(function() 
