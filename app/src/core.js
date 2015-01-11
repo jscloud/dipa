@@ -11,18 +11,18 @@ var PasteModel = Backbone.Model.extend({
 
 var PublicPasteModel = Backbone.Model.extend({
     urlRoot: apiUrl + '/get/publics',
-    defaults: {
-    	username: ''
-    }
+    defaults: {}
 });
 
 var HomeView = Backbone.View.extend(
 {
 	el: 'body',
-	initialize: function(){
+	initialize: function()
+	{
 		this.render();
 	},
-	render: function(){
+	render: function()
+	{
 		NProgress.start();
 		this.$el.html(getTemplate('templates/header.html'));
 
@@ -39,13 +39,15 @@ var HomeView = Backbone.View.extend(
 var UserView = Backbone.View.extend(
 {
 	el: 'body',
-	initialize: function(userStr){
+	initialize: function(userStr)
+	{
 		this.render(userStr);
 	},
-	render: function(userStr){
+	render: function(userStr)
+	{
 		var dataUser = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/userPublic.html', dataUser));
-		
+
 		var dataFeatures = {"header" : false};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 
@@ -57,15 +59,15 @@ var Router = Backbone.Router.extend (
 	{ 
 		routes: 
 		{ 
-			'' 				: function () 
+			'' : function () 
 			{
 				var home_view = new HomeView();
 			}, 
-			'(:username)'	: function (username) 
+			'(:username)' : function (username) 
 			{
 				NProgress.start();
 
-				var socket = io.connect(emitterUrl);
+				/* var socket = io.connect(emitterUrl); */
 
 				var user_view = new UserView(username.toLowerCase());
 
@@ -76,22 +78,24 @@ var Router = Backbone.Router.extend (
 				{
 			    	success: function (response) {}
     			}).always(
-    				function(response) { 
-    					// console.log(response); // modelresponse
+    				function(response) 
+    				{ 
     					var defaultData = {"defaultPaste": response.publics[0]}
-    					var data = {"pastes" : response.publics};
+    					var pastesData = {"pastes" : response.publics};
     					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', data));
+    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
     					NProgress.done();
     					bindPastes();
     				}
     			);
 
+    			/*
 				socket.on(username, function(text) {
 					text = text.replace(/\n/g, "<br />");
 					$('#textArea').html(text);
 				});
 				socket.emit('client_connection', username);
+				*/
 			} 
 		} 
 	}
@@ -99,8 +103,6 @@ var Router = Backbone.Router.extend (
 
 var routing = new Router();
 Backbone.history.start();
-
-var ddd;
 
 function bindPastes() 
 {
@@ -123,7 +125,33 @@ function bindPastes()
 	});
 }
 
+function bindPastingStr() 
+{
+	var codeEditor = CodeMirror.fromTextArea(document.getElementById("pastingStr"), {
+	    lineNumbers: true,
+	    viewportMargin: Infinity,
+	    mode: "javascript",
+	    autoCloseBrackets: true,
+	    matchBrackets: true,
+	    showTrailingSpace: true,
+	    theme: "monokai",
+	  	extraKeys: {
+	        "F11": function(cm) {
+	          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+	        },
+	        "Esc": function(cm) {
+	          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+	        }
+	  	}
+	});
+
+	codeEditor.setValue("Paste or type your text here!");
+
+	return codeEditor;
+}
+
 var connected = false;
+
 $(document).ready(function() 
 {
 	$header 		= $('#header');
@@ -136,26 +164,9 @@ $(document).ready(function()
 	$shareBtn		= $('#shareBtn');
 	$pwd			= $('#pwd');
 
-	var codeEditor = CodeMirror.fromTextArea(document.getElementById("pastingStr"), {
-        lineNumbers: true,
-        viewportMargin: Infinity,
-        mode: "javascript",
-        autoCloseBrackets: true,
-        matchBrackets: true,
-        showTrailingSpace: true,
-        theme: "monokai",
-      	extraKeys: {
-	        "F11": function(cm) {
-	          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-	        },
-	        "Esc": function(cm) {
-	          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-	        }
-      	}
-    });
-    codeEditor.setValue("Paste or type your text here!");
+	pastingEditor = bindPastingStr();
 
-	var socket = io.connect(emitterUrl);
+	/* var socket = io.connect(emitterUrl); */
 
 	if (navigator.appVersion.indexOf("Mac") != -1) {
 		$cmdSpan.html('⌘CMD');
@@ -163,17 +174,20 @@ $(document).ready(function()
 	}
 
 	$header.pastableNonInputable().on('pasteText', function(ev, data) {
-		codeEditor.setValue(data.text);
+		pastingEditor.setValue(data.text);
 		$pastingButon.click();
 	});
 
+	/*
 	$strInput.on('keyup', function () {
 		if (connected) {
 			console.log('Emitted');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: codeEditor.getValue()});
+			socket.emit('send_data', {username: $email.val().toLowerCase(), text: pastingEditor.getValue()});
 		}
 	});
+	*/
 
+	// Socket (not work, for now)
 	$realTimeBtn.on('click', function () {
 		if (!connected) {
 			if ($email.val() != '') {
@@ -192,13 +206,13 @@ $(document).ready(function()
 
 	$shareBtn.on('click', function() {
 
-		if ($email.val() != '' && $pwd.val() != '' && codeEditor.getValue() != '') 
+		if ($email.val() != '' && $pwd.val() != '' && pastingEditor.getValue() != '') 
 		{
 			var Paste = new PasteModel();
 			var pasteData = {
 			    username: $email.val().toLowerCase(),
 			    pwd: $pwd.val(),
-			    text: codeEditor.getValue()
+			    text: pastingEditor.getValue()
 			};
 
 			NProgress.start();
@@ -222,10 +236,12 @@ $(document).ready(function()
 		return false;
 	});
 	
+	/*
 	socket.on('new_client', function(username) {
 		if (connected) {
 			console.log('Emitted new client connected');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: codeEditor.getValue()});
+			socket.emit('send_data', {username: $email.val().toLowerCase(), text: pastingEditor.getValue()});
 		}
 	});
+	*/
 });

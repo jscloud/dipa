@@ -87,8 +87,8 @@ return __p
 
 this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\n\t\t\t<h2>pasting.io/' +
+__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-'</h2>\n\n\t\t\t<p></p>\n\n\t\t\t<pre id="textArea"></pre>\n\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Public pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<pre id="textArea"></pre>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Public pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
 return __p
 };
