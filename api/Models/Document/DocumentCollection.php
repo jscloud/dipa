@@ -37,5 +37,4 @@ class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 		}
 		return $privates;
 	}
-
 }

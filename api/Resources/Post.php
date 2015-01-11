@@ -5,7 +5,6 @@ $app->map(
     function () use ($app) 
     {    
     	try {
-
 	        $bodyData = json_decode($app->request->getBody(), true);
 	        $response = array('st' => 'ok');
 
@@ -95,7 +94,6 @@ $app->map(
     function () use ($app) 
     {    
     	try {
-
 	        $bodyData = json_decode($app->request->getBody(), true);
 	        $response = array('st' => 'ok');
 
@@ -103,7 +101,6 @@ $app->map(
 
 	            $userMapper = new \Models\User\UserMapper($app->pdo);
 	            $user       = $userMapper->findByUsername($bodyData['username']);
-
 
 	            if (array_key_exists('documentid', $bodyData)) {
 
@@ -183,4 +180,4 @@ $app->map(
 		$app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-)->via('OPTIONS', 'POST');;
+)->via('OPTIONS', 'POST');

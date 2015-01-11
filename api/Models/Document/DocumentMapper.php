@@ -108,5 +108,4 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
 
         return $result;
     }
-
 }

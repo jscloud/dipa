@@ -25,7 +25,7 @@ $app->map(
     }
 )->via('OPTIONS', 'GET');
 
-$app->get(
+$app->map(
     '/get/public',
     function () use ($app) 
     {
@@ -53,9 +53,9 @@ $app->get(
         $app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-);
+)->via('OPTIONS', 'GET');
 
-$app->get(
+$app->map(
     '/get/protected',
     function () use ($app) 
     {
@@ -88,9 +88,9 @@ $app->get(
         $app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-);
+)->via('OPTIONS', 'GET');
 
-$app->get(
+$app->map(
     '/get/privates',
     function () use ($app) 
     {    
@@ -123,4 +123,4 @@ $app->get(
         $app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
     }
-);
+)->via('OPTIONS', 'GET');
