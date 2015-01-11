@@ -24,8 +24,14 @@ var HomeView = Backbone.View.extend(
 	},
 	render: function(){
 		NProgress.start();
-		this.$el.html(getTemplate('templates/home.html'));
-		this.$el.append(getTemplate('templates/shared.html'));
+		this.$el.html(getTemplate('templates/header.html'));
+
+		var dataFeatures = {"header" : true};
+		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
+
+		this.$el.append(getTemplate('templates/pastingSection.html'));
+		this.$el.append(getTemplate('templates/pastingTeam.html'));
+		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
 	}
 });
@@ -37,9 +43,13 @@ var UserView = Backbone.View.extend(
 		this.render(userStr);
 	},
 	render: function(userStr){
-		var data = {"user" : userStr.toLowerCase()};
-		this.$el.html(getTemplate('templates/user.html', data));
-		this.$el.append(getTemplate('templates/shared.html'));
+		var dataUser = {"user" : userStr.toLowerCase()};
+		this.$el.html(getTemplate('templates/userPublic.html', dataUser));
+		
+		var dataFeatures = {"header" : false};
+		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
+
+		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
 

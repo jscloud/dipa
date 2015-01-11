@@ -128,11 +128,9 @@
 
 	#header
 	{
-		background-image:			url('../../images/header.jpg');
 		background-size:			cover;
 		background-position:		auto;
-		background-repeat:			no-repeat;
-		-ms-behavior: url('css/ie/backgroundsize.min.htc');
+		background-color: rgba(66, 104, 162, 1);
 	}
 
 /*********************************************************************************/
@@ -149,15 +147,24 @@
 
 		.main > .content.style1
 		{
-			filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#412e4c, endColorstr=#a56365);
+			/* filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#412e4c, endColorstr=#a56365); */
+			background-color: rgba(66, 104, 162, 1);
 		}
 
 		.main > .content.style2
 		{
-			filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#85505f, endColorstr=#384955);
+			/* filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#85505f, endColorstr=#384955); */
+			background-color: #507DC2;
 		}
 
 		.main > .content.style3
 		{
-			filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2f394e, endColorstr=#5f796b);
+			/* filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2f394e, endColorstr=#5f796b); */
+			background-color: rgba(28, 28, 29, 1);
+		}
+
+		.main > .content.styleCustom
+		{
+			/* filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2f394e, endColorstr=#5f796b); */
+			background-color: #507DC2;
 		}

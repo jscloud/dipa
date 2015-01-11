@@ -811,7 +811,6 @@
 	{
 		position: relative;
 		margin: 0;
-		/* background-image:			url('images/overlay.png'),			url('../images/header.jpg'); */
 		background-size:			auto,								cover;
 		background-position:		top left,							center center;
 		background-repeat:			repeat,								no-repeat;
@@ -819,6 +818,8 @@
 		text-align: center;
 		color: #fff;
 		background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);
+		/* background-color: rgba(66, 104, 162, 1); */
+
 	}
 	
 		#header header
@@ -900,45 +901,26 @@
 			
 			.main > .content.style1
 			{
-				/*
-				background:	url('images/bgtr.svg') top right no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/overlay.png'),
-							linear-gradient(45deg, #b39c68, #a56365, #412e4c);
-							*/
-
-				background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);
+				/* background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337); */
+				background-color: rgba(66, 104, 162, 1);
 			}
 
 			.main > .content.style2
 			{
-				/*
-				background:	url('images/bgtr.svg') top right no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/overlay.png'),
-							linear-gradient(45deg, #384955, #655361, #85505f);
-				*/
-				background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);
+				/* background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337); */
+				background-color: #507DC2;
 			}
 
 			.main > .content.style3
 			{
-				/*
-				background:	url('images/bgtr.svg') top right no-repeat,
-							url('images/bgbl.svg') bottom left no-repeat,
-							url('images/overlay.png'),
-							linear-gradient(45deg, #5f796b, #3a4e59, #2f394e); 
-				*/
-				background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);
+				/* background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337); */
+				background-color: rgba(28, 28, 29, 1);
 			}
 
 			.main > .content.styleCustom
 			{
-				/*background: url('images/overlay.png'),
-					linear-gradient(45deg, #384955, #655361, #85505f);
-				*/
-				background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);
+				/* background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337); */
+				background-color: #507DC2;
 			}
 
 			.main > .content.style4
