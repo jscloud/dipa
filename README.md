@@ -1,4 +1,4 @@
 Dipa Project
 ===
 
-Main repo
+Main repoi Dipa
