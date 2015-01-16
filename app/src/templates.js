@@ -16,7 +16,7 @@ return __p
 
 this["JST"]["templates/header.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<!-- Default Header -->\n<section id="header" class="dark">\n\t<img src="assets/images/logo.png"/>\n\t<header>\n\t\t<!-- <h1>PASTING.IO </h1> -->\n\t\t<p>Paste and share text or code. Fast, free and real time support</p>\n\t\t<div class="center pasteBox" title="Press CONTROL+V on your keyboard to paste a text from your clipboard\'" id="pasteBox">\n\t\t \t<p>PRESS <span class="olights" id="cmd">CONTROL</span> + <span class="olights">V</span></span> </p>\n\t\t</div>\n\t</header>\n\t<footer>\n\t\t<a href="#mainFeatures" class="button scrolly">Pasting Features</a>\n\t\t<a href="#pasteText" class="button scrolly" id="pastingButton">Get Pasting Now !</a>\n\t</footer>\n</section>';
+__p += '<!-- Default Header -->\n<section id="header" class="dark">\n\t<i class="icon-pasting-logo"></i>\n\t<header>\n\t\t<!-- <h1>PASTING.IO </h1> -->\n\t\t<p>Paste and share text or code. Fast, free and real time support</p>\n\t\t<div class="center pasteBox" title="Press CONTROL+V on your keyboard to paste a text from your clipboard\'" id="pasteBox">\n\t\t \t<p>PRESS <span class="olights" id="cmd">CONTROL</span> + <span class="olights">V</span></span> </p>\n\t\t</div>\n\t</header>\n\t<footer>\n\t\t<a href="#mainFeatures" class="button scrolly">Pasting Features</a>\n\t\t<a href="#pasteText" class="button scrolly" id="pastingButton">Get Pasting Now !</a>\n\t</footer>\n</section>';
 return __p
 };
 
