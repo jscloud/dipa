@@ -61,4 +61,28 @@ class UserMapper extends \Slim\Extensions\Dmm\Mapper
         return $results;
     }
 
+    public function validateConsoleKey($username, $key) 
+    {
+        $sql =
+            "SELECT *
+            FROM {$this->tableName}
+            WHERE username = :username
+            AND console_key = :key limit 1";
+
+        $bindings = array(
+            'username' => strtolower($username),
+            'key' => $key
+        );
+        
+        $results = $this->fetchCollection($sql, $bindings);
+
+        if (count($results) > 0) {
+            $results = $results[0];
+        } else {
+            $results = false;
+        }
+
+        return $results;
+    }
+
 }
