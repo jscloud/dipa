@@ -238,12 +238,12 @@ $app->map(
                     $response['documentId'] = $document->id;
 	            } else {
                     $response['st'] = 'error';
-                    $response['msg'] = 'Invalid credentials';
+                    $response['msg'] = 'Invalid credentials. Please, configure your pasting cli with the follow command: ~ pasting -u yourUsername -p yourPassword';
 	           	}
 
 	        } else {
 	            $response['st'] = 'error';
-	            $response['msg'] = 'Missing parameters: consoleKey, text';
+	        	$response['msg'] = 'Missing configuration. Please, configure your pasting cli with the follow command: ~ pasting -u yourUsername -p yourPassword';
 	        }
 
 	    } catch(\Exception $e) {
@@ -292,12 +292,12 @@ $app->map(
 
 	                } else {
                			$response['st'] = 'error';
-                    	$response['msg'] = 'Invalid credentials for user';
+                    	$response['msg'] = 'Invalid credentials. Check username and password';
 	                }
 
                 } else {
                     $response['st'] = 'error';
-                    $response['msg'] = 'Username not found';
+                    $response['msg'] = 'Invalid username';
                 }
 
 	        } else {

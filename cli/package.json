@@ -1,0 +1,36 @@
+{
+  "name": "pastingio-cli",
+  "version": "1.0.0",
+  "description": "Command line tool to generate new paste on pasting.io",
+  "keywords": [
+    "pasting",
+    "pasting.io",
+    "pastingcli",
+    "pasting-cli"
+  ],
+  "main": "index.js",
+  "bin": {
+    "pastingdev": "./index.js"
+  },
+  "dependencies": {
+    "commander": "2.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juansanzone"
+  },
+  "bugs": {
+    "url": "https://blog.pasting.io",
+    "email" : "bugs@pasting.io"
+  },
+  "author": {
+    "name": "Juan Sanzone",
+    "email": "juan@pasting.io",
+    "url": "http://pasting.io/"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
