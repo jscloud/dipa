@@ -21,13 +21,7 @@ function bindPastes()
 
 function bindHowToInstall() 
 {
-	CodeMirror.fromTextArea(document.getElementById("howToInstall"), {
-	    mode: 'javascript',
-	    theme: "monokai",
-	    height: "50px",
-	    readOnly: true,
-	    lineNumbers: true
-	});
+
 }
 
 function bindHeaderPaster(editor) 
