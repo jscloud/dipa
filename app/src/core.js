@@ -68,13 +68,13 @@ var UserView = Backbone.View.extend(
 var DocumentView = Backbone.View.extend(
 {
 	el: 'body',
-	initialize: function(userStr)
+	initialize: function(userStr, documentId)
 	{
-		this.render(userStr);
+		this.render(userStr, documentId);
 	},
-	render: function(userStr)
+	render: function(userStr, documentId)
 	{
-		var dataUser = {"user" : userStr.toLowerCase()};
+		var dataUser = {"user" : userStr.toLowerCase(), "documentId": documentId};
 		this.$el.html(getTemplate('templates/documentPublic.html', dataUser));
 
 		var dataFeatures = {"header" : false, "title" : false};
@@ -137,7 +137,7 @@ var Router = Backbone.Router.extend (
 			{
 				NProgress.start();
 
-				var document_view = new DocumentView(username.toLowerCase());
+				var document_view = new DocumentView(username.toLowerCase(), pasteId);
 
 				var publicDocument = new PublicPasteModel();
 				var fetchFilters = {documentid: pasteId};
