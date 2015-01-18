@@ -19,6 +19,17 @@ function bindPastes()
 	});
 }
 
+function bindHowToInstall() 
+{
+	CodeMirror.fromTextArea(document.getElementById("howToInstall"), {
+	    mode: 'javascript',
+	    theme: "monokai",
+	    height: "50px",
+	    readOnly: true,
+	    lineNumbers: true
+	});
+}
+
 function bindHeaderPaster(editor) 
 {
 	$('#header').pastableNonInputable().on('pasteText', function(ev, data) {
@@ -47,7 +58,7 @@ function bindPastingInput()
 	  	}
 	});
 
-	codeEditor.setValue("Paste or type your text here!");
+	codeEditor.setValue("My first Pasting!");
 
 	return codeEditor;
 }
@@ -92,7 +103,7 @@ function bindShareButton(editor)
 					if (response.attributes.st == 'ok') {
 						// swal("Your pasting has been created", baseUrl + $(emailSelector).val().toLowerCase(), "success");
 						// window.location.hash = $(emailSelector).val().toLowerCase();
-						location.href = baseUrl + '/' + $('#email').val().toLowerCase();
+						location.href = '/' + $('#email').val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");
 					}

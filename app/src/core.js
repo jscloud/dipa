@@ -24,11 +24,19 @@ var HomeView = Backbone.View.extend(
 
 		var dataFeatures = {"header" : true};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-
+		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingSection.html'));
 		this.$el.append(getTemplate('templates/pastingTeam.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
+
+		pastingEditor = bindPastingInput();
+		doForPlatform();
+		bindRealTimeButton();
+		bindShareButton(pastingEditor);
+		bindHeaderPaster(pastingEditor);
+		bindHowToInstall();
+		bindSocket();
 	}
 });
 
@@ -46,8 +54,9 @@ var UserView = Backbone.View.extend(
 
 		var dataFeatures = {"header" : false};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-
+		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
+		bindHowToInstall();
 	}
 });
 
@@ -92,7 +101,12 @@ var Router = Backbone.Router.extend (
 				});
 				socket.emit('client_connection', username);
 				*/
-			} 
+			},
+
+			'(:username/:pasteId)' : function (username, pasteId) 
+			{
+				alert(pasteId);
+			}
 		} 
 	}
 );
@@ -103,16 +117,4 @@ Backbone.history.start();
 $(document).ready(function() 
 {
 	/* var socket = io.connect(emitterUrl); */
-	
-	pastingEditor = bindPastingInput();
-
-	doForPlatform();
-
-	bindHeaderPaster();
-
-	bindRealTimeButton();
-
-	bindShareButton(pastingEditor);
-
-	bindSocket();
 });
