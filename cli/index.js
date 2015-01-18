@@ -93,7 +93,7 @@ if (program.username && program.password)
               responseData = JSON.parse(data);
               if (responseData.st == "ok") {
                 process.stdout.write('Pasting created successfully! \n');
-                process.stdout.write('http://pasting.io/' + responseData.username);
+                process.stdout.write('http://pasting.io/' + responseData.username + "/" + responseData.documentId);
               } else {
                 process.stdout.write('Error: Pasting.io - ' + responseData.msg);
               }
