@@ -8,6 +8,14 @@ __p += '<textarea id="defaultPaste">\n' +
 return __p
 };
 
+this["JST"]["templates/documentPublic.html"] = function(obj) {
+var __t, __p = '', __e = _.escape;
+__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
+((__t = ( obj.user )) == null ? '' : __t) +
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
+return __p
+};
+
 this["JST"]["templates/footer.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
 __p += '<!-- Footer -->\n<section id="footer">\n\t<ul class="icons">\n\t\t<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>\n\t\t<!-- <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li> -->\n\t\t<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>\n\t\t<!-- <li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li> -->\n\t</ul>\n\t<div class="copyright">\n\t\t<ul class="menu">\n\t\t\t<li><a href="http://pasting.io">PASTING.IO</a></li>\n\t\t\t<li>&copy; JSCLOUD. All rights reserved.</li>\n\t\t\t<li><a href="http://blog.pasting.io">OUR BLOG</a></li>\n\t\t</ul>\n\t</div>\n</section>';
@@ -26,7 +34,7 @@ function print() { __p += __j.call(arguments, '') }
 __p += '<tbody>\n\t';
 
     var length = obj.pastes.length - 1;
-    for (var index = 1; index < length; index++) {
+    for (var index = 1; index <= length; index++) {
     	var paste = obj.pastes[index];
 	;
 __p += '\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<textarea class="codePaste">\n' +
@@ -46,7 +54,11 @@ return __p
 this["JST"]["templates/pastingFeatures.html"] = function(obj) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
-__p += '<!-- mainFeatures -->\n<section id="mainFeatures" class="main">\n\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>PASTING.IO</h2>\n\t\t\t<p>Sharing is simple and fast. Kill the middle man.<br />\n\t\t\tYour clipboard in all devices with one click; Anywhere, Anytime</p>\n\t\t</div>\n\t</header>\n\n\t<div class="content dark style1 featured">\n\t\t<div class="container">\n\t\t\t<div class="row">\n\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-cloud"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>Cloud & Real Time </h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>You can create a customized URL with your username which will be your Pasting Cloud. This will be available anytime, anywhere.</p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-bullhorn"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>Fast & Free</h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>Sharing is fast now. </br> You can do it with a simple click and there is no need to pay anything for it. You can generate one or more accounts.</p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-rocket"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>By Nerds, for Nerds </h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>The code you\'ve shared can be seen highlighted. Use Pasting.io in your console. <a href="#pastingConsole" class="scrolly">Get the powerfull pasting-cli. </a> Just thought for nerds! </p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class="row">\n\t\t\t\t<div class="12u">\n\t\t\t\t\t<footer>\n\t\t\t\t\t\t';
+__p += '<!-- mainFeatures -->\n<section id="mainFeatures" class="main">\n\n\t';
+ if (obj.title) { ;
+__p += '\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>PASTING.IO</h2>\n\t\t\t<p>Sharing is simple and fast. Kill the middle man.<br />\n\t\t\tYour clipboard in all devices with one click; Anywhere, Anytime</p>\n\t\t</div>\n\t</header>\n\t';
+ } ;
+__p += '\n\n\t<div class="content dark style1 featured">\n\t\t<div class="container">\n\t\t\t<div class="row">\n\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-cloud"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>Cloud & Real Time </h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>You can create a customized URL with your username which will be your Pasting Cloud. This will be available anytime, anywhere.</p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-bullhorn"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>Fast & Free</h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>Sharing is fast now. </br> You can do it with a simple click and there is no need to pay anything for it. You can generate one or more accounts.</p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\t\t\t\t<div class="4u">\n\t\t\t\t\t<section>\n\t\t\t\t\t\t<span class="feature-icon"><span class="icon fa-rocket"></span></span>\n\t\t\t\t\t\t<header>\n\t\t\t\t\t\t\t<h3>By Nerds, for Nerds </h3>\n\t\t\t\t\t\t</header>\n\t\t\t\t\t\t<p>The code you\'ve shared can be seen highlighted. Use Pasting.io in your console. <a href="#pastingConsole" class="scrolly">Get the powerfull pasting-cli. </a> Just thought for nerds! </p>\n\t\t\t\t\t</section>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class="row">\n\t\t\t\t<div class="12u">\n\t\t\t\t\t<footer>\n\t\t\t\t\t\t';
  if (obj.header) { ;
 __p += '\n\t\t\t\t\t\t\t<a href="#pasteText" class="button scrolly">Get Pasting Now !</a>\n\t\t\t\t\t\t';
  } else { ;
@@ -95,6 +107,6 @@ this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
 __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Public pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Others pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
 return __p
 };

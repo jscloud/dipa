@@ -5,8 +5,13 @@ var PasteModel = Backbone.Model.extend({
 	}
 });
 
-var PublicPasteModel = Backbone.Model.extend({
+var PublicsPasteModel = Backbone.Model.extend({
     urlRoot: apiUrl + '/get/publics',
+    defaults: {}
+});
+
+var PublicPasteModel = Backbone.Model.extend({
+    urlRoot: apiUrl + '/get/public',
     defaults: {}
 });
 
@@ -22,7 +27,7 @@ var HomeView = Backbone.View.extend(
 		NProgress.start();
 		this.$el.html(getTemplate('templates/header.html'));
 
-		var dataFeatures = {"header" : true};
+		var dataFeatures = {"header" : true, "title" : true};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingSection.html'));
@@ -52,13 +57,34 @@ var UserView = Backbone.View.extend(
 		var dataUser = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/userPublic.html', dataUser));
 
-		var dataFeatures = {"header" : false};
+		var dataFeatures = {"header" : false, "title" : true};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
 		bindHowToInstall();
 	}
 });
+
+var DocumentView = Backbone.View.extend(
+{
+	el: 'body',
+	initialize: function(userStr)
+	{
+		this.render(userStr);
+	},
+	render: function(userStr)
+	{
+		var dataUser = {"user" : userStr.toLowerCase()};
+		this.$el.html(getTemplate('templates/documentPublic.html', dataUser));
+
+		var dataFeatures = {"header" : false, "title" : false};
+		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
+		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
+		this.$el.append(getTemplate('templates/footer.html'));
+		bindHowToInstall();
+	}
+});
+
 
 var Router = Backbone.Router.extend (
 	{ 
@@ -76,21 +102,25 @@ var Router = Backbone.Router.extend (
 
 				var user_view = new UserView(username.toLowerCase());
 
-				var publicPastes = new PublicPasteModel();
+				var publicsPastes = new PublicsPasteModel();
 				var fetchFilters = {username: username.toLowerCase()};
 
-				publicPastes.fetch({ data: $.param(fetchFilters) }, 
+				publicsPastes.fetch({ data: $.param(fetchFilters) }, 
 				{
 			    	success: function (response) {}
     			}).always(
     				function(response) 
     				{ 
-    					var defaultData = {"defaultPaste": response.publics[0]};
-    					var pastesData = {"pastes" : response.publics};
-    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
-    					NProgress.done();
-    					bindPastes();
+    					if (response.publics.length > 0) {
+	    					var defaultData = {"defaultPaste": response.publics[0]};
+	    					var pastesData = {"pastes" : response.publics};
+	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+	    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
+	    					NProgress.done();
+	    					bindPastes();
+	    				} else {
+	    					location.href = "/";
+	    				}
     				}
     			);
 
@@ -105,7 +135,29 @@ var Router = Backbone.Router.extend (
 
 			'(:username/:pasteId)' : function (username, pasteId) 
 			{
-				alert(pasteId);
+				NProgress.start();
+
+				var document_view = new DocumentView(username.toLowerCase());
+
+				var publicDocument = new PublicPasteModel();
+				var fetchFilters = {documentid: pasteId};
+
+				publicDocument.fetch({ data: $.param(fetchFilters) }, 
+				{
+			    	success: function (response) {}
+    			}).always(
+    				function(response) 
+    				{ 
+    					if (response.st == "ok") {
+	    					var defaultData = {"defaultPaste": response.public[0]};
+	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+	    					NProgress.done();
+	    					bindPastes();
+	    				} else {
+	    					location.href = "/";
+	    				}
+    				}
+    			);
 			}
 		} 
 	}
