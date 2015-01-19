@@ -35,6 +35,7 @@ var HomeView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
 
+		
 		pastingEditor = bindPastingInput();
 		doForPlatform();
 		bindRealTimeButton();
@@ -60,7 +61,6 @@ var UserView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
-		bindCopies();
 	}
 });
 
@@ -80,7 +80,6 @@ var DocumentView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
-		bindCopies();
 	}
 });
 
@@ -117,6 +116,7 @@ var Router = Backbone.Router.extend (
 	    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
 	    					NProgress.done();
 	    					bindPastes();
+	    					bindCopies();
 	    				} else {
 	    					location.href = "/";
 	    				}
@@ -152,6 +152,7 @@ var Router = Backbone.Router.extend (
 	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
 	    					NProgress.done();
 	    					bindPastes();
+	    					bindCopies();
 	    				} else {
 	    					location.href = "/";
 	    				}
