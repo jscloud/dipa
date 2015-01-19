@@ -40,7 +40,6 @@ var HomeView = Backbone.View.extend(
 		bindRealTimeButton();
 		bindShareButton(pastingEditor);
 		bindHeaderPaster(pastingEditor);
-		bindHowToInstall();
 		bindSocket();
 	}
 });
@@ -61,7 +60,7 @@ var UserView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
-		bindHowToInstall();
+		bindCopies();
 	}
 });
 
@@ -81,7 +80,7 @@ var DocumentView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
-		bindHowToInstall();
+		bindCopies();
 	}
 });
 

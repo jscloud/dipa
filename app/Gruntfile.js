@@ -28,7 +28,7 @@ module.exports = function(grunt) {
   uglify: {
     minJS: {
       files: {
-        'assets/compiled/base.min.js': ['src/base/jquery.min.js', 'src/base/jquery.scrolly.min.js', 'src/base/paste.js', 'src/base/progress.min.js', 'src/base/codemirror.js', 'src/base/skel.min.js', 'src/base/sweet-alert.min.js', 'src/base/responsive_init.js'],
+        'assets/compiled/base.min.js': ['src/base/jquery.min.js', 'src/base/jquery.scrolly.min.js', 'src/base/paste.js', 'src/base/progress.min.js', 'src/base/codemirror.js', 'src/base/skel.min.js', 'src/base/sweet-alert.min.js', 'src/base/ZeroClipboard.min.js', 'src/base/responsive_init.js'],
         'assets/compiled/app.min.js': ['../config/config.js', 'src/templates.js', 'src/globals.js',  'src/binds.js', 'src/core.js'],
       }
     },

@@ -14,7 +14,11 @@ __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<
 ((__t = ( obj.user )) == null ? '' : __t) +
 '/' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<!-- <li><a data-clipboard-text="Copy Me!" title="Click to copy text" class="p-copy">COPY TEXT</a></li> -->\n\t\t\t\t<li><a data-clipboard-text="http://pasting.io/' +
+((__t = ( obj.user )) == null ? '' : __t) +
+'/' +
+((__t = ( obj.documentId )) == null ? '' : __t) +
+'" title="Click to copy link" class="p-copy">COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
 return __p
 };
 
@@ -41,7 +45,9 @@ __p += '<tbody>\n\t';
 	;
 __p += '\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<textarea class="codePaste">\n' +
 ((__t = ( paste.text )) == null ? '' : __t) +
-'\n\t\t\t\t</textarea>\n\t\t\t<ul class="menu">\n\t\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t\t</ul>\n\t\t\t</td>\n\t\t</tr>\n\t';
+'\n\t\t\t\t</textarea>\n\t\t\t<ul class="menu">\n\t\t\t\t\t<!-- <li><a>COPY TEXT</a></li> -->\n\t\t\t\t\t<li><a data-clipboard-text="http://pasting.io/p/' +
+((__t = ( paste.id )) == null ? '' : __t) +
+'" title="Click to copy link" class="p-copy">COPY LINK</a></li>\n\t\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t\t</ul>\n\t\t\t</td>\n\t\t</tr>\n\t';
  } ;
 __p += '\n</tbody>';
 return __p
@@ -49,7 +55,7 @@ return __p
 
 this["JST"]["templates/pastingConsole.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<!-- pastingConsole -->\n<section id="pastingConsole" class="main">\n\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>PASTING FOR YOUR CONSOLE </h2>\n\t\t\t<p>Use Pasting cli. Get the power for Linux and Mac. <br />\n\t\t\tYou may share directly from your console. <a href="#">[Watch video]</a></p>\n\t\t</div>\n\t</header>\n\n\t<div class="content dark style1 featured" style="background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);">\n\t\t<div class="container">\n\t\t\t<div class="row">\n\t\t\t\t<div class="container">\n\t\t\t\t\t<h2>Install via: <a href="https://www.npmjs.com"> npm </a> </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> sudo npm install -g pastingio </p>\n\n\t\t\t\t\t<h2>Configure your Pasting.io credentials </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> pasting -u yourUsername -p yourPassword </p>\n\n\t\t\t\t\t<h2>Create your first pasting </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);;"> echo "Mi first pasting" | pasting </p>\n\n\t\t\t\t\t<h2>Advanced pasting? Use the pipe and rocks! </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> ls -la | pasting </p>\n\t\t\t\t</div>\n\t\t</div>\n\t</div>\n</section>';
+__p += '<!-- pastingConsole -->\n<section id="pastingConsole" class="main">\n\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>PASTING FOR YOUR CONSOLE </h2>\n\t\t\t<p>Use Pasting cli. Get the power for Linux and Mac. <br />\n\t\t\tYou may share directly from your console. <a href="#">[Watch video]</a></p>\n\t\t</div>\n\t</header>\n\n\t<div class="content dark style1 featured" style="background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337);">\n\t\t<div class="container">\n\t\t\t<div class="row">\n\t\t\t\t<div class="container">\n\t\t\t\t\t<h2>Install via: <a href="https://www.npmjs.com/package/pasting"> npm </a> </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> sudo npm install -g pasting </p>\n\n\t\t\t\t\t<h2>Configure your Pasting.io credentials </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> pasting -u yourUsername -p yourPassword </p>\n\n\t\t\t\t\t<h2>Create your first pasting </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);;"> echo "Mi first pasting" | pasting </p>\n\n\t\t\t\t\t<h2>Advanced pasting? Use the pipe and rocks! </h2>\n\t\t\t\t\t<p style="background-color: rgba(0, 0, 0, 0.64);"> ls -la | pasting </p>\n\t\t\t\t</div>\n\t\t</div>\n\t</div>\n</section>';
 return __p
 };
 
@@ -109,6 +115,6 @@ this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
 __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<li><a>COPY TEXT</a></li>\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Others pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu">\n\t\t\t\t<!-- <li><a>COPY TEXT</a></li> -->\n\t\t\t\t<li><a>COPY LINK</a></li>\n\t\t\t\t<li><a>RAW</a></li>\n\t\t\t\t<li><a>DELETE</a></li>\n\t\t\t</ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Others pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
 return __p
 };

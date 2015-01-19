@@ -19,9 +19,15 @@ function bindPastes()
 	});
 }
 
-function bindHowToInstall() 
+function bindCopies() 
 {
-
+	var client = new ZeroClipboard( document.getElementsByClassName("p-copy") );
+	client.on( "ready", function( readyEvent ) {
+	  client.on( "aftercopy", function( event ) {
+	  	swal("Copied!","", "success");
+	    // alert("Copied text to clipboard: " + event.data["text/plain"] );
+	  } );
+	} );
 }
 
 function bindHeaderPaster(editor) 

@@ -10,8 +10,8 @@
 <%= paste.text %>
 				</textarea>
 			<ul class="menu">
-					<li><a>COPY TEXT</a></li>
-					<li><a>COPY LINK</a></li>
+					<!-- <li><a>COPY TEXT</a></li> -->
+					<li><a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a></li>
 					<li><a>RAW</a></li>
 					<li><a>DELETE</a></li>
 				</ul>
