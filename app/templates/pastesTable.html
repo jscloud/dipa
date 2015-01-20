@@ -9,11 +9,19 @@
 				<textarea class="codePaste">
 <%= paste.text %>
 				</textarea>
-			<ul class="menu">
-					<!-- <li><a>COPY TEXT</a></li> -->
-					<li><a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a></li>
-					<li><a>RAW</a></li>
-					<li><a>DELETE</a></li>
+				<ul class="menu">
+					<li>
+						<a data-clipboard-text="<%= paste.text %>" title="Click to copy text" class="p-copy">COPY TEXT</a>
+					</li>
+					<li>
+						<a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a>
+					</li>
+					<li>
+						<a href="http://api.pasting.io/raw/<%= paste.id %>" target="_blank">RAW</a>
+					</li>
+					<li>
+						<a data-documentid="<%= paste.id %>">DELETE</a>
+					</li>
 				</ul>
 			</td>
 		</tr>

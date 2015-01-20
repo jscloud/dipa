@@ -3,12 +3,7 @@
 		<div class="container">
 			<h2>pasting.io/<%= obj.user %>/<%= obj.documentId %></h2>
 			<p></p>
-			<ul class="menu">
-				<!-- <li><a data-clipboard-text="Copy Me!" title="Click to copy text" class="p-copy">COPY TEXT</a></li> -->
-				<li><a data-clipboard-text="http://pasting.io/<%= obj.user %>/<%= obj.documentId %>" title="Click to copy link" class="p-copy">COPY LINK</a></li>
-				<li><a>RAW</a></li>
-				<li><a>DELETE</a></li>
-			</ul>
+			<ul class="menu" id="defaultMenu"></ul>
 			<pre id="textArea"></pre>
 		</div>
 	</header>

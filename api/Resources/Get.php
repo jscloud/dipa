@@ -124,3 +124,25 @@ $app->map(
         echo json_encode($response);
     }
 )->via('OPTIONS', 'GET');
+
+$app->get(
+    '/raw/:id',
+    function ($id) use ($app) 
+    {
+        $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+        $document       = $documentMapper->getPublic($id);
+
+        $raw = "Invalid id";
+
+        if ($document) 
+        {
+            $docu = $document->getPublics();
+            $raw = $docu[0]['text'];
+            //$raw  = $docu[0]->text;
+        }
+
+        $app->response()->header("Content-Type", "text/plain");
+        echo $raw;
+    }
+);
+

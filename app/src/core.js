@@ -34,14 +34,6 @@ var HomeView = Backbone.View.extend(
 		//this.$el.append(getTemplate('templates/pastingTeam.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
-
-		
-		pastingEditor = bindPastingInput();
-		doForPlatform();
-		bindRealTimeButton();
-		bindShareButton(pastingEditor);
-		bindHeaderPaster(pastingEditor);
-		bindSocket();
 	}
 });
 
@@ -56,10 +48,9 @@ var UserView = Backbone.View.extend(
 	{
 		var dataUser = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/userPublic.html', dataUser));
-
 		var dataFeatures = {"header" : false, "title" : true};
-		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
+		//this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
+		//this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -77,8 +68,8 @@ var DocumentView = Backbone.View.extend(
 		this.$el.html(getTemplate('templates/documentPublic.html', dataUser));
 
 		var dataFeatures = {"header" : false, "title" : false};
-		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
+		//this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
+		//this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -104,6 +95,13 @@ var Router = Backbone.Router.extend (
 			'' : function () 
 			{
 				var home_view = new HomeView();
+
+				pastingEditor = bindPastingInput();
+				doForPlatform();
+				bindRealTimeButton();
+				bindShareButton(pastingEditor);
+				bindHeaderPaster(pastingEditor);
+				bindSocket();
 			}, 
 
 			'(:username)' : function (username) 
@@ -116,6 +114,7 @@ var Router = Backbone.Router.extend (
 				} else {
 					/* var socket = io.connect(emitterUrl); */
 					var user_view = new UserView(username.toLowerCase());
+
 					var publicsPastes = new PublicsPasteModel();
 					var fetchFilters = {username: username.toLowerCase()};
 
@@ -125,11 +124,23 @@ var Router = Backbone.Router.extend (
 	    			}).always(
 	    				function(response) 
 	    				{ 
-	    					if (response.publics.length > 0) {
+	    					if (response.publics.length > 0) 
+	    					{
 		    					var defaultData = {"defaultPaste": response.publics[0]};
 		    					var pastesData = {"pastes" : response.publics};
+
+		    					var defaultMenuData = {
+		    						"documentId" : defaultData.defaultPaste.id, 
+		    						"text" : defaultData.defaultPaste.text,
+		    						"baseUrl" : baseUrl,
+		    						"apiUrl" : apiUrl
+		    					};
+
+		    					$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
+
 		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
 		    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
+		    					
 		    					bindPastes();
 		    					bindCopies();
 		    					NProgress.done();
@@ -163,12 +174,24 @@ var Router = Backbone.Router.extend (
     			}).always(
     				function(response) 
     				{ 
-    					if (response.st == "ok") {
+    					if (response.st == "ok") 
+    					{
 	    					var defaultData = {"defaultPaste": response.public[0]};
+
+	    					var defaultMenuData = {
+	    						"documentId" : defaultData.defaultPaste.id, 
+	    						"text" : defaultData.defaultPaste.text,
+	    						"baseUrl" : baseUrl,
+	    						"apiUrl": apiUrl
+	    					};
+
+		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
+
 	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-	    					NProgress.done();
+
 	    					bindPastes();
-	    					bindCopies();
+	    					bindCopies();		
+	    					NProgress.done();
 	    				} else {
 	    					location.href = "/";
 	    				}
