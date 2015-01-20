@@ -127,7 +127,6 @@ var Router = Backbone.Router.extend (
 	    					if (response.publics.length > 0) 
 	    					{
 		    					var defaultData = {"defaultPaste": response.publics[0]};
-		    					var pastesData = {"pastes" : response.publics};
 
 		    					var defaultMenuData = {
 		    						"documentId" : defaultData.defaultPaste.id, 
@@ -137,9 +136,12 @@ var Router = Backbone.Router.extend (
 		    					};
 
 		    					$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-
 		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-		    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
+
+		    					if (response.publics.length > 1) {
+		    						var pastesData = {"pastes" : response.publics};
+		    						$('header').after(getTemplate('templates/pastesTable.html', pastesData));
+		    					}
 		    					
 		    					bindPastes();
 		    					bindCopies();

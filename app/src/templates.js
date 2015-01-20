@@ -51,25 +51,25 @@ return __p
 this["JST"]["templates/pastesTable.html"] = function(obj) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
-__p += '<tbody>\n\t';
+__p += '<div class="content dark style1 featured" id="pastesTable">\n\n<div class="container">\n\t<section>\n\t\t<header>\n\t\t\t<h3>Other user pastes</h3>\n\t\t</header>\n\t\t<div class="table-wrapper">\n\t\t\t<table class="default">\n\t\t\t\t<tbody>\n\t\t\t\t\t';
 
-    var length = obj.pastes.length - 1;
-    for (var index = 1; index <= length; index++) {
-    	var paste = obj.pastes[index];
-	;
-__p += '\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<textarea class="codePaste">\n' +
+				    var length = obj.pastes.length - 1;
+				    for (var index = 1; index <= length; index++) {
+				    	var paste = obj.pastes[index];
+					;
+__p += '\n\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<textarea class="codePaste">\n' +
 ((__t = ( paste.text )) == null ? '' : __t) +
-'\n\t\t\t\t</textarea>\n\t\t\t\t<ul class="menu">\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a data-clipboard-text="' +
+'\n\t\t\t\t\t\t\t\t</textarea>\n\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
 ((__t = ( paste.text )) == null ? '' : __t) +
-'" title="Click to copy text" class="p-copy">COPY TEXT</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a data-clipboard-text="http://pasting.io/p/' +
+'" title="Click to copy text" class="p-copy">COPY TEXT</a>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="http://pasting.io/p/' +
 ((__t = ( paste.id )) == null ? '' : __t) +
-'" title="Click to copy link" class="p-copy">COPY LINK</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a data-raw="' +
-((__t = ( paste.text )) == null ? '' : __t) +
-'">RAW</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a data-documentid="' +
+'" title="Click to copy link" class="p-copy">COPY LINK</a>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t<a href="http://api.pasting.io/raw/' +
 ((__t = ( paste.id )) == null ? '' : __t) +
-'">DELETE</a>\n\t\t\t\t\t</li>\n\t\t\t\t</ul>\n\t\t\t</td>\n\t\t</tr>\n\t';
+'" target="_blank">RAW</a>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t<a data-documentid="' +
+((__t = ( paste.id )) == null ? '' : __t) +
+'">DELETE</a>\n\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t';
  } ;
-__p += '\n</tbody>';
+__p += '\n\t\t\t\t</tbody>\n\t\t\t</table>\n\t\t</div>\n\t</section>\n</div>\n\n</div>';
 return __p
 };
 
@@ -135,6 +135,6 @@ this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
 __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n\t<div class="content styleCustom dark">\n\t\t<div class="container">\n\t\t\t<section>\n\t\t\t\t<header>\n\t\t\t\t\t<h3>Others pastes:</h3>\n\t\t\t\t</header>\n\t\t\t\t<div class="table-wrapper">\n\t\t\t\t\t<table class="default" id="pastesTable">\n\t\t\t\t\t</table>\n\t\t\t\t</div>\n\t\t\t</section>\n\t\t</div>\n\t</div>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
 return __p
 };
