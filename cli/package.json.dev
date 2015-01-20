@@ -1,6 +1,6 @@
 {
-  "name": "pasting",
-  "version": "1.0.1",
+  "name": "pasting-dev",
+  "version": "1.0.0",
   "description": "Command line tool to generate new paste on pasting.io",
   "keywords": [
     "pasting",
@@ -10,10 +10,14 @@
   ],
   "main": "index.js",
   "bin": {
-    "pasting": "./index.js"
+    "pastingdev": "./index.js"
   },
   "dependencies": {
     "commander": "2.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juansanzone"
   },
   "bugs": {
     "url": "https://blog.pasting.io",

@@ -20,7 +20,7 @@ if (program.username && program.password)
   pwd = program.password;
 
   var options = {
-    hostname: 'api.pasting-dev.io',
+    hostname: 'api.pasting.io',
     port: 80,
     path: '/createConsoleKey',
     method: 'POST'
@@ -79,7 +79,7 @@ if (program.username && program.password)
           };
 
           var options = {
-            hostname: 'api.pasting-dev.io',
+            hostname: 'api.pasting.io',
             port: 80,
             path: '/createFromConsole',
             method: 'POST'

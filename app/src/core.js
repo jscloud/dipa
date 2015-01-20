@@ -31,7 +31,7 @@ var HomeView = Backbone.View.extend(
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingSection.html'));
-		this.$el.append(getTemplate('templates/pastingTeam.html'));
+		//this.$el.append(getTemplate('templates/pastingTeam.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
 
@@ -83,6 +83,19 @@ var DocumentView = Backbone.View.extend(
 	}
 });
 
+var TeamView = Backbone.View.extend(
+{
+	el: 'body',
+	initialize: function()
+	{
+		this.render();
+	},
+	render: function()
+	{
+		this.$el.append(getTemplate('templates/pastingTeam.html'));
+		this.$el.append(getTemplate('templates/footer.html'));
+	}
+});
 
 var Router = Backbone.Router.extend (
 	{ 
@@ -92,44 +105,47 @@ var Router = Backbone.Router.extend (
 			{
 				var home_view = new HomeView();
 			}, 
+
 			'(:username)' : function (username) 
 			{
 				NProgress.start();
 
-				/* var socket = io.connect(emitterUrl); */
+				if ('team' == username) {
+					var team_view = new TeamView();
+					NProgress.done();
+				} else {
+					/* var socket = io.connect(emitterUrl); */
+					var user_view = new UserView(username.toLowerCase());
+					var publicsPastes = new PublicsPasteModel();
+					var fetchFilters = {username: username.toLowerCase()};
 
-				var user_view = new UserView(username.toLowerCase());
-
-				var publicsPastes = new PublicsPasteModel();
-				var fetchFilters = {username: username.toLowerCase()};
-
-				publicsPastes.fetch({ data: $.param(fetchFilters) }, 
-				{
-			    	success: function (response) {}
-    			}).always(
-    				function(response) 
-    				{ 
-    					if (response.publics.length > 0) {
-	    					var defaultData = {"defaultPaste": response.publics[0]};
-	    					var pastesData = {"pastes" : response.publics};
-	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-	    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
-	    					NProgress.done();
-	    					bindPastes();
-	    					bindCopies();
-	    				} else {
-	    					location.href = "/";
+					publicsPastes.fetch({ data: $.param(fetchFilters) }, 
+					{
+				    	success: function (response) {}
+	    			}).always(
+	    				function(response) 
+	    				{ 
+	    					if (response.publics.length > 0) {
+		    					var defaultData = {"defaultPaste": response.publics[0]};
+		    					var pastesData = {"pastes" : response.publics};
+		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+		    					$('#pastesTable').html(getTemplate('templates/pastesTable.html', pastesData));
+		    					bindPastes();
+		    					bindCopies();
+		    					NProgress.done();
+		    				} else {
+		    					location.href = "/";
+		    				}
 	    				}
-    				}
-    			);
-
-    			/*
-				socket.on(username, function(text) {
-					text = text.replace(/\n/g, "<br />");
-					$('#textArea').html(text);
-				});
-				socket.emit('client_connection', username);
-				*/
+	    			);
+	    			/*
+					socket.on(username, function(text) {
+						text = text.replace(/\n/g, "<br />");
+						$('#textArea').html(text);
+					});
+					socket.emit('client_connection', username);
+					*/
+				}
 			},
 
 			'(:username/:pasteId)' : function (username, pasteId) 
