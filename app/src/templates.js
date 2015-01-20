@@ -51,7 +51,7 @@ return __p
 this["JST"]["templates/pastesTable.html"] = function(obj) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
-__p += '<div class="content dark style1 featured" id="pastesTable">\n\n<div class="container">\n\t<section>\n\t\t<header>\n\t\t\t<h3>Other user pastes</h3>\n\t\t</header>\n\t\t<div class="table-wrapper">\n\t\t\t<table class="default">\n\t\t\t\t<tbody>\n\t\t\t\t\t';
+__p += '<div class="content dark style1 featured" id="pastesTable">\n\n<div class="container">\n\t<section>\n\t\t<header>\n\t\t\t<h3>Others user pastes</h3>\n\t\t</header>\n\t\t<div class="table-wrapper">\n\t\t\t<table class="default">\n\t\t\t\t<tbody>\n\t\t\t\t\t';
 
 				    var length = obj.pastes.length - 1;
 				    for (var index = 1; index <= length; index++) {
