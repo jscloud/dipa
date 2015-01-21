@@ -1,44 +1,42 @@
 <div class="content dark style1 featured" id="pastesTable">
-
-<div class="container">
-	<section>
-		<header>
-			<h3>Others user pastes</h3>
-		</header>
-		<div class="table-wrapper">
-			<table class="default">
-				<tbody>
-					<%
-				    var length = obj.pastes.length - 1;
-				    for (var index = 1; index <= length; index++) {
-				    	var paste = obj.pastes[index];
-					%>
-						<tr>
-							<td>
-								<textarea class="codePaste">
+	<div class="container">
+		<section>
+			<header>
+				<h3>Others user pastes</h3>
+			</header>
+			<div class="table-wrapper">
+				<table class="default">
+					<tbody>
+						<%
+					    var length = obj.pastes.length - 1;
+					    for (var index = 1; index <= length; index++) {
+					    	var paste = obj.pastes[index];
+						%>
+							<tr>
+								<td>
+									<textarea class="codePaste">
 <%= paste.text %>
-								</textarea>
-								<ul class="menu">
-									<li>
-										<a data-clipboard-text="<%= paste.text %>" title="Click to copy text" class="p-copy">COPY TEXT</a>
-									</li>
-									<li>
-										<a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a>
-									</li>
-									<li>
-										<a href="http://api.pasting.io/raw/<%= paste.id %>" target="_blank">RAW</a>
-									</li>
-									<li>
-										<a data-documentid="<%= paste.id %>">DELETE</a>
-									</li>
-								</ul>
-							</td>
-						</tr>
-					<% } %>
-				</tbody>
-			</table>
-		</div>
-	</section>
-</div>
-
+									</textarea>
+									<ul class="menu">
+										<li>
+											<a data-clipboard-text="<%= paste.text %>" title="Click to copy text" class="p-copy">COPY TEXT</a>
+										</li>
+										<li>
+											<a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a>
+										</li>
+										<li>
+											<a href="http://api.pasting.io/raw/<%= paste.id %>" target="_blank">RAW</a>
+										</li>
+										<li>
+											<a data-documentid="<%= paste.id %>">DELETE</a>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						<% } %>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
 </div>

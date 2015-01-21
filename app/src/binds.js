@@ -58,7 +58,7 @@ function bindPastingInput()
 	  	}
 	});
 
-	codeEditor.setValue("My first Pasting!");
+	//codeEditor.setValue("");
 
 	return codeEditor;
 }
@@ -102,7 +102,7 @@ function bindShareButton(editor)
 					NProgress.done();
 					if (response.attributes.st == 'ok') {
 						// swal("Your pasting has been created", baseUrl + $(emailSelector).val().toLowerCase(), "success");
-						// window.location.hash = $(emailSelector).val().toLowerCase();
+						// window.location.hash = $('#email').val().toLowerCase();
 						location.href = '/' + $('#email').val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");

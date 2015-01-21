@@ -66,8 +66,7 @@ var DocumentView = Backbone.View.extend(
 	{
 		var dataUser = {"user" : userStr.toLowerCase(), "documentId": documentId};
 		this.$el.html(getTemplate('templates/documentPublic.html', dataUser));
-
-		var dataFeatures = {"header" : false, "title" : false};
+		//var dataFeatures = {"header" : false, "title" : false};
 		//this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		//this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
