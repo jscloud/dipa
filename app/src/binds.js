@@ -24,8 +24,7 @@ function bindCopies()
 	var client = new ZeroClipboard( document.getElementsByClassName("p-copy") );
 	client.on( "ready", function( readyEvent ) {
 	  client.on( "aftercopy", function( event ) {
-	  	swal("Copied!","", "success");
-	    // alert("Copied text to clipboard: " + event.data["text/plain"] );
+	  	swal({title: "Copied!", type: "success", timer: 1000});
 	  } );
 	} );
 }
@@ -85,7 +84,7 @@ function bindRealTimeButton()
 
 function bindShareButton(editor)
 {
-	$('#shareBtn').on('click', function() {
+	$('#shareBtn, #shareBtnPrivate').on('click', function() {
 
 		if ($('#email').val() != '' && $('#pwd').val() != '' && editor.getValue() != '') 
 		{
@@ -93,7 +92,8 @@ function bindShareButton(editor)
 			var pasteData = {
 			    username: $('#email').val().toLowerCase(),
 			    pwd: $('#pwd').val(),
-			    text: editor.getValue()
+			    text: editor.getValue(),
+			    protected: $(this).data('protected')
 			};
 
 			NProgress.start();
@@ -101,8 +101,6 @@ function bindShareButton(editor)
 				success: function (response) {
 					NProgress.done();
 					if (response.attributes.st == 'ok') {
-						// swal("Your pasting has been created", baseUrl + $(emailSelector).val().toLowerCase(), "success");
-						// window.location.hash = $('#email').val().toLowerCase();
 						location.href = '/' + $('#email').val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");
