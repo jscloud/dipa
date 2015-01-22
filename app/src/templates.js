@@ -12,7 +12,7 @@ __p += '<li><a data-clipboard-text="' +
 ((__t = ( obj.apiUrl )) == null ? '' : __t) +
 '/raw/' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
-'" target="_blank">RAW</a></li>\n<li><a data-documentid="' +
+'" target="_blank">RAW</a></li>\n<li><a class="delete" data-documentid="' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
 '">DELETE</a></li>';
 return __p
@@ -65,7 +65,7 @@ __p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<textarea 
 ((__t = ( paste.id )) == null ? '' : __t) +
 '" title="Click to copy link" class="p-copy">COPY LINK</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="http://api.pasting.io/raw/' +
 ((__t = ( paste.id )) == null ? '' : __t) +
-'" target="_blank">RAW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-documentid="' +
+'" target="_blank">RAW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a class="delete" data-documentid="' +
 ((__t = ( paste.id )) == null ? '' : __t) +
 '">DELETE</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t';
  } ;

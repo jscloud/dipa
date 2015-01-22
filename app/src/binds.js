@@ -26,7 +26,22 @@ function bindCopies()
 	  client.on( "aftercopy", function( event ) {
 	  	swal({title: "Copied!", type: "success", timer: 1000});
 	  } );
-	} );
+	});
+}
+
+function bindDeletes() 
+{
+	$('.delete').on('click', function() 
+	{
+		var documentid = $(this).data('documentid');
+
+		vex.dialog.confirm({
+	  		message: 'Delete this Pasting?' + documentid,
+	  		callback: function(value) {
+	    		return console.log(value ? 'Successfully' : 'Cancel delete');
+	  		}
+		});
+	});
 }
 
 function bindHeaderPaster(editor) 
@@ -62,26 +77,6 @@ function bindPastingInput()
 	return codeEditor;
 }
 
-function bindRealTimeButton()
-{
-	// Socket (not work, for now)
-	$('#realTimeBtn').on('click', function () {
-		if (!connected) {
-			if ($('#email').val() != '') {
-				connected = true;
-				$(this).css('background', "#67A749");
-				swal("Use the follow Url to emit in real time!", baseUrl + '/' + $('#email').val().toLowerCase(), "success");
-			} else {
-				swal("Error!", "Please, fill the username field to emit in real time", "error");
-			}
-		} else {
-			connected = false;
-			$(this).css('background', "#E04646");
-		}
-		return false;
-	});
-}
-
 function bindShareButton(editor)
 {
 	$('#shareBtn, #shareBtnPrivate').on('click', function() {
@@ -112,25 +107,4 @@ function bindShareButton(editor)
 	    }
 		return false;
 	});
-}
-
-function bindSocket() 
-{
-	/*
-	$strInput.on('keyup', function () {
-		if (connected) {
-			console.log('Emitted');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: pastingEditor.getValue()});
-		}
-	});
-	*/
-
-	/*
-	socket.on('new_client', function(username) {
-		if (connected) {
-			console.log('Emitted new client connected');
-			socket.emit('send_data', {username: $email.val().toLowerCase(), text: pastingEditor.getValue()});
-		}
-	});
-	*/
 }

@@ -97,10 +97,8 @@ var Router = Backbone.Router.extend (
 
 				pastingEditor = bindPastingInput();
 				doForPlatform();
-				bindRealTimeButton();
 				bindShareButton(pastingEditor);
 				bindHeaderPaster(pastingEditor);
-				bindSocket();
 			}, 
 
 			'(:username)' : function (username) 
@@ -111,7 +109,6 @@ var Router = Backbone.Router.extend (
 					var team_view = new TeamView();
 					NProgress.done();
 				} else {
-					/* var socket = io.connect(emitterUrl); */
 					var user_view = new UserView(username.toLowerCase());
 
 					var publicsPastes = new PublicsPasteModel();
@@ -144,19 +141,13 @@ var Router = Backbone.Router.extend (
 		    					
 		    					bindPastes();
 		    					bindCopies();
+		    					bindDeletes();
 		    					NProgress.done();
 		    				} else {
 		    					location.href = "/";
 		    				}
 	    				}
 	    			);
-	    			/*
-					socket.on(username, function(text) {
-						text = text.replace(/\n/g, "<br />");
-						$('#textArea').html(text);
-					});
-					socket.emit('client_connection', username);
-					*/
 				}
 			},
 
@@ -187,11 +178,11 @@ var Router = Backbone.Router.extend (
 	    					};
 
 		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-
 	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
 
 	    					bindPastes();
-	    					bindCopies();		
+	    					bindCopies();	
+	    					bindDeletes();
 	    					NProgress.done();
 	    				} else {
 	    					location.href = "/";
@@ -208,5 +199,5 @@ Backbone.history.start();
 
 $(document).ready(function() 
 {
-	/* var socket = io.connect(emitterUrl); */
+	vex.defaultOptions.className = 'vex-theme-default';
 });
