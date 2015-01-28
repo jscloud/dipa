@@ -52,7 +52,7 @@
     padding: 0;
     line-height: normal; }
   .sweet-alert button {
-    background-color: #AEDEF4;
+    background-color: rgba(66, 104, 162, 1);
     color: white;
     border: none;
     box-shadow: none;
@@ -66,9 +66,9 @@
       outline: none;
       box-shadow: 0 0 2px rgba(128, 179, 235, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
     .sweet-alert button:hover {
-      background-color: #a1d9f2; }
+      background-color:  rgba(66, 104, 162, 1) }
     .sweet-alert button:active {
-      background-color: #81ccee; }
+      background-color:  rgba(66, 104, 162, 1); }
     .sweet-alert button.cancel {
       background-color: #D0D0D0; }
       .sweet-alert button.cancel:hover {

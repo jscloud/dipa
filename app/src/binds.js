@@ -34,9 +34,8 @@ function bindDeletes()
 	$('.delete').on('click', function() 
 	{
 		var documentid = $(this).data('documentid');
-
 		vex.dialog.confirm({
-	  		message: 'Delete this Pasting?' + documentid,
+	  		message: 'Delete this Pasting?',
 	  		callback: function(value) {
 	    		return console.log(value ? 'Successfully' : 'Cancel delete');
 	  		}
@@ -71,9 +70,8 @@ function bindPastingInput()
 	        }
 	  	}
 	});
-
-	//codeEditor.setValue("");
-
+	
+	codeEditor.setValue("My first Pasting!");
 	return codeEditor;
 }
 
@@ -92,10 +90,14 @@ function bindShareButton(editor)
 			};
 
 			NProgress.start();
+			
 			Paste.save(pasteData, {
 				success: function (response) {
 					NProgress.done();
 					if (response.attributes.st == 'ok') {
+						$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
+						$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
+						$.cookie('u', response.attributes.u.toLowerCase(), {expires: 7, path: '/' });
 						location.href = '/' + $('#email').val().toLowerCase();
 					} else {
 						swal("Error", response.attributes.msg, "error");
@@ -105,6 +107,69 @@ function bindShareButton(editor)
 	    } else {
 	    	swal("Error!", "Please, complete all fields", "error");
 	    }
+		return false;
+	});
+}
+
+function checkOauth()
+{
+	var oauth = false;
+	if (($.cookie('v') !== undefined) && ($.cookie('uid') !== undefined) && ($.cookie('u') !== undefined)) 
+	{
+		$('.navlogin').hide();
+		$('.navlogout').show();
+		$('.navcreate').show();
+		oauth = true;
+	} else {
+		$.removeCookie('v', { path: '/' });
+		$.removeCookie('uid', { path: '/' });
+		$.removeCookie('u', { path: '/' });
+		$('.navlogin').show();
+		$('.navcreate').hide();
+		$('.navlogout').hide();
+	}
+	return oauth;
+}
+
+function bindLoginButtons () 
+{
+	$('.login').on('click', function() {
+		vex.dialog.open({
+		  message: 'Enter your username and password:',
+		  input: "<input name=\"username\" type=\"text\" placeholder=\"Username\" required />\n<input name=\"password\" type=\"password\" placeholder=\"Password\" required /> <a href='/' style='text-align:right;'> Create Account</a>",
+		  buttons: [
+		    $.extend({}, vex.dialog.buttons.YES, {
+		      text: 'Login'
+		    }), $.extend({}, vex.dialog.buttons.NO, {
+		      text: 'Cancel'
+		    })
+		  ],
+		  callback: function(data) 
+		  {
+		  	NProgress.start();
+		    if (data) {  
+				var loginObj = new Login();
+				var loginData = {username: data.username, pwd: data.password};
+				loginObj.save(loginData, {
+					success: function (response) 
+					{
+						if (response.attributes.st == 'ok') {
+							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
+							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
+							$.cookie('u', response.attributes.username.toLowerCase(), {expires: 7, path: '/' });
+							location.href = '/' + response.attributes.username.toLowerCase();
+						} else {
+							$.removeCookie('v', { path: '/' });
+							$.removeCookie('uid', { path: '/' });
+							$.removeCookie('u', { path: '/' });
+							vex.dialog.alert(response.attributes.msg);
+						}
+					}
+	    		});
+		    } 
+			NProgress.done();
+		  }
+		});
 		return false;
 	});
 }

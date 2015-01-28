@@ -4,8 +4,8 @@ namespace Models\Document;
 
 class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 {
-	const TYPE_PUBLIC	= 0;
-	const TYPE_PRIVATE 	= 1;
+	const TYPE_PUBLIC	 = 0;
+	const TYPE_PROTECTED = 1;
 
 	public function getCount() 
 	{
@@ -17,12 +17,22 @@ class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 		$publics = array();
 		foreach ($this as $collection) 
 		{
-			if ($collection->type == self::TYPE_PUBLIC) {
-				if ($collection->protected) $collection->text = "****";
+			if ($collection->protected == self::TYPE_PUBLIC) {
+				$collection->public_password = null;
 				array_push($publics, $collection->getData());
 			}
 		}
 		return $publics;
+	}
+
+	public function getAll() 
+	{
+		$all = array();
+		foreach ($this as $collection) 
+		{
+			array_push($all, $collection->getData());
+		}
+		return $all;
 	}
 
 	public function getPrivates($maskText=true) 
@@ -30,7 +40,7 @@ class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 		$privates = array();
 		foreach ($this as $collection) 
 		{
-			if ($collection->type == self::TYPE_PRIVATE) {
+			if ($collection->protected == self::TYPE_PROTECTED) {
 				if ($maskText) $collection->text = "****";
 				array_push($privates, $collection->getData());
 			}

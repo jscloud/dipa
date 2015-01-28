@@ -476,7 +476,7 @@
 }
 /* line 116, ../sass/vex-theme-default.sass */
 .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary {
-  background: #3288e6;
+  background: rgba(66, 104, 162, 1);
   color: white;
 }
 /* line 120, ../sass/vex-theme-default.sass */

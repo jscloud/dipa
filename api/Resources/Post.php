@@ -1,22 +1,24 @@
 <?php
 
 $app->map(
-    '/create',
+    '/register',
     function () use ($app) 
     {    
     	try {
 	        $bodyData = json_decode($app->request->getBody(), true);
 	        $response = array('st' => 'ok');
+	        $hash = null;
 
 	        if (array_key_exists('username', $bodyData) && array_key_exists('pwd', $bodyData)) {
 
-	            $userMapper = new \Models\User\UserMapper($app->pdo);
-	            $user       = $userMapper->findByUsername($bodyData['username']);
-
 	            if (array_key_exists('text', $bodyData)) {
 
+	            	$userMapper = new \Models\User\UserMapper($app->pdo);
+	            	$user       = $userMapper->findByUsername($bodyData['username']);
+
 	                if ($user) {
-	                    $userId = $user->id;
+	            		$response['st'] = 'error';
+	                	$response['msg'] = 'Username is already in use';
 	                } else {
 	                    $userModel       = new \Models\User\User;
 	                    $userModelMapper = new \Models\User\UserMapper($app->pdo);
@@ -24,25 +26,18 @@ $app->map(
 	                    $userModel->username = strtolower($bodyData['username']);
 	                    $userModel->password = $bodyData['pwd'];
 
+	                   	$hash = substr(substr(
+							"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+							mt_rand(0 ,25), 1) . substr(md5(time()), 1
+	   					), 0, 29);
+
+	   					$userModel->hash = $hash;
 	                    $userModelMapper->insert($userModel);
 	                    $userId = $userModel->id;
-	                }
+	                    $username = $userModel->username;
 
-	                $userValidateMapper = new \Models\User\UserMapper($app->pdo);
-	                if ($userValidateMapper->validate($bodyData['username'], $bodyData['pwd'])) 
-	                {
 	                    $document       = new \Models\Document\Document;
 	                    $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
-
-	                    if (array_key_exists('code', $bodyData)) {
-	                    	if ($bodyData['code'] == 1) $document->code = 1;
-	                    }
-
-	                   	if (array_key_exists('type', $bodyData)) {
-	                    	if (in_array($bodyData['type'], array(0,1))) {
-	                    		$document->type = $bodyData['type'];
-	                    	}
-	                    }
 
 	                   	if (array_key_exists('protected', $bodyData)) {
 	                    	if (in_array($bodyData['protected'], array(0,1))) {
@@ -50,10 +45,13 @@ $app->map(
 	                    	}
 	                    }
 
-	                   	if (array_key_exists('public_password', $bodyData)) {
-	                    	if ($bodyData['public_password'] != '') {
-	                    		$document->public_password = $bodyData['public_password'];
-	                    	}
+	                    if ($document->protected == 1) {
+		                   	$public_pwd = substr(substr(
+								"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+								mt_rand(0 ,25), 1) . substr(md5(time()), 1
+		   					), 0, 29);
+
+		   					$document->public_password = $public_pwd;
 	                    }
 
 	                    $document->user_id  = $userId;
@@ -61,11 +59,10 @@ $app->map(
 
 	                    $documentMapper->insert($document);
 
+	                    $response['v'] 			= $hash;
 	                    $response['userId']     = $userId;
+	                    $response['u'] 			= $userModel->username;
 	                    $response['documentId'] = $document->id;
-	                } else {
-	                    $response['st'] = 'error';
-	                    $response['msg'] = 'Invalid password';
 	                }
 
 	            } else {
@@ -198,22 +195,12 @@ $app->map(
 	        	$username 		= $keyData[1];
 
 	            $userValidateMapper = new \Models\User\UserMapper($app->pdo);
-	            $userData 			= $userValidateMapper->validateConsoleKey($username, $console_key);
+	            $userData 			= $userValidateMapper->validateKeyHash($username, $console_key, 'console_key');
 
                 if ($userData) 
                 {
                     $document       = new \Models\Document\Document;
                     $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
-
-                    if (array_key_exists('code', $bodyData)) {
-                    	if ($bodyData['code'] == 1) $document->code = 1;
-                    }
-
-                   	if (array_key_exists('type', $bodyData)) {
-                    	if (in_array($bodyData['type'], array(0,1))) {
-                    		$document->type = $bodyData['type'];
-                    	}
-                    }
 
                    	if (array_key_exists('protected', $bodyData)) {
                     	if (in_array($bodyData['protected'], array(0,1))) {
@@ -221,11 +208,14 @@ $app->map(
                     	}
                     }
 
-                   	if (array_key_exists('public_password', $bodyData)) {
-                    	if ($bodyData['public_password'] != '') {
-                    		$document->public_password = $bodyData['public_password'];
-                    	}
-                    }
+       	            if ($document->protected == 1) {
+	                   	$public_pwd = substr(substr(
+							"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+							mt_rand(0 ,25), 1) . substr(md5(time()), 1
+	   					), 0, 29);
+
+	   					$document->public_password = $public_pwd;
+	                }
 
 					$document->origin = 1;
                     $document->user_id  = $userData->id;

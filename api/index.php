@@ -1,7 +1,10 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: X-Requested-With, Authorization, Content-Type');
+
+session_start();
 
 require 'Slim/Slim.php';
 
@@ -25,6 +28,7 @@ $app->container->singleton('pdo', function () {
     );
 });
 
+require 'Resources/Login.php';
 require 'Resources/Get.php';
 require 'Resources/Post.php';
 

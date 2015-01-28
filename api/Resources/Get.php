@@ -7,14 +7,24 @@ $app->map(
         if ($app->request->params('username')) {
 
             $username = $app->request->params('username');
+            $u        = $app->request->params('u');
+            $uid      = $app->request->params('uid');
+            $v        = $app->request->params('v');
 
             $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
             $documents      = $documentMapper->getForUser($username);
 
             $response = array('publics' => array(), 'st' => 'ok');
 
+            $userValidateMapper = new \Models\User\UserMapper($app->pdo);
+            $userData           = $userValidateMapper->validateKeyHash($u, $v, 'hash');
+
             if ($documents) {
-                $response['publics'] = $documents->getPublics();
+                if ($userData && (strtolower($u) == strtolower($username))) {
+                    $response['publics'] = $documents->getAll();
+                } else {
+                    $response['publics'] = $documents->getPublics();
+                }
             }
         } else {
             $response = array('publics' => array(), 'st' => 'error', 'msg' => 'Missing username param');
@@ -129,20 +139,24 @@ $app->get(
     '/raw/:id',
     function ($id) use ($app) 
     {
-        $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
-        $document       = $documentMapper->getPublic($id);
+        try {
+            $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+            $document       = $documentMapper->getPublic($id);
 
-        $raw = "Invalid id";
+            $raw = "Invalid id";
 
-        if ($document) 
-        {
-            $docu = $document->getPublics();
-            $raw = $docu[0]['text'];
-            //$raw  = $docu[0]->text;
+            if ($document) 
+            {
+                $docu = $document->getPublics();
+                $raw = $docu[0]['text'];
+            }
+
+            $app->response()->header("Content-Type", "text/plain");
+            echo $raw;
+        } catch(\Exception $e) {
+            $app->response()->header("Content-Type", "text/plain");
+            echo "Unexpected error";
         }
-
-        $app->response()->header("Content-Type", "text/plain");
-        echo $raw;
     }
 );
 

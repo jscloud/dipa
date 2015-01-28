@@ -1,5 +1,5 @@
 var PasteModel = Backbone.Model.extend({
-	urlRoot: apiUrl + '/create',
+	urlRoot: apiUrl + '/register',
 	defaults: {
 	    code: 0
 	}
@@ -15,6 +15,10 @@ var PublicPasteModel = Backbone.Model.extend({
     defaults: {}
 });
 
+var Login = Backbone.Model.extend({
+    urlRoot: apiUrl + '/login'
+});
+
 var HomeView = Backbone.View.extend(
 {
 	el: 'body',
@@ -25,13 +29,13 @@ var HomeView = Backbone.View.extend(
 	render: function()
 	{
 		NProgress.start();
-		this.$el.html(getTemplate('templates/header.html'));
+		this.$el.html(getTemplate('templates/menu.html'));
+		this.$el.append(getTemplate('templates/header.html'));
 
 		var dataFeatures = {"header" : true, "title" : true};
 		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/pastingSection.html'));
-		//this.$el.append(getTemplate('templates/pastingTeam.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
 	}
@@ -47,10 +51,9 @@ var UserView = Backbone.View.extend(
 	render: function(userStr)
 	{
 		var dataUser = {"user" : userStr.toLowerCase()};
-		this.$el.html(getTemplate('templates/userPublic.html', dataUser));
+		this.$el.html(getTemplate('templates/menu.html'));
+		this.$el.append(getTemplate('templates/userPublic.html', dataUser));
 		var dataFeatures = {"header" : false, "title" : true};
-		//this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-		//this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -64,11 +67,9 @@ var DocumentView = Backbone.View.extend(
 	},
 	render: function(userStr, documentId)
 	{
+		this.$el.html(getTemplate('templates/menu.html'));
 		var dataUser = {"user" : userStr.toLowerCase(), "documentId": documentId};
-		this.$el.html(getTemplate('templates/documentPublic.html', dataUser));
-		//var dataFeatures = {"header" : false, "title" : false};
-		//this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-		//this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
+		this.$el.append(getTemplate('templates/documentPublic.html', dataUser));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -93,26 +94,39 @@ var Router = Backbone.Router.extend (
 		{ 
 			'' : function () 
 			{
-				var home_view = new HomeView();
-
-				pastingEditor = bindPastingInput();
-				doForPlatform();
-				bindShareButton(pastingEditor);
-				bindHeaderPaster(pastingEditor);
+				if (checkOauth()) {
+					location.href = "/" + $.cookie('u');
+				} else {
+					var home_view = new HomeView();
+					pastingEditor = bindPastingInput();
+					doForPlatform();
+					bindShareButton(pastingEditor);
+					bindHeaderPaster(pastingEditor);
+					checkOauth();
+					bindLoginButtons();
+				}
 			}, 
 
 			'(:username)' : function (username) 
 			{
 				NProgress.start();
 
-				if ('team' == username) {
-					var team_view = new TeamView();
-					NProgress.done();
+				if ('logout' == username) 
+				{
+					$.removeCookie('v', { path: '/' });
+					$.removeCookie('uid', { path: '/' });
+					$.removeCookie('u', { path: '/' });
+					location.href = "/";
 				} else {
 					var user_view = new UserView(username.toLowerCase());
 
 					var publicsPastes = new PublicsPasteModel();
-					var fetchFilters = {username: username.toLowerCase()};
+					var fetchFilters = {
+						username: username.toLowerCase(),
+						v: $.cookie('v'),
+						u: $.cookie('u'),
+						uid: $.cookie('uid')
+					};
 
 					publicsPastes.fetch({ data: $.param(fetchFilters) }, 
 					{
@@ -142,6 +156,8 @@ var Router = Backbone.Router.extend (
 		    					bindPastes();
 		    					bindCopies();
 		    					bindDeletes();
+		    					bindLoginButtons();
+		    					checkOauth();
 		    					NProgress.done();
 		    				} else {
 		    					location.href = "/";
@@ -158,7 +174,12 @@ var Router = Backbone.Router.extend (
 				var document_view = new DocumentView(username.toLowerCase(), pasteId);
 
 				var publicDocument = new PublicPasteModel();
-				var fetchFilters = {documentid: pasteId};
+				var fetchFilters = {
+					documentid: pasteId,
+					v: $.cookie('v'),
+					u: $.cookie('u'),
+					uid: $.cookie('uid')
+				};
 
 				publicDocument.fetch({ data: $.param(fetchFilters) }, 
 				{
@@ -183,6 +204,8 @@ var Router = Backbone.Router.extend (
 	    					bindPastes();
 	    					bindCopies();	
 	    					bindDeletes();
+	    					bindLoginButtons();
+	    					checkOauth();
 	    					NProgress.done();
 	    				} else {
 	    					location.href = "/";
