@@ -1,4 +1,17 @@
-<li><a data-clipboard-text="<%= obj.text %>" title="Click to copy text" class="p-copy">COPY TEXT</a></li>
-<li><a data-clipboard-text="<%= obj.baseUrl %>/p/<%= obj.documentId %>" title="Click to copy link" class="p-copy">COPY LINK</a></li>
-<li><a href="<%= obj.apiUrl %>/raw/<%= obj.documentId %>" target="_blank">RAW</a></li>
-<li><a class="delete" data-documentid="<%= obj.documentId %>">DELETE</a></li>
+<%
+	if (obj.private) {
+		var copyUrl		= obj.baseUrl + "/p/" + obj.documentId + "/" + obj.hashId;
+    	var copyLabel	= "COPY SECRET LINK";
+    	var rawUrl 		= obj.apiUrl + "/raw/" + obj.documentId + "/" + obj.hashId;
+	} else {
+		var copyUrl		= obj.baseUrl + "/p/" + obj.documentId;
+    	var copyLabel	= "COPY LINK";
+    	var rawUrl 		= obj.apiUrl + "/raw/" + obj.documentId;
+	}
+%>
+<li><a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a></li>
+<li><a href="<%= rawUrl %>" target="_blank">RAW</a></li>
+
+<% if (obj.userId == obj.ownerId) { %>
+	<li><a class="delete" data-del-documentid="<%= obj.documentId %>">DELETE</a></li>
+<% } %>

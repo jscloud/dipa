@@ -160,3 +160,28 @@ $app->get(
     }
 );
 
+$app->get(
+    '/raw/:id/:hashId',
+    function ($id, $hashId) use ($app) 
+    {
+        try {
+            $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+            $document       = $documentMapper->getProtected($id, $hashId);
+
+            $raw = "Validation error";
+
+            if ($document) 
+            {
+                $docu = $document->getData();
+                $raw = $docu['text'];
+            }
+
+            $app->response()->header("Content-Type", "text/plain");
+            echo $raw;
+        } catch(\Exception $e) {
+            $app->response()->header("Content-Type", "text/plain");
+            echo "Unexpected error";
+        }
+    }
+);
+

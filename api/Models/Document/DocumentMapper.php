@@ -108,4 +108,27 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
 
         return $result;
     }
+
+    public function deleteDocument($userId, $documentId) 
+    {
+        $sql = "DELETE
+                FROM {$this->tableName}
+                WHERE {$this->tablePrimaryKey} = :documentId
+                AND {$this->tableRelationKey} = :userId";
+                
+        $bindings = array(
+            'documentId' => $documentId,
+            'userId'     => $userId
+        );
+
+        $documents = $this->fetchCollection($sql, $bindings);
+        
+        if ($documents->getCount() > 0) {
+            $result = true;
+        } else {
+            $result = false;
+        }
+
+        return $result;
+    }
 }

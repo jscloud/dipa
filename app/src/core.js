@@ -1,8 +1,20 @@
-var PasteModel = Backbone.Model.extend({
+var RegisterModel = Backbone.Model.extend({
 	urlRoot: apiUrl + '/register',
 	defaults: {
 	    code: 0
 	}
+});
+
+var NewPasteModel = Backbone.Model.extend({
+	urlRoot: apiUrl + '/create',
+	defaults: {
+	    code: 0
+	}
+});
+
+var DeletePasteModel = Backbone.Model.extend({
+	urlRoot: apiUrl + '/delete',
+	defaults: {}
 });
 
 var PublicsPasteModel = Backbone.Model.extend({
@@ -12,6 +24,11 @@ var PublicsPasteModel = Backbone.Model.extend({
 
 var PublicPasteModel = Backbone.Model.extend({
     urlRoot: apiUrl + '/get/public',
+    defaults: {}
+});
+
+var ProtectedModel = Backbone.Model.extend({
+    urlRoot: apiUrl + '/get/protected',
     defaults: {}
 });
 
@@ -31,10 +48,8 @@ var HomeView = Backbone.View.extend(
 		NProgress.start();
 		this.$el.html(getTemplate('templates/menu.html'));
 		this.$el.append(getTemplate('templates/header.html'));
-
-		var dataFeatures = {"header" : true, "title" : true};
-		this.$el.append(getTemplate('templates/pastingFeatures.html', dataFeatures));
-		this.$el.append(getTemplate('templates/pastingConsole.html', dataFeatures));
+		this.$el.append(getTemplate('templates/pastingFeatures.html'));
+		this.$el.append(getTemplate('templates/pastingConsole.html'));
 		this.$el.append(getTemplate('templates/pastingSection.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 		NProgress.done();
@@ -53,7 +68,7 @@ var UserView = Backbone.View.extend(
 		var dataUser = {"user" : userStr.toLowerCase()};
 		this.$el.html(getTemplate('templates/menu.html'));
 		this.$el.append(getTemplate('templates/userPublic.html', dataUser));
-		var dataFeatures = {"header" : false, "title" : true};
+		this.$el.append(getTemplate('templates/createPasteButton.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -70,20 +85,7 @@ var DocumentView = Backbone.View.extend(
 		this.$el.html(getTemplate('templates/menu.html'));
 		var dataUser = {"user" : userStr.toLowerCase(), "documentId": documentId};
 		this.$el.append(getTemplate('templates/documentPublic.html', dataUser));
-		this.$el.append(getTemplate('templates/footer.html'));
-	}
-});
-
-var TeamView = Backbone.View.extend(
-{
-	el: 'body',
-	initialize: function()
-	{
-		this.render();
-	},
-	render: function()
-	{
-		this.$el.append(getTemplate('templates/pastingTeam.html'));
+		this.$el.append(getTemplate('templates/createPasteButton.html'));
 		this.$el.append(getTemplate('templates/footer.html'));
 	}
 });
@@ -99,9 +101,7 @@ var Router = Backbone.Router.extend (
 				} else {
 					var home_view = new HomeView();
 					pastingEditor = bindPastingInput();
-					doForPlatform();
 					bindShareButton(pastingEditor);
-					bindHeaderPaster(pastingEditor);
 					checkOauth();
 					bindLoginButtons();
 				}
@@ -118,8 +118,8 @@ var Router = Backbone.Router.extend (
 					$.removeCookie('u', { path: '/' });
 					location.href = "/";
 				} else {
-					var user_view = new UserView(username.toLowerCase());
 
+					var user_view = new UserView(username.toLowerCase());
 					var publicsPastes = new PublicsPasteModel();
 					var fetchFilters = {
 						username: username.toLowerCase(),
@@ -138,7 +138,16 @@ var Router = Backbone.Router.extend (
 	    					{
 		    					var defaultData = {"defaultPaste": response.publics[0]};
 
+		    					var privatePaste = false;
+		    					if ("1" == response.publics[0].protected) {
+		    						privatePaste = true;
+		    					}
+
 		    					var defaultMenuData = {
+		    						"ownerId" : response.publics[0].user_id,
+		    						"userId" : $.cookie('uid'),
+		    						"hashId" : response.publics[0].public_password,
+		    						"private" : privatePaste,
 		    						"documentId" : defaultData.defaultPaste.id, 
 		    						"text" : defaultData.defaultPaste.text,
 		    						"baseUrl" : baseUrl,
@@ -149,7 +158,7 @@ var Router = Backbone.Router.extend (
 		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
 
 		    					if (response.publics.length > 1) {
-		    						var pastesData = {"pastes" : response.publics};
+		    						var pastesData = {"pastes":response.publics, "apiUrl":apiUrl, "baseUrl":baseUrl, "loggedId":$.cookie('uid')};
 		    						$('header').after(getTemplate('templates/pastesTable.html', pastesData));
 		    					}
 		    					
@@ -158,13 +167,95 @@ var Router = Backbone.Router.extend (
 		    					bindDeletes();
 		    					bindLoginButtons();
 		    					checkOauth();
+		    					bindNewPaste();
 		    					NProgress.done();
 		    				} else {
-		    					location.href = "/";
+
+		    					if ($.cookie('u') !== undefined) {
+			    					var defaultData = {"defaultPaste": {}};
+			    					var defaultMenuData = {
+			    						"ownerId" : 0,
+			    						"userId" : $.cookie('uid'),
+			    						"hashId" : 0,
+			    						"private" : false,
+			    						"documentId" : 0, 
+			    						"text" : "",
+			    						"baseUrl" : baseUrl,
+			    						"apiUrl" : apiUrl
+			    					};
+
+			    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+			    					
+			    					bindPastes();
+			    					bindLoginButtons();
+			    					checkOauth();
+			    					bindNewPaste();
+			    					NProgress.done();
+		    					} else {
+									location.href = "/";
+		    					}
+		    					
 		    				}
 	    				}
 	    			);
 				}
+			},
+
+
+			'(:username/:pasteId/:hashId)' : function (username, pasteId, hashId) 
+			{
+				NProgress.start();
+
+				var document_view = new DocumentView(username.toLowerCase(), pasteId);
+
+				var protectedDocument = new ProtectedModel();
+				var fetchFilters = {
+					documentid: pasteId,
+					pwd: hashId
+				};
+
+				protectedDocument.fetch({ data: $.param(fetchFilters) }, 
+				{
+			    	success: function (response) {}
+    			}).always(
+    				function(response) 
+    				{ 
+    					if (response.st == "ok") 
+    					{
+    						
+							var defaultData = {"defaultPaste": response.protected};
+
+	    					var defaultMenuData = {
+	    						"ownerId" : defaultData.defaultPaste.user_id,
+		    					"userId" : $.cookie('uid'),
+	    						"hashId" : hashId,
+	    						"private" : true,
+	    						"documentId" : defaultData.defaultPaste.id, 
+	    						"text" : defaultData.defaultPaste.text,
+	    						"baseUrl" : baseUrl,
+	    						"apiUrl": apiUrl
+	    					};
+
+		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
+	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+
+	    					bindPastes();
+	    					bindCopies();	
+	    					bindDeletes();
+	    					bindLoginButtons();
+	    					checkOauth();
+	    					bindNewPaste();
+	    					NProgress.done();
+
+	    				} else {
+	    					if (checkOauth()) {
+	    						location.href = "/" + $.cookie('u');
+	    					} else {
+	    						location.href = "/";
+	    					}
+	    				}
+    				}
+    			);
 			},
 
 			'(:username/:pasteId)' : function (username, pasteId) 
@@ -189,26 +280,48 @@ var Router = Backbone.Router.extend (
     				{ 
     					if (response.st == "ok") 
     					{
-	    					var defaultData = {"defaultPaste": response.public[0]};
+    						console.log(response);
 
-	    					var defaultMenuData = {
-	    						"documentId" : defaultData.defaultPaste.id, 
-	    						"text" : defaultData.defaultPaste.text,
-	    						"baseUrl" : baseUrl,
-	    						"apiUrl": apiUrl
-	    					};
+    						if (response.public.length > 0) {
 
-		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+    							var defaultData = {"defaultPaste": response.public[0]};
 
-	    					bindPastes();
-	    					bindCopies();	
-	    					bindDeletes();
-	    					bindLoginButtons();
-	    					checkOauth();
-	    					NProgress.done();
+		    					var defaultMenuData = {
+		    						"ownerId" : defaultData.defaultPaste.user_id,
+		    						"userId" : $.cookie('uid'),
+		    						"private" : false,
+		    						"documentId" : defaultData.defaultPaste.id, 
+		    						"text" : defaultData.defaultPaste.text,
+		    						"baseUrl" : baseUrl,
+		    						"apiUrl": apiUrl
+		    					};
+
+			    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
+		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+
+		    					bindPastes();
+		    					bindCopies();	
+		    					bindDeletes();
+		    					bindLoginButtons();
+		    					checkOauth();
+		    					bindNewPaste();
+		    					NProgress.done();
+
+    						} else {
+
+	    						if (checkOauth()) {
+		    						location.href = "/" + $.cookie('u');
+		    					} else {
+		    						location.href = "/";
+		    					}
+    						}
+	    					
 	    				} else {
-	    					location.href = "/";
+	    					if (checkOauth()) {
+	    						location.href = "/" + $.cookie('u');
+	    					} else {
+	    						location.href = "/";
+	    					}
 	    				}
     				}
     			);

@@ -2,7 +2,7 @@
 
 $app->map(
     '/login',
-    function () use ($app, &$_SESSION) 
+    function () use ($app) 
     {    
     	try {
 	        $bodyData = json_decode($app->request->getBody(), true);

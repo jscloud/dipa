@@ -1,9 +1,11 @@
 <div class="content dark style1 featured" id="pastesTable">
 	<div class="container">
 		<section>
+		<!--
 			<header>
-				<h3>Others user pastes</h3>
+				<h3>Other pastes</h3>
 			</header>
+		-->
 			<div class="table-wrapper">
 				<table class="default">
 					<tbody>
@@ -11,6 +13,16 @@
 					    var length = obj.pastes.length - 1;
 					    for (var index = 1; index <= length; index++) {
 					    	var paste = obj.pastes[index];
+
+							if ("1" == paste.protected) {
+								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
+						    	var copyLabel	= "COPY SECRET LINK";
+						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id + "/" + paste.public_password;
+							} else {
+								var copyUrl		= obj.baseUrl + "/p/" + paste.id;
+						    	var copyLabel	= "COPY LINK";
+						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id;
+							}
 						%>
 							<tr>
 								<td>
@@ -19,17 +31,17 @@
 									</textarea>
 									<ul class="menu">
 										<li>
-											<a data-clipboard-text="<%= paste.text %>" title="Click to copy text" class="p-copy">COPY TEXT</a>
+											<a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a>
 										</li>
 										<li>
-											<a data-clipboard-text="http://pasting.io/p/<%= paste.id %>" title="Click to copy link" class="p-copy">COPY LINK</a>
+											<a href="<%= rawUrl %>" target="_blank">RAW</a>
 										</li>
-										<li>
-											<a href="http://api.pasting.io/raw/<%= paste.id %>" target="_blank">RAW</a>
-										</li>
-										<li>
-											<a class="delete" data-documentid="<%= paste.id %>">DELETE</a>
-										</li>
+
+										<% if (paste.user_id == obj.loggedId) { %>
+											<li>
+												<a class="delete" data-del-documentid="<%= paste.id %>">DELETE</a>
+											</li>
+										<% } %>
 									</ul>
 								</td>
 							</tr>
