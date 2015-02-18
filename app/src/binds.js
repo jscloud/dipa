@@ -103,21 +103,25 @@ function bindShareButton()
 			    protected: 0
 			};
 
-			NProgress.start();
-			
-			Register.save(pasteData, {
-				success: function (response) {
-					NProgress.done();
-					if (response.attributes.st == 'ok') {
-						$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
-						$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
-						$.cookie('u', response.attributes.u.toLowerCase(), {expires: 7, path: '/' });
-						location.href = '/' + $('#email').val().toLowerCase();
-					} else {
-						swal("Error", response.attributes.msg, "error");
+			if ($('#pwd').val() == $('#pwd2').val()) {
+				NProgress.start();
+				Register.save(pasteData, {
+					success: function (response) {
+						NProgress.done();
+						if (response.attributes.st == 'ok') {
+							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
+							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
+							$.cookie('u', response.attributes.u.toLowerCase(), {expires: 7, path: '/' });
+							location.href = '/' + $('#email').val().toLowerCase();
+						} else {
+							swal("Error", response.attributes.msg, "error");
+						}
 					}
-				}
-	    	});
+		    	});
+		    } else {
+		    	swal("Error!", "Passwords don't match", "error");
+		    }
+
 	    } else {
 	    	swal("Error!", "Please, complete all fields", "error");
 	    }
