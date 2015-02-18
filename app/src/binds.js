@@ -89,18 +89,18 @@ function bindPastingInput()
 	return codeEditor;
 }
 
-function bindShareButton(editor)
+function bindShareButton()
 {
-	$('#shareBtn, #shareBtnPrivate').on('click', function() {
+	$('#shareBtn').on('click', function() {
 
-		if ($('#email').val() != '' && $('#pwd').val() != '' && editor.getValue() != '') 
+		if ($('#email').val() != '' && $('#pwd').val() != '') 
 		{
 			var Register = new RegisterModel();
 			var pasteData = {
 			    username: $('#email').val().toLowerCase(),
 			    pwd: $('#pwd').val(),
-			    text: editor.getValue(),
-			    protected: $(this).data('protected')
+			    text: "My first Pasting",
+			    protected: 0
 			};
 
 			NProgress.start();

@@ -2,26 +2,28 @@
 	<header>
 		<div class="container">
 			<h2>CREATE YOUR PASTING CLOUD</h2>
-			<h2>SHARE YOUR CLIPBOARD</h2>
+			<h2>SHARE YOUR CLIPBOARD NOW</h2>
+			<p>Create your username and access your pastes by entering: pasting.io/yourUsername</p>
 		</div>
 	</header>
 	<div class="content style4 featured">
 		<div class="container 75%">
 			<form method="post" action="#" name="pastingForm">
-				<div class="row 50%">
-					<div class="6u"><input type="text" name="username" placeholder="Create your username here" id="email" required /></div>
-					<div class="6u"><input type="password" placeholder="Create your password here" id="pwd" /></div>
+				<div class="row 100%">
+					<input type="text" name="username" placeholder="Create your username here" id="email" required style="margin-bottom: 10px;" />
+					<input type="password" placeholder="Create your password here" id="pwd" required style="margin-bottom: 10px;" />
+					<input type="password" placeholder="Confirm your password" id="pwd2" required />
 				</div>
+				<!--
 				<div class="row 50%">
 					<div class="12u"><textarea placeholder="Paste or type your text!" id="pastingStr" required></textarea></div>
 				</div>
-				<p>Create your username and access your pastes by entering: pasting.io/yourUsername</p>
+				-->
 				<div class="row">
 					<div class="12u">
 						<ul class="actions">
-							<li><input type="submit" class="button" value="Share Public" id="shareBtn" data-protected="0" /></li>
-							<li><input type="submit" class="button" value="Share Private" id="shareBtnPrivate" data-protected="1" /></li>
-							<li><input type="reset" class="button alt" value="Clear Text " /></li>
+							<li><input type="submit" class="button" value="Create" id="shareBtn" data-protected="0" /></li>
+							<li><input type="reset" class="button alt" value="Clear" /></li>
 						</ul>
 					</div>
 				</div>

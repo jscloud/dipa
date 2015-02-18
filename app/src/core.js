@@ -115,8 +115,7 @@ var Router = Backbone.Router.extend (
 					location.href = "/" + $.cookie('u');
 				} else {
 					var home_view = new HomeView();
-					pastingEditor = bindPastingInput();
-					bindShareButton(pastingEditor);
+					bindShareButton();
 					checkOauth();
 					bindLoginButtons();
 				}
@@ -136,8 +135,7 @@ var Router = Backbone.Router.extend (
 				} else if ('create' == username) {
 					
 					var create_view = new CreateView();
-					pastingEditor = bindPastingInput();
-					bindShareButton(pastingEditor);
+					bindShareButton();
 					checkOauth();
 					bindLoginButtons();
 
@@ -208,9 +206,9 @@ var Router = Backbone.Router.extend (
 			    						"apiUrl" : apiUrl
 			    					};
 
-			    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+			    					// $('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
 			    					
-			    					bindPastes();
+			    					// bindPastes();
 			    					bindLoginButtons();
 			    					checkOauth();
 			    					bindNewPaste();
