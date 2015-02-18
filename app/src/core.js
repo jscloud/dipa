@@ -7,9 +7,7 @@ var RegisterModel = Backbone.Model.extend({
 
 var NewPasteModel = Backbone.Model.extend({
 	urlRoot: apiUrl + '/create',
-	defaults: {
-	    code: 0
-	}
+	defaults: {}
 });
 
 var DeletePasteModel = Backbone.Model.extend({
@@ -90,6 +88,23 @@ var DocumentView = Backbone.View.extend(
 	}
 });
 
+var CreateView = Backbone.View.extend(
+{
+	el: 'body',
+	initialize: function()
+	{
+		this.render();
+	},
+	render: function()
+	{
+		NProgress.start();
+		this.$el.html(getTemplate('templates/menu.html'));
+		this.$el.append(getTemplate('templates/pastingSection.html'));
+		this.$el.append(getTemplate('templates/footer.html'));
+		NProgress.done();
+	}
+});
+
 var Router = Backbone.Router.extend (
 	{ 
 		routes: 
@@ -117,6 +132,15 @@ var Router = Backbone.Router.extend (
 					$.removeCookie('uid', { path: '/' });
 					$.removeCookie('u', { path: '/' });
 					location.href = "/";
+
+				} else if ('create' == username) {
+					
+					var create_view = new CreateView();
+					pastingEditor = bindPastingInput();
+					bindShareButton(pastingEditor);
+					checkOauth();
+					bindLoginButtons();
+
 				} else {
 
 					var user_view = new UserView(username.toLowerCase());
