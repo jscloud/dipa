@@ -112,6 +112,11 @@ function bindShareButton()
 						    $username: response.attributes.u.toLowerCase()
 						});
 
+						mixpanel.track("First paste", {
+    						"userName": response.attributes.username,
+    						"userId": response.attributes.userId
+						});
+
 						NProgress.done();
 						if (response.attributes.st == 'ok') {
 							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
@@ -181,7 +186,7 @@ function bindLoginButtons ()
 					success: function (response) 
 					{
 						if (response.attributes.st == 'ok') {
-							mixpanel.identify(response.attributes.userId + "_" + response.attributes.username.toLowerCase());
+							mixpanel.identify(response.attributes.username.toLowerCase());
 							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
 							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
 							$.cookie('u', response.attributes.username.toLowerCase(), {expires: 7, path: '/' });
@@ -230,10 +235,14 @@ function bindNewPaste()
 						text: textStr
 					};
 
-					console.log(pasteData);
 					Paste.save(pasteData, {
 						success: function (response) 
 						{
+							mixpanel.track("New paste", {
+    							"pasteId": response.attributes.documentId,
+    							"userName": response.attributes.username
+							});
+
 							console.log(response);
 							NProgress.done();
 							if (response.attributes.st == 'ok') {
