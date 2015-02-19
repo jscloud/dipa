@@ -176,6 +176,7 @@ function bindLoginButtons ()
 					success: function (response) 
 					{
 						if (response.attributes.st == 'ok') {
+							mixpanel.identify(response.attributes.userId + "_" + response.attributes.username.toLowerCase());
 							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
 							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
 							$.cookie('u', response.attributes.username.toLowerCase(), {expires: 7, path: '/' });
