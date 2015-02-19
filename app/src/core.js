@@ -114,6 +114,7 @@ var Router = Backbone.Router.extend (
 				if (checkOauth()) {
 					location.href = "/" + $.cookie('u');
 				} else {
+					mixpanel.track("Home-Landing View");
 					var home_view = new HomeView();
 					bindShareButton();
 					checkOauth();
@@ -334,7 +335,7 @@ var Router = Backbone.Router.extend (
 
     						if (response.public.length > 0) {
 
-    							
+
 		    					mixpanel.track("Paste view", {
 		    						"targetUser": username.toLowerCase(),
 									"targetPasteId": pasteId,
