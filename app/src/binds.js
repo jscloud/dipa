@@ -24,6 +24,7 @@ function bindCopies()
 	var client = new ZeroClipboard( document.getElementsByClassName("p-copy") );
 	client.on( "ready", function( readyEvent ) {
 	  client.on( "aftercopy", function( event ) {
+	  	mixpanel.track("Copy paste link");
 	  	swal({title: "Copied", type: "success", timer: 1000});
 	  } );
 	});
@@ -53,8 +54,23 @@ function bindDeletes()
 						{
 							NProgress.done();
 							if (response.attributes.st == 'ok') {
+
+								mixpanel.track("Delete paste", {
+									"userId" : $.cookie('uid'),
+    								"userName": $.cookie('u'),
+    								"pasteId": documentId
+								});
+
 								location.href = "/" + $.cookie('u');
 							} else {
+
+								mixpanel.track("Failed Delete paste", {
+									"userId" : $.cookie('uid'),
+    								"userName": $.cookie('u'),
+    								"pasteId": documentId,
+    								"errorMsg" : response.attributes.msg
+								});
+
 								swal("Error", response.attributes.msg, "error");
 							}
 						}
@@ -186,12 +202,25 @@ function bindLoginButtons ()
 					success: function (response) 
 					{
 						if (response.attributes.st == 'ok') {
-							mixpanel.identify(response.attributes.username.toLowerCase());
+							mixpanel.identify(response.attributes.userId + "_" + response.attributes.username.toLowerCase());
+
+							mixpanel.track("User Logged", {
+    							"userId": response.attributes.userId,
+    							"userName": response.attributes.username.toLowerCase()
+							});
+
 							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
 							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
 							$.cookie('u', response.attributes.username.toLowerCase(), {expires: 7, path: '/' });
 							location.href = '/' + response.attributes.username.toLowerCase();
 						} else {
+
+							mixpanel.track("Failed Login", {
+								"userName": data.username,
+								"password": data.password,
+								"msgError": response.attributes.msg
+							});
+
 							$.removeCookie('v', { path: '/' });
 							$.removeCookie('uid', { path: '/' });
 							$.removeCookie('u', { path: '/' });
@@ -248,6 +277,7 @@ function bindNewPaste()
 							if (response.attributes.st == 'ok') {
 								location.href = "/" + response.attributes.username + "/" + response.attributes.documentId;
 							} else {
+								mixpanel.track("Failed New paste");
 								swal("Error", response.attributes.msg, "error");
 							}
 						}

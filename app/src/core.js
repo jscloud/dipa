@@ -127,6 +127,11 @@ var Router = Backbone.Router.extend (
 
 				if ('logout' == username) 
 				{
+					mixpanel.track("User logout", {
+						"userId" : $.cookie('uid'),
+    					"userName": $.cookie('u')
+					});
+
 					$.removeCookie('v', { path: '/' });
 					$.removeCookie('uid', { path: '/' });
 					$.removeCookie('u', { path: '/' });
@@ -134,12 +139,19 @@ var Router = Backbone.Router.extend (
 
 				} else if ('create' == username) {
 					
+					mixpanel.track("Create account view");
 					var create_view = new CreateView();
 					bindShareButton();
 					checkOauth();
 					bindLoginButtons();
 
 				} else {
+
+					mixpanel.track("User view", {
+						"targetUser": username.toLowerCase(),
+						"userId" : $.cookie('uid'),
+						"userName" : $.cookie('u')
+					});
 
 					var user_view = new UserView(username.toLowerCase());
 					var publicsPastes = new PublicsPasteModel();
@@ -244,6 +256,14 @@ var Router = Backbone.Router.extend (
     				{ 
     					if (response.st == "ok") 
     					{
+
+    						mixpanel.track("Private paste view", {
+								"targetUser": username.toLowerCase(),
+								"targetPasteId": pasteId,
+								"targetHash": hashId,
+								"userId" : $.cookie('uid'),
+								"userName" : $.cookie('u')
+							});
     						
 							var defaultData = {"defaultPaste": response.protected};
 
@@ -270,6 +290,15 @@ var Router = Backbone.Router.extend (
 	    					NProgress.done();
 
 	    				} else {
+
+	    					mixpanel.track("Access denied - Private paste view", {
+	    						"targetUser": username.toLowerCase(),
+								"targetPasteId": pasteId,
+								"targetHash": hashId,
+								"userId" : $.cookie('uid'),
+								"userName" : $.cookie('u')
+	    					});
+
 	    					if (checkOauth()) {
 	    						location.href = "/" + $.cookie('u');
 	    					} else {
@@ -302,9 +331,16 @@ var Router = Backbone.Router.extend (
     				{ 
     					if (response.st == "ok") 
     					{
-    						console.log(response);
 
     						if (response.public.length > 0) {
+
+    							
+		    					mixpanel.track("Paste view", {
+		    						"targetUser": username.toLowerCase(),
+									"targetPasteId": pasteId,
+									"userId" : $.cookie('uid'),
+									"userName" : $.cookie('u')
+		    					});
 
     							var defaultData = {"defaultPaste": response.public[0]};
 
