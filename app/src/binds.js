@@ -107,6 +107,11 @@ function bindShareButton()
 				NProgress.start();
 				Register.save(pasteData, {
 					success: function (response) {
+
+						mixpanel.people.set({
+						    $username: response.attributes.u.toLowerCase()
+						});
+
 						NProgress.done();
 						if (response.attributes.st == 'ok') {
 							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
