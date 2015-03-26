@@ -82,7 +82,7 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
-					    	var displayText =  paste.text.substring(0,98) + ' ..........';
+					    	var displayText =  paste.text.substring(0,98) + ' .......';
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
@@ -96,7 +96,11 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 						;
 __p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class="pastingBlock" onclick="location.href=\'' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
-'\';">\n\t\t\t\t\t\t\t\t\t\t' +
+'\';">\n\t\t\t\t\t\t\t\t\t\t';
+ if ("1" == paste.protected) { ;
+__p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 18px;color:rgba(53, 85, 120, 0.59);"></i>\n\t\t\t\t\t\t\t\t\t\t';
+ } ;
+__p += '\n\t\t\t\t\t\t\t\t\t\t' +
 ((__t = ( displayText )) == null ? '' : __t) +
 '\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
