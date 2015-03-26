@@ -47,7 +47,7 @@ return __p
 
 this["JST"]["templates/documentPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
+__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2 style="margin-top: 8px;">pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
 '/' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
@@ -161,7 +161,7 @@ return __p
 
 this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section class="main">\n\t<header style="height: 90px;">\n\t\t<div class="container">\n\t\t\t<h2 style="margin-top: 4px;">pasting.io/' +
+__p += '<section class="main">\n\t<header style="height: 90px;">\n\t\t<div class="container">\n\t\t\t<h2 style="margin-top: 8px;">pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
 '</h2>\n\t\t</div>\n\t</header>\n</section>';
 return __p
