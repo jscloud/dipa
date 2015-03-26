@@ -95,7 +95,7 @@
 
 		.dark a
 		{
-			color: #fff;
+			color: #000;
 			border-bottom-color: rgba(255,255,255,0.5);
 		}
 
@@ -903,7 +903,8 @@
 			.main > .content.style1
 			{
 				/* background: linear-gradient(45deg, #243FAB, #3F79A3, #1E2337); */
-				background-color:  rgba(29, 65, 126, 0.89);
+				/*background-color:  rgba(29, 65, 126, 0.89);*/
+				background-color: white;
 			}
 
 			.main > .content.style2
