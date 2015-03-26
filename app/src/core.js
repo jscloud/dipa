@@ -1,10 +1,3 @@
-var RegisterModel = Backbone.Model.extend({
-	urlRoot: apiUrl + '/register',
-	defaults: {
-	    code: 0
-	}
-});
-
 var NewPasteModel = Backbone.Model.extend({
 	urlRoot: apiUrl + '/create',
 	defaults: {}
@@ -32,26 +25,6 @@ var ProtectedModel = Backbone.Model.extend({
 
 var Login = Backbone.Model.extend({
     urlRoot: apiUrl + '/login'
-});
-
-var HomeView = Backbone.View.extend(
-{
-	el: 'body',
-	initialize: function()
-	{
-		this.render();
-	},
-	render: function()
-	{
-		NProgress.start();
-		this.$el.html(getTemplate('templates/menu.html'));
-		this.$el.append(getTemplate('templates/header.html'));
-		this.$el.append(getTemplate('templates/pastingFeatures.html'));
-		this.$el.append(getTemplate('templates/pastingConsole.html'));
-		this.$el.append(getTemplate('templates/pastingSection.html'));
-		this.$el.append(getTemplate('templates/footer.html'));
-		NProgress.done();
-	}
 });
 
 var UserView = Backbone.View.extend(
@@ -115,12 +88,9 @@ var Router = Backbone.Router.extend (
 					location.href = "/" + $.cookie('u');
 				} else {
 					mixpanel.track("Home-Landing View");
-					var home_view = new HomeView();
-					bindShareButton();
-					checkOauth();
-					bindLoginButtons();
+					location.href = '/landing/';
 				}
-			}, 
+			},
 
 			'(:username)' : function (username) 
 			{
@@ -137,14 +107,6 @@ var Router = Backbone.Router.extend (
 					$.removeCookie('uid', { path: '/' });
 					$.removeCookie('u', { path: '/' });
 					location.href = "/";
-
-				} else if ('create' == username) {
-					
-					mixpanel.track("Create account view");
-					var create_view = new CreateView();
-					bindShareButton();
-					checkOauth();
-					bindLoginButtons();
 
 				} else {
 
@@ -220,8 +182,8 @@ var Router = Backbone.Router.extend (
 			    					};
 
 			    					// $('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-			    					
 			    					// bindPastes();
+			    					
 			    					bindLoginButtons();
 			    					checkOauth();
 			    					bindNewPaste();

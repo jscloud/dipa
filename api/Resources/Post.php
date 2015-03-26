@@ -85,6 +85,92 @@ $app->map(
     }
 )->via('OPTIONS', 'POST');
 
+$app->map(
+    '/registerUser',
+    function () use ($app) 
+    {    
+    	try {
+	        $bodyData = $_POST;
+	        $response = array('st' => 'ok');
+	        $hash = null;
+
+	        if (array_key_exists('username', $bodyData) && array_key_exists('pwd', $bodyData)) {
+
+	            if (array_key_exists('text', $bodyData)) {
+
+	            	$userMapper = new \Models\User\UserMapper($app->pdo);
+	            	$user       = $userMapper->findByUsername($bodyData['username']);
+
+	                if ($user) {
+	            		$response['st'] = 'error';
+	                	$response['msg'] = 'Username is already in use';
+	                } else {
+	                    $userModel       = new \Models\User\User;
+	                    $userModelMapper = new \Models\User\UserMapper($app->pdo);
+
+	                    $userModel->username = strtolower($bodyData['username']);
+	                    $userModel->password = $bodyData['pwd'];
+	                    $userModel->email 	 =  $bodyData['email'];
+
+	                   	$hash = substr(substr(
+							"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+							mt_rand(0 ,25), 1) . substr(md5(time()), 1
+	   					), 0, 29);
+
+	   					$userModel->hash = $hash;
+	                    $userModelMapper->insert($userModel);
+	                    $userId = $userModel->id;
+	                    $username = $userModel->username;
+
+	                    $document       = new \Models\Document\Document;
+	                    $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+
+	                   	if (array_key_exists('protected', $bodyData)) {
+	                    	if (in_array($bodyData['protected'], array(0,1))) {
+	                    		$document->protected = $bodyData['protected'];
+	                    	}
+	                    }
+
+	                    if ($document->protected == 1) {
+		                   	$public_pwd = substr(substr(
+								"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+								mt_rand(0 ,25), 1) . substr(md5(time()), 1
+		   					), 0, 29);
+
+		   					$document->public_password = $public_pwd;
+	                    }
+
+	                    $document->user_id  = $userId;
+	                    $document->text     = $bodyData['text'];
+
+	                    $documentMapper->insert($document);
+
+	                    $response['v'] 			= $hash;
+	                    $response['userId']     = $userId;
+	                    $response['u'] 			= $userModel->username;
+	                    $response['documentId'] = $document->id;
+	                }
+
+	            } else {
+	                $response['st'] = 'error';
+	                $response['msg'] = 'Missing text parameter';
+	            }
+
+	        } else {
+	            $response['st'] = 'error';
+	            $response['msg'] = 'Missing parameters: username, pwd';
+	        }
+
+	    } catch(\Exception $e) {
+	    	$response['st'] = 'error';
+	        $response['msg'] = 'Unexpected error';
+	    }
+
+		$app->response()->header("Content-Type", "application/json");
+        echo json_encode($response);
+    }
+)->via('POST');
+
 
 $app->map(
     '/create',

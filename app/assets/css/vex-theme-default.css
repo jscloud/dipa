@@ -347,7 +347,7 @@
   -webkit-border-radius: 5px;
   border-radius: 5px;
   font-family: "Helvetica Neue", sans-serif;
-  background: #f0f0f0;
+  background:  rgba(240, 240, 240, 0.94);
   color: #444444;
   padding: 1em;
   position: relative;
@@ -476,12 +476,12 @@
 }
 /* line 116, ../sass/vex-theme-default.sass */
 .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-primary {
-  background: rgba(66, 104, 162, 1);
+  background: rgba(29, 65, 126, 0.89);
   color: white;
 }
 /* line 120, ../sass/vex-theme-default.sass */
 .vex.vex-theme-default .vex-dialog-button.vex-dialog-button-secondary {
-  background: #e0e0e0;
+  background: white;
   color: #777777;
 }
 

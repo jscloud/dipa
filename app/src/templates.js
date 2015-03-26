@@ -57,7 +57,7 @@ return __p
 
 this["JST"]["templates/footer.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section id="footer">\n\t<ul class="icons">\n\t\t<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>\n\t\t<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>\n\t</ul>\n\t<div class="copyright">\n\t\t<a href="https://www.npmjs.com/package/pasting">GET PASTING CLI</a></br>\n\t\tBETA VERSION\n\t\t<ul class="menu">\n\t\t\t<li><a href="/">PASTING.IO</a></li>\n\t\t\t<li>&copy; JS. All rights reserved.</li>\n\t\t\t<li><a href="http://pastingio.blogspot.com.ar" target="_blank">TECH BLOG</a></li>\n\t\t</ul>\n\t</div>\n</section>';
+__p += '<section id="footer">\n\t<ul class="icons">\n\t\t<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>\n\t\t<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>\n\t</ul>\n\t<div class="copyright">\n\t\t<ul class="menu">\n\t\t\t<li><a href="/landing/#cli">PASTING CLI</a> </li>\n\t\t \t<li><a href="/landing/#viewer">PASTING VIEWER</a> </li>\n\t\t</ul>\n\n\t\t<ul class="menu">\n\t\t\t<li><a href="/landing/">PASTING.IO</a></li>\n\t\t\t<li>&copy; JS. All rights reserved.</li>\n\t\t\t<li><a href="http://pastingio.blogspot.com.ar" target="_blank">TECH BLOG</a></li>\n\t\t</ul>\n\t</div>\n</section>';
 return __p
 };
 
@@ -82,6 +82,8 @@ __p += '<div class="content dark style1 featured" id="pastesTable">\n\t<div clas
 					    for (var index = 1; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
+					    	var displayText =  paste.text.substring(0,98) + ' ..........';
+
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
 						    	var copyLabel	= "COPY SECRET LINK";
@@ -92,9 +94,13 @@ __p += '<div class="content dark style1 featured" id="pastesTable">\n\t<div clas
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id;
 							}
 						;
-__p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<textarea class="codePaste">\n' +
-((__t = ( paste.text )) == null ? '' : __t) +
-'\n\t\t\t\t\t\t\t\t\t</textarea>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
+__p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class="pastingBlock" onclick="location.href=\'' +
+((__t = ( copyUrl )) == null ? '' : __t) +
+'\';">\n\t\t\t\t\t\t\t\t\t\t' +
+((__t = ( displayText )) == null ? '' : __t) +
+'\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
+((__t = ( copyUrl )) == null ? '' : __t) +
+'">VIEW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
 '" title="Click to copy link" class="p-copy">' +
 ((__t = ( copyLabel )) == null ? '' : __t) +

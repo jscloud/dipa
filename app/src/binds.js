@@ -1,19 +1,9 @@
 function bindPastes() 
 {
-	$('.codePaste').each(function() {
-	    CodeMirror.fromTextArea(this, {
-	        mode: 'javascript',
-	        theme: "monokai",
-	        height: "300px",
-	        lineNumbers: true,
-	        readOnly: true
-	    });
-	});
-
 	CodeMirror.fromTextArea(document.getElementById("defaultPaste"), {
 	    mode: 'javascript',
 	    theme: "monokai",
-	    viewportMargin: Infinity,
+	    /*viewportMargin: Infinity, */
 	    lineNumbers: true,
 	    readOnly: true
 	});
@@ -90,69 +80,11 @@ function bindPastingInput()
 	    autoCloseBrackets: true,
 	    matchBrackets: true,
 	    showTrailingSpace: true,
-	    theme: "monokai",
-	  	extraKeys: {
-	        "F11": function(cm) {
-	          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-	        },
-	        "Esc": function(cm) {
-	          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-	        }
-	  	}
+	    theme: "monokai"
 	});
 	
 	codeEditor.setValue("");
 	return codeEditor;
-}
-
-function bindShareButton()
-{
-	$('#shareBtn').on('click', function() {
-
-		if ($('#email').val() != '' && $('#pwd').val() != '') 
-		{
-			var Register = new RegisterModel();
-			var pasteData = {
-			    username: $('#email').val().toLowerCase(),
-			    pwd: $('#pwd').val(),
-			    text: "My first Pasting",
-			    protected: 0
-			};
-
-			if ($('#pwd').val() == $('#pwd2').val()) {
-				NProgress.start();
-				Register.save(pasteData, {
-					success: function (response) {
-
-						mixpanel.people.set({
-						    $username: response.attributes.u.toLowerCase()
-						});
-
-						mixpanel.track("First paste", {
-    						"userName": response.attributes.username,
-    						"userId": response.attributes.userId
-						});
-
-						NProgress.done();
-						if (response.attributes.st == 'ok') {
-							$.cookie('v', response.attributes.v, {expires: 7, path: '/' });
-							$.cookie('uid', response.attributes.userId, {expires: 7, path: '/' });
-							$.cookie('u', response.attributes.u.toLowerCase(), {expires: 7, path: '/' });
-							location.href = '/' + $('#email').val().toLowerCase();
-						} else {
-							swal("Error", response.attributes.msg, "error");
-						}
-					}
-		    	});
-		    } else {
-		    	swal("Error!", "Passwords don't match", "error");
-		    }
-
-	    } else {
-	    	swal("Error!", "Please, complete all fields", "error");
-	    }
-		return false;
-	});
 }
 
 function checkOauth()
@@ -184,7 +116,7 @@ function bindLoginButtons ()
 	$('.login').on('click', function() {
 		vex.dialog.open({
 		  message: 'Enter your username and password',
-		  input: "<input name=\"username\" type=\"text\" placeholder=\"Username\" required />\n<input name=\"password\" type=\"password\" placeholder=\"Password\" required /> <div style='float:right'><a href='/create' style='text-align:right;'> Create Account</a></div></br>",
+		  input: "<input name=\"username\" type=\"text\" placeholder=\"Username\" required />\n<input name=\"password\" type=\"password\" placeholder=\"Password\" required /> <div style='float:right'><a href='/landing/#signup' style='text-align:right;'> Create Account</a></div></br>",
 		  buttons: [
 		    $.extend({}, vex.dialog.buttons.YES, {
 		      text: 'Login'

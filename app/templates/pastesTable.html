@@ -14,6 +14,8 @@
 					    for (var index = 1; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
+					    	var displayText =  paste.text.substring(0,98) + ' ..........';
+
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
 						    	var copyLabel	= "COPY SECRET LINK";
@@ -26,10 +28,13 @@
 						%>
 							<tr>
 								<td>
-									<textarea class="codePaste">
-<%= paste.text %>
-									</textarea>
+									<div class="pastingBlock" onclick="location.href='<%= copyUrl %>';">
+										<%= displayText %>
+									</div>
 									<ul class="menu">
+										<li>
+											<a href="<%= copyUrl %>">VIEW</a>
+										</li>
 										<li>
 											<a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a>
 										</li>
