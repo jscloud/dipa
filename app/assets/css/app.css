@@ -130,16 +130,21 @@
 }
 
 div .pastingBlock {
-	background: rgb(239, 239, 239);
-  	border-radius: 4px;
-  	color:  rgba(52, 84, 119, 0.99);
-  	font-family: monospace;
-  	font-size: 13px;
-  	font-weight: 100;
+	font-family: monospace;
+	font-size: 13px;
+	font-weight: 100;
+  	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  	box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  	background: #fff;
+  	border-left: 10px solid rgba(52, 84, 119, 0.99);
+	padding: 20px 80px 20px 40px; 
+	text-align: left;
+	text-decoration: none;
+	color: #7b8087;
+	cursor: pointer;
 }
 
 div .pastingBlock:hover {
-	background: rgba(52, 84, 119, 0.99);
-	color: white;
+	background: rgba(0, 0, 0, 0.02);
 	cursor: pointer;
 }

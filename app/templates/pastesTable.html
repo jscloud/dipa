@@ -1,17 +1,12 @@
-<div class="content dark style1 featured" id="pastesTable">
+<div class="content dark style1 featured" id="pastesTable" style="padding: 0em 0 6em 0;">
 	<div class="container">
-		<section>
-		<!--
-			<header>
-				<h3>Other pastes</h3>
-			</header>
-		-->
+		<section>	
 			<div class="table-wrapper">
 				<table class="default">
 					<tbody>
 						<%
 					    var length = obj.pastes.length - 1;
-					    for (var index = 1; index <= length; index++) {
+					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
 					    	var displayText =  paste.text.substring(0,98) + ' ..........';

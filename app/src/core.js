@@ -133,39 +133,16 @@ var Router = Backbone.Router.extend (
 	    				{ 
 	    					if (response.publics.length > 0) 
 	    					{
-		    					var defaultData = {"defaultPaste": response.publics[0]};
-
-		    					var privatePaste = false;
-		    					if ("1" == response.publics[0].protected) {
-		    						privatePaste = true;
-		    					}
-
-		    					var defaultMenuData = {
-		    						"ownerId" : response.publics[0].user_id,
-		    						"userId" : $.cookie('uid'),
-		    						"hashId" : response.publics[0].public_password,
-		    						"private" : privatePaste,
-		    						"documentId" : defaultData.defaultPaste.id, 
-		    						"text" : defaultData.defaultPaste.text,
-		    						"baseUrl" : baseUrl,
-		    						"apiUrl" : apiUrl
-		    					};
-
-		    					$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-
-		    					if (response.publics.length > 1) {
-		    						var pastesData = {"pastes":response.publics, "apiUrl":apiUrl, "baseUrl":baseUrl, "loggedId":$.cookie('uid')};
-		    						$('header').after(getTemplate('templates/pastesTable.html', pastesData));
-		    					}
+	    						var pastesData = {"pastes":response.publics, "apiUrl":apiUrl, "baseUrl":baseUrl, "loggedId":$.cookie('uid')};
+	    						$('header').after(getTemplate('templates/pastesTable.html', pastesData));
 		    					
-		    					bindPastes();
 		    					bindCopies();
 		    					bindDeletes();
 		    					bindLoginButtons();
 		    					checkOauth();
 		    					bindNewPaste();
 		    					NProgress.done();
+
 		    				} else {
 
 		    					if ($.cookie('u') !== undefined) {

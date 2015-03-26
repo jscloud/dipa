@@ -76,10 +76,10 @@ return __p
 this["JST"]["templates/pastesTable.html"] = function(obj) {
 var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
 function print() { __p += __j.call(arguments, '') }
-__p += '<div class="content dark style1 featured" id="pastesTable">\n\t<div class="container">\n\t\t<section>\n\t\t<!--\n\t\t\t<header>\n\t\t\t\t<h3>Other pastes</h3>\n\t\t\t</header>\n\t\t-->\n\t\t\t<div class="table-wrapper">\n\t\t\t\t<table class="default">\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t';
+__p += '<div class="content dark style1 featured" id="pastesTable" style="padding: 0em 0 6em 0;">\n\t<div class="container">\n\t\t<section>\t\n\t\t\t<div class="table-wrapper">\n\t\t\t\t<table class="default">\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t';
 
 					    var length = obj.pastes.length - 1;
-					    for (var index = 1; index <= length; index++) {
+					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
 					    	var displayText =  paste.text.substring(0,98) + ' ..........';
@@ -161,8 +161,8 @@ return __p
 
 this["JST"]["templates/userPublic.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>pasting.io/' +
+__p += '<section class="main">\n\t<header style="height: 90px;">\n\t\t<div class="container">\n\t\t\t<h2 style="margin-top: 4px;">pasting.io/' +
 ((__t = ( obj.user )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
+'</h2>\n\t\t</div>\n\t</header>\n</section>';
 return __p
 };
