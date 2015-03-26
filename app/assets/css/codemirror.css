@@ -1,10 +1,10 @@
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: 400px;
+  /*height: 400px; */
   text-align: left;
   font-size: medium;
-  /*height: auto;*/
+  height: auto;
   min-height: 100px;
 }
 
