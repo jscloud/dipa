@@ -9,7 +9,7 @@
 					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
-					    	var displayText =  paste.text.substring(0,98) + ' .......';
+					    	var displayText =  paste.text.substring(0,98) + ' ...';
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
@@ -27,6 +27,7 @@
 										<% if ("1" == paste.protected) { %>
 											<i class="fa fa-lock" style="font-size: 18px;color:rgba(53, 85, 120, 0.59);"></i>
 										<% } %>
+
 										<%= displayText %>
 									</div>
 									<ul class="menu">

@@ -100,9 +100,9 @@ __p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class
  if ("1" == paste.protected) { ;
 __p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 18px;color:rgba(53, 85, 120, 0.59);"></i>\n\t\t\t\t\t\t\t\t\t\t';
  } ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t' +
-((__t = ( displayText )) == null ? '' : __t) +
-'\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
+__p += '\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<span class="truncate">' +
+((__t = ( paste.text )) == null ? '' : __t) +
+' </span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
 '">VIEW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +

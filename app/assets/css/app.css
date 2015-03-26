@@ -129,7 +129,7 @@
 	margin-top: 3px;
 }
 
-div .pastingBlock {
+div.pastingBlock {
 	font-family: monospace;
 	font-size: 13px;
 	font-weight: 100;
@@ -144,7 +144,13 @@ div .pastingBlock {
 	cursor: pointer;
 }
 
-div .pastingBlock:hover {
+div.pastingBlock:hover {
 	background: rgba(0, 0, 0, 0.02);
 	cursor: pointer;
+}
+
+span.truncate {
+	white-space: nowrap;
+ 	overflow: hidden;
+ 	text-overflow: ellipsis;
 }
