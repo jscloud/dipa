@@ -289,6 +289,7 @@ $app->map(
     	try {
 	        $bodyData = json_decode($app->request->getBody(), true);
 	        $response = array('st' => 'ok');
+	        $public_pwd = '';
 
 	        if ((array_key_exists('consoleKey', $bodyData) && array_key_exists('text', $bodyData))) {
 
@@ -325,6 +326,7 @@ $app->map(
 
                     $documentMapper->insert($document);
 
+                    $response['hash']     	= $public_pwd;
                     $response['userId']     = $userData->id;
                     $response['username']	= $username;
                     $response['documentId'] = $document->id;

@@ -54,6 +54,13 @@ $(document).ready(function () {
     mainNav();
 });
 
+
+/* Tracking Landing View */
+$(document).ready(function () {
+    mixpanel.track("Home-Landing View");
+});
+
+
 $(window).scroll(function () {
     mainNav();
 });
@@ -226,16 +233,15 @@ $("#contact").submit(function (e) {
                 success: function (response) 
                 {
                     if (response.st == 'ok') {
+
                         $('.success').fadeIn(1000);
                         $('.error').fadeOut(500);
                         $('.error2').fadeOut(500);
 
-                        /*
-                            mixpanel.track("First paste", {
-                                "userName": response.attributes.username,
-                                "userId": response.attributes.userId
-                            });
-                        */
+                        mixpanel.track("First paste", {
+                            "userName": username.toLowerCase(),
+                            "userId": response.userId
+                        });
 
                         $.cookie('v', response.v, {expires: 7, path: '/' });
                         $.cookie('uid', response.userId, {expires: 7, path: '/' });
@@ -290,13 +296,12 @@ $('.pastingLogin').on('click', function(e) {
                 {
                     if (response.st == 'ok') {
 
-                        /*
-                            mixpanel.identify(response.attributes.userId + "_" + response.attributes.username.toLowerCase());
-                            mixpanel.track("User Logged", {
-                                "userId": response.attributes.userId,
-                                "userName": response.attributes.username.toLowerCase()
-                            });
-                        */
+                        mixpanel.identify(response.userId);
+
+                        mixpanel.track("User Logged", {
+                            "userId": response.userId,
+                            "userName": response.username.toLowerCase()
+                        });
 
                         $.cookie('v', response.v, {expires: 7, path: '/' });
                         $.cookie('uid', response.userId, {expires: 7, path: '/' });
@@ -305,13 +310,11 @@ $('.pastingLogin').on('click', function(e) {
 
                     } else {
                        
-                        /*
                         mixpanel.track("Failed Login", {
                             "userName": data.username,
                             "password": data.password,
-                            "msgError": response.attributes.msg
+                            "msgError": response.msg
                         });
-                        */
 
                         $.removeCookie('v', { path: '/' });
                         $.removeCookie('uid', { path: '/' });

@@ -57,7 +57,7 @@ return __p
 
 this["JST"]["templates/footer.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section id="footer">\n\t<ul class="icons">\n\t\t<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>\n\t\t<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>\n\t\t<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>\n\t\t<li><a href="#" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>\n\t</ul>\n\t<div class="copyright">\n\t\t<ul class="menu">\n\t\t\t<li><a href="/landing/#cli">PASTING CLI</a> </li>\n\t\t \t<li><a href="/landing/#viewer">PASTING VIEWER</a> </li>\n\t\t</ul>\n\n\t\t<ul class="menu">\n\t\t\t<li><a href="/landing/">PASTING.IO</a></li>\n\t\t\t<li>&copy; JS. All rights reserved.</li>\n\t\t\t<li><a href="http://pastingio.blogspot.com.ar" target="_blank">TECH BLOG</a></li>\n\t\t</ul>\n\t</div>\n</section>';
+__p += '<section id="footer">\n\t<ul class="icons">\n\t\t<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>\n\t\t<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>\n\t\t<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>\n\t\t<li><a href="#" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>\n\t</ul>\n\t<div class="copyright">\n\t\t<ul class="menu">\n\t\t\t<li><a href="/landing/#cli">PASTING CLI</a> </li>\n\t\t \t<li><a href="/landing/#viewer">PASTING VIEWER</a> </li>\n\t\t</ul>\n\n\t\t<ul class="menu">\n\t\t\t<li>&copy; 2015 <a href="/landing/">PASTING.IO</a></li>\n\t\t\t<li>JS. All Rights Reserved</li>\n\t\t</ul>\n\t</div>\n</section>';
 return __p
 };
 
@@ -82,7 +82,7 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
-					    	var displayText =  paste.text.substring(0,98) + ' .......';
+					    	var displayText =  paste.text.substring(0,98) + ' ...';
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
@@ -100,9 +100,9 @@ __p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class
  if ("1" == paste.protected) { ;
 __p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 18px;color:rgba(53, 85, 120, 0.59);"></i>\n\t\t\t\t\t\t\t\t\t\t';
  } ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t<span class="truncate">' +
-((__t = ( paste.text )) == null ? '' : __t) +
-' </span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
+__p += '\n\n\t\t\t\t\t\t\t\t\t\t' +
+((__t = ( displayText )) == null ? '' : __t) +
+'\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<ul class="menu">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
 '">VIEW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
@@ -136,7 +136,7 @@ return __p
 
 this["JST"]["templates/pastingSection.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<section id="pasteText" class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<h2>CREATE YOUR PASTING CLOUD</h2>\n\t\t\t<h2>SHARE YOUR CLIPBOARD NOW</h2>\n\t\t\t<p>Create your username and access your pastes by entering: pasting.io/yourUsername</p>\n\t\t</div>\n\t</header>\n\t<div class="content style4 featured">\n\t\t<div class="container 75%">\n\t\t\t<form method="post" action="#" name="pastingForm">\n\t\t\t\t<div class="row 100%">\n\t\t\t\t\t<input type="text" name="username" placeholder="Create your username here" id="email" required style="margin-bottom: 10px;" />\n\t\t\t\t\t<input type="password" placeholder="Create your password here" id="pwd" required style="margin-bottom: 10px;" />\n\t\t\t\t\t<input type="password" placeholder="Confirm your password" id="pwd2" required />\n\t\t\t\t</div>\n\t\t\t\t<!--\n\t\t\t\t<div class="row 50%">\n\t\t\t\t\t<div class="12u"><textarea placeholder="Paste or type your text!" id="pastingStr" required></textarea></div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t\t\t<div class="row">\n\t\t\t\t\t<div class="12u">\n\t\t\t\t\t\t<ul class="actions">\n\t\t\t\t\t\t\t<li><input type="submit" class="button" value="Create" id="shareBtn" data-protected="0" /></li>\n\t\t\t\t\t\t\t<li><input type="reset" class="button alt" value="Clear" /></li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</div>\n\t</div>\n</section>';
+__p += '';
 return __p
 };
 

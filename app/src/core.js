@@ -1,8 +1,3 @@
-var NewPasteModel = Backbone.Model.extend({
-	urlRoot: apiUrl + '/create',
-	defaults: {}
-});
-
 var DeletePasteModel = Backbone.Model.extend({
 	urlRoot: apiUrl + '/delete',
 	defaults: {}
@@ -61,23 +56,6 @@ var DocumentView = Backbone.View.extend(
 	}
 });
 
-var CreateView = Backbone.View.extend(
-{
-	el: 'body',
-	initialize: function()
-	{
-		this.render();
-	},
-	render: function()
-	{
-		NProgress.start();
-		this.$el.html(getTemplate('templates/menu.html'));
-		this.$el.append(getTemplate('templates/pastingSection.html'));
-		this.$el.append(getTemplate('templates/footer.html'));
-		NProgress.done();
-	}
-});
-
 var Router = Backbone.Router.extend (
 	{ 
 		routes: 
@@ -87,7 +65,7 @@ var Router = Backbone.Router.extend (
 				if (checkOauth()) {
 					location.href = "/" + $.cookie('u');
 				} else {
-					mixpanel.track("Home-Landing View");
+					mixpanel.track("Redirect-To-Landing");
 					location.href = '/landing/';
 				}
 			},
@@ -157,9 +135,6 @@ var Router = Backbone.Router.extend (
 			    						"baseUrl" : baseUrl,
 			    						"apiUrl" : apiUrl
 			    					};
-
-			    					// $('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
-			    					// bindPastes();
 			    					
 			    					bindLoginButtons();
 			    					checkOauth();
@@ -197,7 +172,7 @@ var Router = Backbone.Router.extend (
     					if (response.st == "ok") 
     					{
 
-    						mixpanel.track("Private paste view", {
+    						mixpanel.track("PrivatePaste_View", {
 								"targetUser": username.toLowerCase(),
 								"targetPasteId": pasteId,
 								"targetHash": hashId,
@@ -231,7 +206,7 @@ var Router = Backbone.Router.extend (
 
 	    				} else {
 
-	    					mixpanel.track("Access denied - Private paste view", {
+	    					mixpanel.track("AccessDenied_PrivatePaste", {
 	    						"targetUser": username.toLowerCase(),
 								"targetPasteId": pasteId,
 								"targetHash": hashId,

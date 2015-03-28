@@ -71,46 +71,6 @@ function bindDeletes()
 	});
 }
 
-function bindPastingInput() 
-{
-	var codeEditor = CodeMirror.fromTextArea(document.getElementById('pastingStr'), {
-	    lineNumbers: true,
-	    viewportMargin: Infinity,
-	    mode: "javascript",
-	    autoCloseBrackets: true,
-	    matchBrackets: true,
-	    showTrailingSpace: true,
-	    theme: "monokai"
-	});
-	
-	codeEditor.setValue("");
-	return codeEditor;
-}
-
-function checkOauth()
-{
-	var oauth = false;
-	if (($.cookie('v') !== undefined) && ($.cookie('uid') !== undefined) && ($.cookie('u') !== undefined)) 
-	{
-		$('.login').hide();
-		$('#signUp').hide();
-		$('#loginButtonHead').hide();
-		$('.logout').show();
-		$('.float-button').show();
-		oauth = true;
-	} else {
-		$.removeCookie('v', { path: '/' });
-		$.removeCookie('uid', { path: '/' });
-		$.removeCookie('u', { path: '/' });
-		$('.login').show();
-		$('.logout').hide();
-		$('#signUp').show();
-		$('loginButtonHead').show();
-		$('.float-button').hide();
-	}
-	return oauth;
-}
-
 function bindLoginButtons () 
 {
 	$('.login').on('click', function() {
@@ -134,7 +94,8 @@ function bindLoginButtons ()
 					success: function (response) 
 					{
 						if (response.attributes.st == 'ok') {
-							mixpanel.identify(response.attributes.userId + "_" + response.attributes.username.toLowerCase());
+
+							mixpanel.identify(response.attributes.userId);
 
 							mixpanel.track("User Logged", {
     							"userId": response.attributes.userId,
@@ -221,4 +182,28 @@ function bindNewPaste()
 
 		return false;
 	});
+}
+
+function checkOauth()
+{
+	var oauth = false;
+	if (($.cookie('v') !== undefined) && ($.cookie('uid') !== undefined) && ($.cookie('u') !== undefined)) 
+	{
+		$('.login').hide();
+		$('#signUp').hide();
+		$('#loginButtonHead').hide();
+		$('.logout').show();
+		$('.float-button').show();
+		oauth = true;
+	} else {
+		$.removeCookie('v', { path: '/' });
+		$.removeCookie('uid', { path: '/' });
+		$.removeCookie('u', { path: '/' });
+		$('.login').show();
+		$('.logout').hide();
+		$('#signUp').show();
+		$('loginButtonHead').show();
+		$('.float-button').hide();
+	}
+	return oauth;
 }
