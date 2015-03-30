@@ -55,16 +55,13 @@
 .myGrandHead {
 	position: fixed;
 	width: 100%;
-	height: 55px;
 	color: white;
-	background-color:  rgba(52, 84, 119, 0.99);
 	z-index: 99;
-	box-shadow: 0px 0px 15px white;
 	padding: 10px 20px 10px 20px;
 	font-size: 22px;
-	/* -webkit-filter: blur(1px);
-		opacity: 0.7;
-		*/
+  	background-color: #125FB6;
+  	box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+  	height: 57px;
 }
 
 .myGrandHead i.icon-pasting-logo {
@@ -103,7 +100,7 @@
   width: 30px;
   padding: 30px;
   font-size: 30px;
-  background:  rgba(52, 84, 119, 0.99);
+  background:  #125FB6;
   position: fixed;
   bottom: 20px; /* Adjust to where you want it */
   right: 20px; /* Adjust to where you want it */
@@ -130,13 +127,12 @@
 }
 
 div.pastingBlock {
-	font-family: monospace;
 	font-size: 13px;
 	font-weight: 100;
   	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,.3);
   	box-shadow: 0 3px 10px rgba(0,0,0,.3);
   	background: #fff;
-  	border-left: 10px solid rgba(52, 84, 119, 0.99);
+  	border-left: 5px solid #125FB6;
 	padding: 20px 80px 20px 40px; 
 	text-align: left;
 	text-decoration: none;

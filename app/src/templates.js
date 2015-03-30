@@ -98,7 +98,7 @@ __p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class
 ((__t = ( copyUrl )) == null ? '' : __t) +
 '\';">\n\t\t\t\t\t\t\t\t\t\t';
  if ("1" == paste.protected) { ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 18px;color:rgba(53, 85, 120, 0.59);"></i>\n\t\t\t\t\t\t\t\t\t\t';
+__p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>\n\t\t\t\t\t\t\t\t\t\t';
  } ;
 __p += '\n\n\t\t\t\t\t\t\t\t\t\t' +
 ((__t = ( displayText )) == null ? '' : __t) +
