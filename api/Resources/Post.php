@@ -408,3 +408,132 @@ $app->map(
         echo json_encode($response);
     }
 )->via('OPTIONS', 'POST');
+
+
+
+$app->map(
+    '/createFromExtension',
+    function () use ($app) 
+    {    
+    	try {
+	        $bodyData = json_decode($app->request->getBody(), true);
+	        $response = array('st' => 'ok');
+	        $public_pwd = '';
+
+	        if ((array_key_exists('extensionKey', $bodyData) && array_key_exists('text', $bodyData))) {
+
+	        	$keyData = explode(":", $bodyData['extensionKey']);
+	        	$extension_key 	= $keyData[0];
+	        	$username 		= $keyData[1];
+
+	            $userValidateMapper = new \Models\User\UserMapper($app->pdo);
+	            $userData 			= $userValidateMapper->validateKeyHash($username, $extension_key, 'extension_key');
+
+                if ($userData) 
+                {
+                    $document       = new \Models\Document\Document;
+                    $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+
+                   	if (array_key_exists('protected', $bodyData)) {
+                    	if (in_array($bodyData['protected'], array(0,1))) {
+                    		$document->protected = $bodyData['protected'];
+                    	}
+                    }
+
+       	            if ($document->protected == 1) {
+	                   	$public_pwd = substr(substr(
+							"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+							mt_rand(0 ,25), 1) . substr(md5(time()), 1
+	   					), 0, 29);
+
+	   					$document->public_password = $public_pwd;
+	                }
+
+					$document->origin = 2;
+                    $document->user_id  = $userData->id;
+                    $document->text     = $bodyData['text'];
+
+                    $documentMapper->insert($document);
+
+                    $response['hash']     	= $public_pwd;
+                    $response['userId']     = $userData->id;
+                    $response['username']	= $username;
+                    $response['documentId'] = $document->id;
+	            } else {
+                    $response['st'] = 'error';
+                    $response['msg'] = 'Invalid credentials. Please, configure your extension with a valid username and password.';
+	           	}
+
+	        } else {
+	            $response['st'] = 'error';
+	        	$response['msg'] = 'Missing configuration. Please, configure your pasting cli with the follow command: ~ pasting -u yourUsername -p yourPassword';
+	        }
+
+	    } catch(\Exception $e) {
+	    	$response['st'] = 'error';
+	        $response['msg'] = 'Unexpected error';
+	    }
+
+		$app->response()->header("Content-Type", "application/json");
+        echo json_encode($response);
+    }
+)->via('OPTIONS', 'POST');
+
+
+$app->map(
+    '/createExtensionKey',
+    function () use ($app) 
+    {    
+    	try {
+	        $bodyData = json_decode($app->request->getBody(), true);
+	        $response = array('st' => 'ok');
+
+	        if (array_key_exists('username', $bodyData) && array_key_exists('pwd', $bodyData)) {
+
+	            $userMapper = new \Models\User\UserMapper($app->pdo);
+	            $user       = $userMapper->findByUsername($bodyData['username']);
+
+                if ($user) {
+
+                	$userValidateMapper = new \Models\User\UserMapper($app->pdo);
+	                if ($userValidateMapper->validate($bodyData['username'], $bodyData['pwd'])) 
+	   				{
+	   					$extension_key = $user->extension_key;
+
+	   					if (!$extension_key) {
+	   						$extension_key = substr(substr(
+	   							"abcdefghijklmnopqrstuvwxyz0123456789%*^.;?_+-#@!{}", 
+	   							mt_rand(0 ,25), 1) . substr(md5(time()), 1
+	   						), 0, 29);
+
+	   						$user->extension_key = $extension_key;
+	   						$userMapper->save($user);
+	   					}
+
+	   					$response['st']  = "ok";
+	   					$response['extnsion_key'] = "$extension_key:$user->username";
+
+	                } else {
+               			$response['st'] = 'error';
+                    	$response['msg'] = 'Invalid credentials. Check username and password';
+	                }
+
+                } else {
+                    $response['st'] = 'error';
+                    $response['msg'] = 'Invalid username';
+                }
+
+	        } else {
+	            $response['st'] = 'error';
+	            $response['msg'] = 'Missing parameters: username, password';
+	        }
+
+	    } catch(\Exception $e) {
+	    	$response['st'] = 'error';
+	        $response['msg'] = 'Unexpected error';
+	   	}
+
+		$app->response()->header("Content-Type", "application/json");
+        echo json_encode($response);
+    }
+)->via('OPTIONS', 'POST');
