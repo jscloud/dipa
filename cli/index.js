@@ -68,14 +68,18 @@ if (program.username && program.password)
 
   fs.readFile(keyPath, 'utf8', function(err, pastingKeyData) 
   {
+    var stdinData = '' ; 
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
-    process.stdin.on('data', function(stream) 
+    process.stdin.on('data', function(chunk) {
+         stdinData += chunk;
+    })
+    process.stdin.on('end', function(stream) 
     {
         if (stream != '' && stream != '\n') { 
           var bodyData = {
             consoleKey: pastingKeyData,
-            text: stream
+            text: stdinData
           };
 
           var options = {
