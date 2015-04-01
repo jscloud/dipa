@@ -50,7 +50,7 @@ __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<
 ((__t = ( obj.user )) == null ? '' : __t) +
 '/' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre><code id="highlightText"></code></pre>\n\t\t</div>\n\t</header>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre><code id="highlightText" class="javascript"></code></pre>\n\t\t</div>\n\t</header>\n</section>';
 return __p
 };
 
@@ -81,7 +81,8 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
-					    	var displayText =  paste.text.substring(0,98) + ' ...';
+					    	displayText =  paste.text.substring(0,98) + ' ...';
+					    	displayText = safe_tags_replace(displayText);
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;

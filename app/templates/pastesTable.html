@@ -9,7 +9,8 @@
 					    for (var index = 0; index <= length; index++) {
 					    	var paste = obj.pastes[index];
 
-					    	var displayText =  paste.text.substring(0,98) + ' ...';
+					    	displayText =  paste.text.substring(0,98) + ' ...';
+					    	displayText = safe_tags_replace(displayText);
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
