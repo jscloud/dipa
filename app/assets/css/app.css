@@ -158,3 +158,15 @@ span.truncate {
   padding: 15px;
   padding-left: 20px;
 }
+
+.menu a {
+	color: #000;
+	-webkit-transition: color ease-in 0.5s;
+}
+
+.menu a:hover {
+	color: #125FB6;
+}
+
+
+

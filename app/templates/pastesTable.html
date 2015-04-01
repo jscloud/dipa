@@ -24,22 +24,24 @@
 						%>
 							<tr>
 								<td>
-									<div class="pastingBlock" onclick="location.href='<%= copyUrl %>';">
+									<div class="pastingBlock">
+
+									<a href="<%= copyUrl %>">
 										<% if ("1" == paste.protected) { %>
 											<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>
 										<% } %>
-
 										<%= displayText %>
-									</div>
-									<ul class="menu">
+									</a>
+
+									<ul class="menu" style="float: right;">
 										<li>
 											<a href="<%= copyUrl %>">VIEW</a>
 										</li>
 										<li>
-											<a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a>
+											<a href="<%= rawUrl %>" target="_blank">RAW</a>
 										</li>
 										<li>
-											<a href="<%= rawUrl %>" target="_blank">RAW</a>
+											<a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a>
 										</li>
 
 										<% if (paste.user_id == obj.loggedId) { %>
@@ -48,6 +50,8 @@
 											</li>
 										<% } %>
 									</ul>
+								</div>
+
 								</td>
 							</tr>
 						<% } %>
