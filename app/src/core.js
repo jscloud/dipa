@@ -201,12 +201,12 @@ var Router = Backbone.Router.extend (
 		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
 	    					$('#highlightText').html(getTemplate('templates/defaultPaste.html', defaultData));
 
-	    					doHighlight();
 	    					bindCopies();	
 	    					bindDeletes();
 	    					bindLoginButtons();
 	    					checkOauth();
 	    					bindNewPaste();
+	    					doHighlight();
 	    					NProgress.done();
 
 	    				} else {
@@ -277,12 +277,12 @@ var Router = Backbone.Router.extend (
 			    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
 		    					$('#highlightText').html(getTemplate('templates/defaultPaste.html', defaultData));
 
-		    					doHighlight();
 		    					bindCopies();	
 		    					bindDeletes();
 		    					bindLoginButtons();
 		    					checkOauth();
 		    					bindNewPaste();
+		    					doHighlight();
 		    					NProgress.done();
 
     						} else {
