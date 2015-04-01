@@ -39,9 +39,8 @@ return __p
 
 this["JST"]["templates/defaultPaste.html"] = function(obj) {
 var __t, __p = '', __e = _.escape;
-__p += '<textarea id="defaultPaste">\n' +
-((__t = ( obj.defaultPaste.text )) == null ? '' : __t) +
-'\n</textarea>';
+__p +=
+((__t = ( obj.defaultPaste.text )) == null ? '' : __t);
 return __p
 };
 
@@ -51,7 +50,7 @@ __p += '<section class="main">\n\t<header>\n\t\t<div class="container">\n\t\t\t<
 ((__t = ( obj.user )) == null ? '' : __t) +
 '/' +
 ((__t = ( obj.documentId )) == null ? '' : __t) +
-'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre id="textArea"></pre>\n\t\t</div>\n\t</header>\n</section>';
+'</h2>\n\t\t\t<p></p>\n\t\t\t<ul class="menu" id="defaultMenu"></ul>\n\t\t\t<pre><code id="highlightText"></code></pre>\n\t\t</div>\n\t</header>\n</section>';
 return __p
 };
 

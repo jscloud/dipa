@@ -199,9 +199,9 @@ var Router = Backbone.Router.extend (
 	    					};
 
 		    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-	    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+	    					$('#highlightText').html(getTemplate('templates/defaultPaste.html', defaultData));
 
-	    					bindPastes();
+	    					doHighlight();
 	    					bindCopies();	
 	    					bindDeletes();
 	    					bindLoginButtons();
@@ -275,9 +275,9 @@ var Router = Backbone.Router.extend (
 		    					};
 
 			    				$('#defaultMenu').html(getTemplate('templates/defaultMenu.html', defaultMenuData));
-		    					$('#textArea').html(getTemplate('templates/defaultPaste.html', defaultData));
+		    					$('#highlightText').html(getTemplate('templates/defaultPaste.html', defaultData));
 
-		    					bindPastes();
+		    					doHighlight();
 		    					bindCopies();	
 		    					bindDeletes();
 		    					bindLoginButtons();

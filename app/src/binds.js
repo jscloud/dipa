@@ -1,12 +1,6 @@
-function bindPastes() 
+function doHighlight() 
 {
-	CodeMirror.fromTextArea(document.getElementById("defaultPaste"), {
-	    mode: 'javascript',
-	    theme: "monokai",
-	    /*viewportMargin: Infinity, */
-	    lineNumbers: true,
-	    readOnly: true
-	});
+	hljs.initHighlightingOnLoad();
 }
 
 function bindCopies() 
