@@ -1,3 +1,8 @@
+var NewPasteModel = Backbone.Model.extend({
+	urlRoot: apiUrl + '/create',
+	defaults: {}
+});
+
 var DeletePasteModel = Backbone.Model.extend({
 	urlRoot: apiUrl + '/delete',
 	defaults: {}
