@@ -86,7 +86,7 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
-						    	var copyLabel	= "COPY SECRET LINK";
+						    	var copyLabel	= "COPY LINK";
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id + "/" + paste.public_password;
 							} else {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id;
@@ -94,29 +94,27 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id;
 							}
 						;
-__p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t\t<div class="pastingBlock">\n\n\t\t\t\t\t\t\t\t\t<a href="' +
+__p += '\n\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t    <div class="pasteBlock">\n\t\t\t\t\t\t\t\t\t\t<div class="content" onclick="location.href=\'' +
 ((__t = ( copyUrl )) == null ? '' : __t) +
-'">\n\t\t\t\t\t\t\t\t\t\t';
+'\';">\n\t\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t\t';
  if ("1" == paste.protected) { ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>\n\t\t\t\t\t\t\t\t\t\t';
+__p += '\n\t\t\t\t\t\t\t\t\t\t\t\t<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>\n\t\t\t\t\t\t\t\t\t\t\t';
  } ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t' +
+__p += '\n\t\t\t\t\t\t\t\t\t\t\t' +
 ((__t = ( displayText )) == null ? '' : __t) +
-'\n\t\t\t\t\t\t\t\t\t</a>\n\n\t\t\t\t\t\t\t\t\t<ul class="menu" style="float: right;">\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
-((__t = ( copyUrl )) == null ? '' : __t) +
-'">VIEW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a href="' +
-((__t = ( rawUrl )) == null ? '' : __t) +
-'" target="_blank">RAW</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t<a data-clipboard-text="' +
-((__t = ( copyUrl )) == null ? '' : __t) +
-'" title="Click to copy link" class="p-copy">' +
-((__t = ( copyLabel )) == null ? '' : __t) +
-'</a>\n\t\t\t\t\t\t\t\t\t\t</li>\n\n\t\t\t\t\t\t\t\t\t\t';
+'\n\t\t\t\t\t\t\t\t\t\t\t<paper-ripple fit></paper-ripple>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t\t\t';
  if (paste.user_id == obj.loggedId) { ;
-__p += '\n\t\t\t\t\t\t\t\t\t\t\t<li>\n\t\t\t\t\t\t\t\t\t\t\t\t<a class="delete" data-del-documentid="' +
+__p += '\n\t\t\t\t\t\t\t\t\t\t<div class="button">\n\t\t\t\t\t\t\t\t\t\t\t<div class="delete" data-del-documentid="' +
 ((__t = ( paste.id )) == null ? '' : __t) +
-'">DELETE</a>\n\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t';
+'" fit style="color:#B61212;">DELETE</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t';
  } ;
-__p += '\n\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t';
+__p += '\n\n\t\t\t\t\t\t\t\t\t\t<div class="button">\n\t\t\t\t\t\t\t\t\t\t\t<div onclick="location.href=\'' +
+((__t = ( rawUrl )) == null ? '' : __t) +
+'\';" fit>RAW</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t\t\t   \t<div class="button">\n\t\t\t\t\t\t\t\t\t        <div class="p-copy" data-clipboard-text="' +
+((__t = ( copyUrl )) == null ? '' : __t) +
+'" fit>' +
+((__t = ( copyLabel )) == null ? '' : __t) +
+'</div>\n\t\t\t\t\t\t\t\t\t    </div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t';
  } ;
 __p += '\n\t\t\t\t\t</tbody>\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t</section>\n\t</div>\n</div>';
 return __p

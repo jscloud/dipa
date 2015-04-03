@@ -14,7 +14,7 @@
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
-						    	var copyLabel	= "COPY SECRET LINK";
+						    	var copyLabel	= "COPY LINK";
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id + "/" + paste.public_password;
 							} else {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id;
@@ -24,34 +24,31 @@
 						%>
 							<tr>
 								<td>
-									<div class="pastingBlock">
-
-									<a href="<%= copyUrl %>">
-										<% if ("1" == paste.protected) { %>
-											<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>
-										<% } %>
-										<%= displayText %>
-									</a>
-
-									<ul class="menu" style="float: right;">
-										<li>
-											<a href="<%= copyUrl %>">VIEW</a>
-										</li>
-										<li>
-											<a href="<%= rawUrl %>" target="_blank">RAW</a>
-										</li>
-										<li>
-											<a data-clipboard-text="<%= copyUrl %>" title="Click to copy link" class="p-copy"><%= copyLabel %></a>
-										</li>
+								    <div class="pasteBlock">
+										<div class="content" onclick="location.href='<%= copyUrl %>';">
+										<div>
+											<% if ("1" == paste.protected) { %>
+												<i class="fa fa-lock" style="font-size: 14px;color:rgba(18, 95, 182, 0.45);"></i>
+											<% } %>
+											<%= displayText %>
+											<paper-ripple fit></paper-ripple>
+										</div>
+										</div>
 
 										<% if (paste.user_id == obj.loggedId) { %>
-											<li>
-												<a class="delete" data-del-documentid="<%= paste.id %>">DELETE</a>
-											</li>
+										<div class="button">
+											<div class="delete" data-del-documentid="<%= paste.id %>" fit style="color:#B61212;">DELETE</div>
+										</div>
 										<% } %>
-									</ul>
-								</div>
 
+										<div class="button">
+											<div onclick="location.href='<%= rawUrl %>';" fit>RAW</div>
+										</div>
+
+									   	<div class="button">
+									        <div class="p-copy" data-clipboard-text="<%= copyUrl %>" fit><%= copyLabel %></div>
+									    </div>
+									</div>
 								</td>
 							</tr>
 						<% } %>

@@ -64,7 +64,7 @@
     cursor: pointer; }
     .sweet-alert button:focus {
       outline: none;
-      box-shadow: 0 0 2px rgba(128, 179, 235, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
+      box-shadow: 0 0 2px rgba(66, 104, 162, 0.5), inset 0 0 0 1px rgba(0, 0, 0, 0.05); }
     .sweet-alert button:hover {
       background-color:  rgba(66, 104, 162, 1) }
     .sweet-alert button:active {
@@ -76,7 +76,7 @@
       .sweet-alert button.cancel:active {
         background-color: #b6b6b6; }
       .sweet-alert button.cancel:focus {
-        box-shadow: rgba(197, 205, 211, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px inset !important; }
+        box-shadow: rgba(66, 104, 162, 0.8) 0px 0px 2px, rgba(0, 0, 0, 0.0470588) 0px 0px 0px 1px inset !important; }
     .sweet-alert button::-moz-focus-inner {
       border: 0; }
   .sweet-alert[data-has-cancel-button=false] button {
@@ -91,7 +91,7 @@
     position: relative;
     box-sizing: content-box; }
     .sweet-alert .icon.error {
-      border-color: #F27474; }
+      border-color: #125FB6; }
       .sweet-alert .icon.error .x-mark {
         position: relative;
         display: block; }
@@ -99,7 +99,7 @@
         position: absolute;
         height: 5px;
         width: 47px;
-        background-color: #F27474;
+        background-color: #125FB6;
         display: block;
         top: 37px;
         border-radius: 2px; }
@@ -112,7 +112,7 @@
           transform: rotate(-45deg);
           right: 16px; }
     .sweet-alert .icon.warning {
-      border-color: #F8BB86; }
+      border-color: #125FB6; }
       .sweet-alert .icon.warning .body {
         position: absolute;
         width: 5px;
@@ -121,7 +121,7 @@
         top: 10px;
         border-radius: 2px;
         margin-left: -2px;
-        background-color: #F8BB86; }
+        background-color: #125FB6; }
       .sweet-alert .icon.warning .dot {
         position: absolute;
         width: 7px;
@@ -130,9 +130,9 @@
         margin-left: -3px;
         left: 50%;
         bottom: 10px;
-        background-color: #F8BB86; }
+        background-color: #125FB6; }
     .sweet-alert .icon.info {
-      border-color: #C9DAE1; }
+      border-color: #125FB6; }
       .sweet-alert .icon.info::before {
         content: "";
         position: absolute;
@@ -142,7 +142,7 @@
         bottom: 17px;
         border-radius: 2px;
         margin-left: -2px;
-        background-color: #C9DAE1; }
+        background-color: #125FB6; }
       .sweet-alert .icon.info::after {
         content: "";
         position: absolute;
@@ -151,9 +151,9 @@
         border-radius: 50%;
         margin-left: -3px;
         top: 19px;
-        background-color: #C9DAE1; }
+        background-color: #125FB6; }
     .sweet-alert .icon.success {
-      border-color: #A5DC86; }
+      border-color: #125FB6; }
       .sweet-alert .icon.success::before, .sweet-alert .icon.success::after {
         content: '';
         border-radius: 50%;
@@ -182,7 +182,7 @@
       .sweet-alert .icon.success .placeholder {
         width: 80px;
         height: 80px;
-        border: 4px solid rgba(165, 220, 134, 0.2);
+        border: 4px solid rgba(66, 104, 162, 0.3);
         border-radius: 50%;
         box-sizing: content-box;
         position: absolute;
@@ -201,7 +201,7 @@
         transform: rotate(-45deg); }
       .sweet-alert .icon.success .line {
         height: 5px;
-        background-color: #A5DC86;
+        background-color: rgba(66, 104, 162, 1);
         display: block;
         border-radius: 2px;
         position: absolute;
@@ -565,19 +565,19 @@
 
 @-webkit-keyframes pulseWarning {
   0% {
-    border-color: #F8D486; }
+    border-color: #125FB6; }
   100% {
-    border-color: #F8BB86; } }
+    border-color: #125FB6; } }
 @-moz-keyframes pulseWarning {
   0% {
-    border-color: #F8D486; }
+    border-color: #125FB6; }
   100% {
-    border-color: #F8BB86; } }
+    border-color: #125FB6; } }
 @keyframes pulseWarning {
   0% {
-    border-color: #F8D486; }
+    border-color: #125FB6; }
   100% {
-    border-color: #F8BB86; } }
+    border-color: #125FB6; } }
 .pulseWarning {
   -webkit-animation: pulseWarning 0.75s infinite alternate;
   -moz-animation: pulseWarning 0.75s infinite alternate;
@@ -585,19 +585,19 @@
 
 @-webkit-keyframes pulseWarningIns {
   0% {
-    background-color: #F8D486; }
+    background-color: #125FB6; }
   100% {
-    background-color: #F8BB86; } }
+    background-color: #125FB6; } }
 @-moz-keyframes pulseWarningIns {
   0% {
-    background-color: #F8D486; }
+    background-color: #125FB6; }
   100% {
-    background-color: #F8BB86; } }
+    background-color: #125FB6; } }
 @keyframes pulseWarningIns {
   0% {
-    background-color: #F8D486; }
+    background-color: #125FB6; }
   100% {
-    background-color: #F8BB86; } }
+    background-color: #125FB6; } }
 .pulseWarningIns {
   -webkit-animation: pulseWarningIns 0.75s infinite alternate;
   -moz-animation: pulseWarningIns 0.75s infinite alternate;

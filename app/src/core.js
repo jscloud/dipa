@@ -314,4 +314,5 @@ Backbone.history.start();
 $(document).ready(function() 
 {
 	vex.defaultOptions.className = 'vex-theme-default';
+	$('.ripple').materialripple();
 });
