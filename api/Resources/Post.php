@@ -411,23 +411,24 @@ $app->map(
 
 
 
+
 $app->map(
     '/createFromExtension',
     function () use ($app) 
     {    
     	try {
-	        $bodyData = json_decode($app->request->getBody(), true);
+
+	        $bodyData = $_POST;
 	        $response = array('st' => 'ok');
-	        $public_pwd = '';
 
-	        if ((array_key_exists('extensionKey', $bodyData) && array_key_exists('text', $bodyData))) {
+	        if ((array_key_exists('v', $bodyData) && array_key_exists('text', $bodyData))) {
 
-	        	$keyData = explode(":", $bodyData['extensionKey']);
-	        	$extension_key 	= $keyData[0];
-	        	$username 		= $keyData[1];
+	        	$keyData 	= explode(":", $bodyData['v']);
+	        	$hash_key 	= $keyData[0];
+	        	$hash_user 	= $keyData[1];
 
 	            $userValidateMapper = new \Models\User\UserMapper($app->pdo);
-	            $userData 			= $userValidateMapper->validateKeyHash($username, $extension_key, 'extension_key');
+	            $userData 			= $userValidateMapper->validateKeyHash($hash_user, $hash_key, 'hash');
 
                 if ($userData) 
                 {
@@ -449,24 +450,22 @@ $app->map(
 	   					$document->public_password = $public_pwd;
 	                }
 
-					$document->origin = 2;
                     $document->user_id  = $userData->id;
                     $document->text     = $bodyData['text'];
 
                     $documentMapper->insert($document);
 
-                    $response['hash']     	= $public_pwd;
                     $response['userId']     = $userData->id;
-                    $response['username']	= $username;
+                    $response['username']	= $hash_user;
                     $response['documentId'] = $document->id;
 	            } else {
                     $response['st'] = 'error';
-                    $response['msg'] = 'Invalid credentials. Please, configure your extension with a valid username and password.';
+                    $response['msg'] = 'Invalid credentials.';
 	           	}
 
 	        } else {
 	            $response['st'] = 'error';
-	        	$response['msg'] = 'Missing configuration. Please, configure your pasting cli with the follow command: ~ pasting -u yourUsername -p yourPassword';
+	        	$response['msg'] = 'Invalid request params';
 	        }
 
 	    } catch(\Exception $e) {
@@ -478,6 +477,8 @@ $app->map(
         echo json_encode($response);
     }
 )->via('OPTIONS', 'POST');
+
+
 
 
 $app->map(

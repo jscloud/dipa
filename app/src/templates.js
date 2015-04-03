@@ -86,11 +86,11 @@ __p += '<div class="content dark style1 featured" id="pastesTable" style="paddin
 
 							if ("1" == paste.protected) {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id + "/" + paste.public_password;
-						    	var copyLabel	= "COPY LINK";
+						    	var copyLabel	= "COPY";
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id + "/" + paste.public_password;
 							} else {
 								var copyUrl		= obj.baseUrl + "/p/" + paste.id;
-						    	var copyLabel	= "COPY LINK";
+						    	var copyLabel	= "COPY";
 						    	var rawUrl 		= obj.apiUrl + "/raw/" + paste.id;
 							}
 						;
