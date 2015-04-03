@@ -171,7 +171,7 @@
 }
 
 .pasteBlock {
-	border-left: 4px solid #125FB6;
+	border-left: 3px solid #125FB6;
 	box-sizing: border-box;
 	padding: 20px 80px 20px 40px;
 
@@ -187,4 +187,8 @@
 	font-size: 0.8em;
 	color: #125FB6;
 	border: 0px;
+}
+
+pre {
+	border-left: 3px solid #125FB6 !important;
 }
