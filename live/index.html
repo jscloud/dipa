@@ -2,15 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <!-- Firebase -->
+
   <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 
-  <!-- ACE and its JavaScript mode and theme files -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/theme-textmate.js"></script>
 
-  <!-- Firepad -->
+
   <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css" />
   <script src="https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js"></script>
 
@@ -20,6 +20,9 @@
     #firepad-container {
       width: 100%;
       height: 100%;
+    }
+    .powered-by-firepad {
+      display:none;
     }
   </style>
 
@@ -31,10 +34,9 @@
 
   <script>
     function init() {
-      //// Initialize Firebase.
+
       var firepadRef = getRef();
 
-      //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
       var session = editor.getSession();
@@ -42,9 +44,8 @@
       session.setUseWorker(false);
       session.setMode("ace/mode/javascript");
 
-      //// Create Firepad.
       var firepad = Firepad.fromACE(firepadRef, editor, {
-        defaultText: '// Pasting Live Editing \nfunction helloWorld() {\n  var msg = "Hello, world.";\n  return msg;\n}'
+        defaultText: '// Pasting Live Editing \n'
       });
     }
 
@@ -55,7 +56,7 @@
         ref = ref.child(hash);
       } else {
         ref = ref.push(); // generate unique location.
-        window.location = window.location + '#' + ref.key(); // add it as a hash to the URL.
+        window.location = window.location + '#' + ref.key();
       }
       if (typeof console !== 'undefined')
         console.log('Firebase data: ', ref.toString());
