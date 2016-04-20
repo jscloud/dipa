@@ -144,7 +144,7 @@ $app->map(
             
             $response = array('publics' => array(), 'st' => 'ok');
 
-            $response['publics'] = $documents;
+            $response['publics'] = $documents->getAll();
         
         $app->response()->header("Content-Type", "application/json");
         echo json_encode($response);
