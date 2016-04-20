@@ -131,4 +131,19 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
 
         return $result;
     }
+    
+    public function getRecents()
+    {
+        $sql = "SELECT *
+                FROM {$this->tableName}
+                ORDER BY date DESC LIMIT 30";
+                
+        $documents = $this->fetchCollection($sql, null);
+        
+        if ($documents->getCount() == 0) {
+            $documents = false;
+        }
+        
+        return $documents;
+    }
 }
