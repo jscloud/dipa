@@ -136,6 +136,7 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
     {
         $sql = "SELECT *
                 FROM {$this->tableName}
+                WHERE `protected` = 0
                 ORDER BY date DESC LIMIT 30";
                 
         $documents = $this->fetchCollection($sql, null);
