@@ -135,6 +135,22 @@ $app->map(
     }
 )->via('OPTIONS', 'GET');
 
+$app->map(
+    '/get/recents',
+    function () use ($app) 
+    {    
+            $documentMapper = new \Models\Document\DocumentMapper($app->pdo);
+            $documents      = $documentMapper->getRecents();
+            
+            $response = array('publics' => array(), 'st' => 'ok');
+
+            $response['publics'] = $documents;
+        
+        $app->response()->header("Content-Type", "application/json");
+        echo json_encode($response);
+    }
+)->via('OPTIONS', 'GET');
+
 $app->get(
     '/raw/:id',
     function ($id) use ($app) 
@@ -184,4 +200,6 @@ $app->get(
         }
     }
 );
+
+
 
