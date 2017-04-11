@@ -18,13 +18,22 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
         parent::__construct($pdo, $this->tableName, $this->tablePrimaryKey);
     }
 
-    public function getForUser($username)
+    public function getForUser($username, $size=15, $lastId=null)
     {
+        if (is_null($size)) $size = 15;
+        $lastIdBuilder = "";
+        $limitBuilder = "LIMIT $size";
+
+        if (!is_null($lastId)) {
+            $lastIdBuilder = " AND id < $lastId";
+        }
+
         $sql = "SELECT *
                 FROM {$this->tableName}
-                WHERE {$this->tableRelationKey} = ({$this->relationQuery})
-                ORDER BY date DESC";
-                
+                WHERE {$this->tableRelationKey} = ({$this->relationQuery}) ".
+                $lastIdBuilder.
+                " ORDER BY date DESC ".$limitBuilder;
+
         $bindings = array(
             'username' => strtolower($username)
         );
@@ -130,5 +139,36 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
         }
 
         return $result;
+    }
+
+    public function getRecents($size=15, $lastId=null)
+    {
+        if (is_null($size)) $size = 15;
+        $lastIdBuilder = "";
+        $limitBuilder = "LIMIT $size";
+
+
+        if (!is_null($lastId)) {
+            $lastIdBuilder = " AND id < :lastId";
+        }
+
+        $sql = "SELECT *
+                FROM {$this->tableName}
+                WHERE type = 0
+                AND protected = 0 ".
+                $lastIdBuilder.
+                " ORDER BY date DESC ".$limitBuilder;
+
+        $bindings = array(
+            'lastId'    => $lastId
+        );
+
+        $documents = $this->fetchCollection($sql, $bindings);
+        
+        if ($documents->getCount() == 0) {
+            $documents = false;
+        }
+
+        return $documents;
     }
 }

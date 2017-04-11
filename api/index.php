@@ -31,5 +31,6 @@ $app->container->singleton('pdo', function () {
 require 'Resources/Login.php';
 require 'Resources/Get.php';
 require 'Resources/Post.php';
+require 'Resources/Mobile.php';
 
 $app->run();

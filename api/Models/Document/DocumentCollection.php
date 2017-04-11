@@ -6,6 +6,7 @@ class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 {
 	const TYPE_PUBLIC	 = 0;
 	const TYPE_PROTECTED = 1;
+	const MAX_STRING_TEXT = 200;
 
 	public function getCount() 
 	{
@@ -18,6 +19,7 @@ class DocumentCollection extends \Slim\Extensions\Dmm\ModelCollection
 		foreach ($this as $collection) 
 		{
 			if ($collection->protected == self::TYPE_PUBLIC) {
+				$collection->text = substr($collection->text, 0, self::MAX_STRING_TEXT);
 				$collection->public_password = null;
 				array_push($publics, $collection->getData());
 			}
