@@ -164,7 +164,7 @@ class DocumentMapper extends \Slim\Extensions\Dmm\Mapper
         );
 
         $documents = $this->fetchCollection($sql, $bindings);
-        
+
         if ($documents->getCount() == 0) {
             $documents = false;
         }
